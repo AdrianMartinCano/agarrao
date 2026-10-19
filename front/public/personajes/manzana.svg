@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Manzana con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M80 46 Q78 30 86 18" stroke="#8A5A3C" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M86 30 Q104 12 120 24 Q104 40 86 30 Z" fill="#4FD18B"/>
+  <path d="M80 46 C60 30 26 40 28 82 C30 124 58 144 80 134 C102 144 130 124 132 82 C134 40 100 30 80 46 Z" fill="#FF6B6B"/>
+  <path d="M42 72 Q44 58 56 52" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="90" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="90" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="88" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="88" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="102" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <ellipse cx="105" cy="102" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <path d="M73 101 Q80 108 87 101" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

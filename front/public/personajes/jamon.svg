@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Jamón con cara">
+  <ellipse cx="80" cy="148" rx="52" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M112 34 L128 20" stroke="#FFF8EC" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="132" cy="16" r="8" fill="#FFF8EC"/>
+  <path d="M114 32 C144 58 124 120 90 138 C56 154 18 132 24 100 C30 70 76 50 114 32 Z" fill="#E5737A"/>
+  <path d="M24 100 C18 132 56 154 90 138 C64 140 32 128 24 100 Z" fill="#FFF0E6"/>
+  <path d="M48 84 Q60 70 78 64" stroke="#F2A0A5" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="62" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="86" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="63.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <circle cx="87.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="51" cy="112" rx="7" ry="4.5" fill="#FFD0D6"/>
+  <ellipse cx="97" cy="112" rx="7" ry="4.5" fill="#FFD0D6"/>
+  <path d="M67 111 Q74 118 81 111" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

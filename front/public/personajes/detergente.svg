@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Botella de detergente con cara">
+  <ellipse cx="80" cy="148" rx="54" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <rect x="40" y="12" width="40" height="20" rx="6" fill="#4FD18B"/>
+  <path d="M36 32 H124 Q134 32 134 42 V132 Q134 144 122 144 H38 Q26 144 26 132 V42 Q26 32 36 32 Z" fill="#5CB2FF"/>
+  <path d="M96 40 H118 Q124 40 124 46 V70 Q124 76 118 76 H96 Z" fill="#8EC5FF"/>
+  <rect x="38" y="92" width="84" height="38" rx="12" fill="#FFFFFF"/>
+  <circle cx="58" cy="111" r="6" fill="#C4E1FF"/><circle cx="74" cy="104" r="4" fill="#C4E1FF"/>
+  <path d="M38 50 V74" stroke="#C4E1FF" stroke-width="7" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="60" cy="64" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="84" cy="64" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="61.5" cy="62" r="1.6" fill="#FFFFFF"/>
+  <circle cx="85.5" cy="62" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="49" cy="76" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="95" cy="76" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M65 75 Q72 82 79 75" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,499 @@
+.hogar {
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  min-height: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+  padding: max(22px, env(safe-area-inset-top)) 18px 28px;
+}
+
+.hogar__lapiz svg,
+.icono {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hogar__cabeza {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+.hogar__cabeza .titular {
+  padding: 0 6px;
+  border-radius: 14px;
+  overflow-wrap: anywhere;
+}
+
+.hogar__lapiz {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.hogar__lapiz svg { width: 18px; height: 18px; }
+
+.hogar__renombrar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  width: 100%;
+}
+
+/* ── El cartel de invitar: papel con borde rosa, como el de «Toca actualizar» ── */
+
+.cartel {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 24px 20px 18px;
+  border: 4px solid var(--rosa-boton);
+  border-radius: 32px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+.cartel__titulo {
+  margin: 0;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 1.75rem;
+  line-height: 1.05;
+}
+
+.cartel__texto {
+  margin: 0;
+  max-width: 28ch;
+  color: var(--tinta-suave);
+  font-size: 0.9375rem;
+  text-wrap: balance;
+}
+
+.cartel__codigo {
+  margin: 4px 0 6px;
+  padding: 6px 18px;
+  border-radius: 18px;
+  background: var(--placa-nota);
+  /* M PLUS y no Sniglet: en Sniglet 5/S, 6/G, 8/B y 2/Z se confunden, y el código se dicta */
+  font-weight: 800;
+  font-size: 2.125rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  user-select: all;
+}
+
+.cartel__nuevo {
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  background: none;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--rosa-boton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ── Quién está: cada uno con su cinta, como en el catálogo ── */
+
+.miembros,
+.otros {
+  display: grid;
+  gap: 10px;
+}
+
+.miembros__titulo {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.125rem;
+}
+
+.miembros__cuenta {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  font-size: 0.9375rem;
+}
+
+.miembros__lista {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.miembro {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 62px;
+  padding: 10px 12px 10px 58px;
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--lila);
+  box-shadow: var(--sombra-ficha);
+}
+
+.miembro:nth-child(4n + 2) { background: var(--cielo); }
+.miembro:nth-child(4n + 3) { background: var(--mantequilla); }
+.miembro:nth-child(4n + 4) { background: var(--rubor); }
+
+.miembro__cinta {
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  display: grid;
+  place-items: start center;
+  width: 32px;
+  height: 44px;
+  padding-top: 6px;
+  background: var(--cinta);
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.miembro__nombre {
+  flex: 1;
+  min-width: 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.miembro__tu {
+  margin-left: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--papel);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.miembro__rol {
+  flex: none;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--placa-nombre-rosa);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.miembro__sacar {
+  flex: none;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.miembro__sacar--seguro,
+.hogar__salir--seguro {
+  border-color: var(--rosa-boton);
+  background: var(--rosa-boton);
+  color: #fff;
+}
+
+.otros__hogar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 18px;
+  border: 3px solid var(--papel);
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.otros__gente {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.hogar__pie {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.hogar__pie .boton-papel { text-decoration: none; }
+
+.hogar__sesion {
+  justify-self: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  background: none;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hogar__cargando {
+  margin: 40px 0 0;
+  text-align: center;
+  font-weight: 800;
+}
+
+.hogar__hecho {
+  position: fixed;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 10;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 8px 20px -6px rgb(42 47 90 / 0.5);
+  transform: translateX(-50%);
+  animation: sube 380ms var(--salida) both;
+  white-space: nowrap;
+}
+
+@keyframes sube {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+}
+
+/* ── Ajustes ── */
+
+.ajustes {
+  display: grid;
+  gap: 14px;
+}
+
+.ajuste {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+}
+
+.ajuste__titulo {
+  margin: 0;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ajuste__valor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.0625rem;
+}
+
+.ajuste__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.ajuste__nota {
+  margin: 0;
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+.cadenas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Cada súper, una píldora que se marca: placa lila cuando se compara */
+.cadena {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 2px solid var(--placa-nombre-lila);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta-suave);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease, transform 300ms var(--salida);
+}
+
+.cadena:active { transform: scale(0.96); }
+
+.cadena--si {
+  border-color: var(--tinta);
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+}
+
+/* ── Qué usas: un interruptor por parte ── */
+
+.usos {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uso {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uso__texto {
+  display: grid;
+  flex: 1;
+}
+
+.uso__nombre { font-weight: 800; }
+
+.uso__nota {
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+/* El interruptor: píldora lila que se pone rosa, con la bolita de papel */
+.interruptor {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  transition: background 220ms ease;
+}
+
+.interruptor::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--papel);
+  box-shadow: 0 1px 3px rgb(42 47 90 / 0.3);
+  transition: transform 320ms var(--salida);
+}
+
+.interruptor--si { background: var(--rosa-boton); }
+.interruptor--si::after { transform: translateX(20px); }
+
+/* ── Ayuda: la guía y las novedades ── */
+
+.ayuda {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ayuda__enlace {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.ayuda__enlace > span:last-child {
+  display: grid;
+}
+
+.ayuda__nota {
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+.ayuda__version {
+  display: grid;
+  place-items: center;
+  flex: none;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 6px;
+  border-radius: 12px;
+  background: var(--placa-precio);
+  font-weight: 800;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 380px) {
+  .ayuda { grid-template-columns: 1fr; }
+}
+

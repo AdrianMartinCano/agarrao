@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Cubo con fregona y cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El palo y las tiras de la fregona -->
+  <path d="M104 16 L92 82" stroke="#C98B52" stroke-width="8" stroke-linecap="round"/>
+  <path d="M74 80 Q90 70 110 80 L112 100 Q92 106 72 100 Z" fill="#F2EDFF"/>
+  <path d="M78 98 L74 112 M86 100 L84 114 M94 100 L94 115 M102 100 L104 113" stroke="#D9CDFF" stroke-width="5" stroke-linecap="round"/>
+  <!-- El cubo con su asa y el escurridor -->
+  <path d="M38 64 Q80 30 122 64" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round" opacity=".55"/>
+  <path d="M30 70 H130 L120 136 Q118 144 110 144 H50 Q42 144 40 136 Z" fill="#5CB2FF"/>
+  <rect x="26" y="64" width="108" height="14" rx="7" fill="#8EC5FF"/>
+  <path d="M44 90 Q46 82 54 80" stroke="#C4E1FF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="102" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="102" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="100" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="100" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="114" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="105" cy="114" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 113 Q80 120 87 113" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

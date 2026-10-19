@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Barra de pan con cara">
+  <ellipse cx="80" cy="148" rx="54" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- La barra, tumbada y un poco inclinada -->
+  <g transform="rotate(-14 80 88)">
+    <rect x="18" y="58" width="124" height="58" rx="29" fill="#E0A562"/>
+    <path d="M42 64 Q50 74 46 86 M70 60 Q78 70 74 82 M98 60 Q106 70 102 82 M124 64 Q130 72 128 82" stroke="#F3CC94" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Cara -->
+  <ellipse cx="66" cy="98" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="98" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="96" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="96" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="110" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="110" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 109 Q80 116 87 109" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

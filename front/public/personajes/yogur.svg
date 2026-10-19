@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Yogur con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M40 46 H120 L110 138 Q108 144 102 144 H58 Q52 144 50 138 Z" fill="#E9E2FF"/>
+  <path d="M44 84 H116 L112 112 H48 Z" fill="#FFB3CC"/>
+  <path d="M34 38 H126 V50 H34 Z" fill="#B28BFF"/>
+  <path d="M118 38 Q134 22 144 34 Q136 44 126 44" fill="#C7B0FF"/>
+  <path d="M52 58 V74" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="68" cy="70" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="70" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="69.5" cy="68" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="68" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="57" cy="82" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="103" cy="82" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 81 Q80 88 87 81" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

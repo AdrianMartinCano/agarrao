@@ -1,0 +1,296 @@
+.portada {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 14px;
+  min-height: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+  padding: max(22px, env(safe-area-inset-top)) 18px max(14px, env(safe-area-inset-bottom));
+}
+
+/* ── La marca ─────────────────────────────────────────────── */
+
+.portada__marca {
+  text-align: center;
+}
+
+.portada__nombre {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: clamp(3.25rem, 15vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--tinta);
+}
+
+.portada__chispas {
+  position: absolute;
+  top: -0.35em;
+  right: -0.62em;
+  width: 0.6em;
+  height: 0.6em;
+  fill: var(--chispa);
+  animation: chispa 2.6s var(--salida) infinite;
+}
+
+.portada__lema,
+.portada__ejemplo,
+.portada__privado,
+.portada__version {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+}
+
+.portada__nombre {
+  /* Halo del fondo alrededor de las letras gordas, por la misma razón */
+  text-shadow: 0 0 6px var(--fondo), 0 0 12px var(--fondo);
+}
+
+.portada__lema {
+  margin: 10px 0 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--tinta-suave);
+  text-wrap: balance;
+}
+
+/* ── El elenco ────────────────────────────────────────────── */
+
+.elenco {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 14px;
+  margin: 0;
+  padding: 10px 2px 0;
+  list-style: none;
+}
+
+/* Inclinadas como muñecos colocados a mano, no en formación */
+.elenco__hueco:nth-child(4n + 1) { --giro: -2deg; }
+.elenco__hueco:nth-child(4n + 2) { --giro: 1.5deg; }
+.elenco__hueco:nth-child(4n + 3) { --giro: 1deg; }
+.elenco__hueco:nth-child(4n + 4) { --giro: -1.5deg; }
+
+.elenco__hueco {
+  display: grid;
+  min-width: 0;
+  transform: rotate(var(--giro));
+  animation: entra 620ms var(--salida) both;
+  animation-delay: calc(var(--orden) * 90ms + 120ms);
+}
+
+.elenco__hueco > app-ficha-personaje {
+  height: 100%;
+  --retrato: 84px;
+}
+
+@media (min-height: 820px) {
+  .elenco__hueco > app-ficha-personaje {
+    --retrato: 92px;
+  }
+}
+
+:host-context(.con-aviso) .elenco__hueco > app-ficha-personaje {
+  --retrato: 60px;
+}
+
+@media (min-height: 900px), (min-width: 900px) {
+  .elenco__hueco > app-ficha-personaje {
+    --retrato: 124px;
+  }
+}
+
+.portada__ejemplo {
+  margin: 0 4px 6px;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--tinta-suave);
+  text-wrap: pretty;
+}
+
+/* ── Entrar ───────────────────────────────────────────────── */
+
+.portada__entrar {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  /* El botón se queda a mano del pulgar; el fondo lo separa de las fichas al hacer scroll */
+  background: linear-gradient(to bottom, transparent, var(--fondo) 22px);
+  text-align: center;
+}
+
+/*
+ * El botón de ng-auth, vestido de cinta rosa. Las variables las lee la librería; el alto y
+ * la forma se fuerzan aquí porque su 44 px se queda corto para el pulgar.
+ */
+.boton-google {
+  --color-surface: var(--rosa-boton);
+  --color-background: var(--rosa-boton-hondo);
+  --color-text: #fff;
+  --color-border: transparent;
+  --color-accent: var(--tinta);
+  --radius-md: 999px;
+  --font-weight-semibold: 800;
+}
+
+:host ::ng-deep .boton-google .lib-google__wrapper {
+  height: 58px;
+  max-width: none;
+  border-radius: 999px;
+  box-shadow: var(--sombra-boton);
+  transition: transform 300ms var(--salida), box-shadow 300ms var(--salida);
+}
+
+:host ::ng-deep .boton-google .lib-google__wrapper:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 4px 10px -4px rgb(212 35 97 / 0.6);
+}
+
+:host ::ng-deep .boton-google .lib-google__visual {
+  font-size: 1.125rem;
+  letter-spacing: 0.01em;
+}
+
+/* El logo de Google va en su chapa blanca: sobre rosa, sus colores no se distinguen */
+:host ::ng-deep .boton-google .lib-google__logo {
+  box-sizing: content-box;
+  padding: 7px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.portada__privado,
+.portada__version {
+  margin: 0;
+  text-wrap: balance;
+  font-size: 0.8125rem;
+  color: var(--tinta-suave);
+}
+
+.portada__version {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.portada__sin-google {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--placa-nota);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+
+/* ── Pantalla ancha: marca y botón a un lado, el elenco al otro ── */
+
+@media (min-width: 900px) {
+  .portada {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    row-gap: 28px;
+    column-gap: 64px;
+    max-width: 1080px;
+    padding-inline: 40px;
+  }
+
+  .portada__marca {
+    align-self: end;
+    text-align: left;
+  }
+
+  .portada__nombre {
+    font-size: 6rem;
+  }
+
+  .portada__elenco {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .portada__entrar {
+    position: static;
+    padding-top: 0;
+    align-self: start;
+    max-width: 380px;
+    background: none;
+    text-align: left;
+  }
+}
+
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92) rotate(var(--giro));
+  }
+}
+
+@keyframes chispa {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(0.82) rotate(12deg); }
+}
+
+/* Solo en desarrollo: discreto a propósito, que no compita con el botón de Google */
+.portada__prueba {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px dashed var(--tinta-suave);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.portada__prueba:disabled { cursor: progress; opacity: 0.8; }
+
+.portada__error {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--rosa-boton-hondo);
+}
+
+.portada__gasolina {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  min-height: 44px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--cielo);
+  box-shadow: var(--sombra-ficha);
+  color: var(--tinta);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.portada__gasolina svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.portada__gasolina strong {
+  color: var(--rosa-boton);
+  font-weight: 800;
+}

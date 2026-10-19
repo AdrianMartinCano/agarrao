@@ -1,0 +1,270 @@
+/* Ionic: solo lo estructural. El aspecto lo pone el catálogo de Listillo. */
+@use '@ionic/angular/css/core.css';
+@use '@ionic/angular/css/normalize.css';
+@use '@ionic/angular/css/structure.css';
+
+/*
+ * LISTILLO · el catálogo de personajes.
+ * Cada producto genérico es un personaje con su ficha. Pastel en las fichas, tinta azul
+ * marino para todo lo que se lee, y un color de cinta saturado por personaje.
+ * Claro a propósito: se usa en el pasillo del súper, bajo fluorescentes, y en la cocina.
+ */
+:root {
+  color-scheme: light;
+
+  /* Tinta */
+  --tinta: #2a2f5a;
+  --tinta-suave: #575c86; /* 5,4:1 sobre el fondo */
+
+  /* Fondo y pasteles de ficha */
+  --fondo: #eee8ff;
+  --papel: #ffffff;
+  --lila: #e4dcff;
+  --rubor: #ffe1ec;
+  --menta: #dcf5e9;
+  --cielo: #dfeeff;
+  --mantequilla: #fff0b3;
+
+  /* Cintas: un color vivo por personaje, con el número en tinta encima (contraste ≥ 4,5) */
+  --cinta-listillo: #ff6ba7;
+  --cinta-leche: #5cb2ff;
+  --cinta-huevo: #ffb23e;
+  --cinta-tomate: #ff7a6b;
+  /* Dos más para las personas del hogar: seis seguidas sin repetir (tinta encima ≥ 4,8:1) */
+  --cinta-lechuga: #4fd18b; /* 6,55:1 */
+  --cinta-uva: #b28bff; /* 4,86:1 */
+
+  /* El rosa de los botones: más hondo, para llevar texto blanco (4,99:1) */
+  --rosa-boton: #d42361;
+  --rosa-boton-hondo: #b51c52; /* pulsado / hover */
+
+  /* Las chispas del nombre */
+  --chispa: #ffc93c;
+
+  /* Placas de la ficha: el nombre alterna lila y rosa */
+  --placa-nombre-lila: #d9cdff;
+  --placa-nombre-rosa: #ffcfe0;
+  --placa-precio: #c8efdc;
+  --placa-nota: #fff3c4;
+
+  /* Forma y profundidad: sombras suaves con desplazamiento, del color de la tinta */
+  --radio-ficha: 22px;
+  --radio-placa: 999px;
+  --sombra-ficha: 0 6px 18px -6px rgb(42 47 90 / 0.25), 0 2px 4px rgb(42 47 90 / 0.08);
+  --sombra-boton: 0 8px 20px -6px rgb(212 35 97 / 0.55);
+
+  /* Letra */
+  --letra-burbuja: 'Sniglet', 'M PLUS Rounded 1c', system-ui, sans-serif;
+  --letra-cuerpo: 'M PLUS Rounded 1c', system-ui, sans-serif;
+
+  /* Movimiento: salida exponencial */
+  --salida: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Ionic, hablando el mismo idioma */
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--tinta);
+  --ion-font-family: var(--letra-cuerpo);
+}
+
+html,
+body {
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--letra-cuerpo);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lo que no se dibuja también lleva la marca */
+::selection {
+  background: var(--rosa-boton);
+  color: #fff;
+}
+
+* {
+  caret-color: var(--rosa-boton);
+}
+
+:focus-visible {
+  outline: 3px solid var(--rosa-boton);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--placa-nombre-lila);
+  border-radius: 999px;
+  border: 3px solid var(--fondo);
+}
+
+a {
+  color: var(--tinta);
+  text-decoration-color: var(--rosa-boton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/*
+ * El fondo de toda la app: lila con una trama de puntitos muy suave, como la impresión de
+ * un catálogo. Antes era confeti de colores y resultaba demasiado festivo para una lista
+ * que se mira a diario; la trama da textura sin competir con las fichas.
+ */
+:root {
+  --trama: radial-gradient(rgb(42 47 90 / 0.075) 1.3px, transparent 1.7px) 0 0 / 16px 16px, var(--fondo);
+}
+
+.trama {
+  background: var(--trama);
+}
+
+/* ion-content pinta su fondo dentro de su sombra: hay que pasárselo por su variable */
+ion-content.trama {
+  --background: var(--trama);
+}
+
+/* Las filas que viajan al carro (View Transitions): salida exponencial, como todo */
+::view-transition-group(*) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--salida);
+}
+
+/* Que la capa de la transición no se coma los toques: en el súper se tachan varias seguidas */
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ── Piezas comunes a todas las pantallas ─────────────────── */
+
+.sr-solo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Titular de pantalla, en burbuja (DESIGN: «Burbuja contada») */
+.titular {
+  margin: 0;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 2.5rem;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* El botón principal: píldora rosa de 58 px con su resplandor */
+.boton-rosa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rosa-boton);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1.125rem;
+  box-shadow: var(--sombra-boton);
+  cursor: pointer;
+  transition: transform 300ms var(--salida), box-shadow 300ms var(--salida), background 200ms ease;
+}
+
+.boton-rosa:hover { background: var(--rosa-boton-hondo); }
+
+.boton-rosa:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 4px 10px -4px rgb(212 35 97 / 0.6);
+}
+
+.boton-rosa:disabled {
+  opacity: 0.75;
+  cursor: progress;
+}
+
+/* El secundario: píldora papel con contorno de tinta */
+.boton-papel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 3px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 300ms var(--salida);
+}
+
+.boton-papel:active { transform: translateY(1px) scale(0.985); }
+.boton-papel:disabled { opacity: 0.7; cursor: progress; }
+
+/* Campo de texto: píldora papel; el foco lo marca el anillo rosa común */
+.campo {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 20px;
+  border: 3px solid var(--placa-nombre-lila);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 800;
+}
+
+.campo::placeholder {
+  color: var(--tinta-suave);
+  font-weight: 500;
+  opacity: 1;
+}
+
+.campo:focus-visible {
+  border-color: var(--rosa-boton);
+  outline-offset: 2px;
+}
+
+/* Un error dicho en voz de Listillo: placa nota con el texto en rosa hondo */
+.aviso-error {
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: var(--placa-nota);
+  color: var(--rosa-boton-hondo);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+
+/* El pie de las pantallas con pestañas: el fondo sube en degradado para separar la barra
+   de lo que pasa por debajo al desplazar */
+.pie {
+  padding-top: 12px;
+  background: linear-gradient(to top, var(--fondo) 55%, rgb(238 232 255 / 0));
+}

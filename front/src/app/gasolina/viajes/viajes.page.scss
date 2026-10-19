@@ -1,0 +1,283 @@
+/*
+ * Viajes. El panel y las tarjetas usan las clases del buscador (.filtros, .gcampo,
+ * .segmentado, .tarjeta…) para que src/gasolina.scss les ponga las fichas de Agarrao;
+ * aquí va solo la maquetación propia.
+ */
+:host {
+  display: grid;
+  gap: 14px;
+}
+
+.intro {
+  margin: 0;
+  color: var(--tinta-suave);
+  font-size: 0.9375rem;
+}
+
+.viaje {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.viaje__extremos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: 10px;
+}
+
+.gcampo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  font-size: 0.8rem;
+
+  select {
+    padding: 0 14px;
+    font: inherit;
+  }
+}
+
+/* Las sugerencias se colocan respecto a la caja */
+.gcampo--lugar {
+  position: relative;
+}
+
+.viaje__vuelta {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+  font-size: 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.boton-ubicacion {
+  justify-self: start;
+  cursor: pointer;
+}
+
+.viaje__opciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 14px;
+}
+
+.segmentado {
+  display: inline-flex;
+
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+}
+
+.viaje__buscar {
+  justify-self: start;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.aviso {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--rubor);
+  font-weight: 700;
+}
+
+/* El resumen del viaje: placas en fila */
+.resumen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.resumen__placa {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.resumen__placa:first-child {
+  background: var(--tinta);
+  color: #fff;
+}
+
+/* Lista y mapa, como en el buscador */
+.resultados {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.panel {
+  min-width: 0;
+  max-height: min(70vh, 40rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mapa-contenedor {
+  position: sticky;
+  top: 16px;
+  height: min(70vh, 40rem);
+}
+
+.lista {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tarjeta {
+  display: flex;
+  align-items: stretch;
+}
+
+.tarjeta__cuerpo {
+  flex: 1;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.tarjeta__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rotulo {
+  display: grid;
+  font-weight: 800;
+}
+
+.la-mejor {
+  justify-self: start;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--menta);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.precio-bloque {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  white-space: nowrap;
+  color: var(--rosa-boton);
+}
+
+.precio {
+  font-size: 1.35rem;
+}
+
+.precio-unidad {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.direccion {
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+}
+
+.detalles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  color: var(--tinta-suave);
+  font-size: 0.8rem;
+}
+
+.distancia {
+  font-weight: 800;
+  color: var(--tinta);
+}
+
+.ahorro {
+  font-weight: 800;
+  color: #1f7a52;
+}
+
+.como-llegar {
+  display: grid;
+  place-items: center;
+  padding: 0 16px;
+  color: var(--tinta);
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.vacio,
+.nota {
+  margin: 0;
+  padding: 14px;
+  text-align: center;
+}
+
+.nota {
+  padding: 10px 0 0;
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 900px) {
+  .resultados {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .mapa-contenedor {
+    order: -1;
+    position: static;
+    height: 20rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .viaje__extremos {
+    grid-template-columns: 1fr;
+  }
+
+  .viaje__vuelta {
+    justify-self: center;
+  }
+}

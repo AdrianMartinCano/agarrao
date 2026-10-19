@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Rebanada de pan de molde con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M36 140 V78 Q20 74 22 54 Q26 26 80 24 Q134 26 138 54 Q140 74 124 78 V140 Z" fill="#E0A562"/>
+  <path d="M46 132 V74 Q32 70 34 56 Q38 36 80 34 Q122 36 126 56 Q128 70 114 74 V132 Z" fill="#FBE3B6"/>
+  <path d="M56 50 Q64 44 74 42" stroke="#FFF4DD" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="68" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="69.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="57" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="103" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 99 Q80 106 87 99" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

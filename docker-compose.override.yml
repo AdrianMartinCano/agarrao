@@ -1,0 +1,7 @@
+# Solo para DESARROLLO en local: Compose lo carga solo con `docker compose up`.
+# Coolify NO lo aplica (usa `-f docker-compose.yml`), así que en el VPS no se publica
+# ningún puerto en el host.
+services:
+  front:
+    ports:
+      - "${FRONT_PORT:-8080}:80"

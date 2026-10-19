@@ -1,0 +1,152 @@
+<p class="intro">
+  Pon de dónde sales y adónde vas: te decimos dónde repostar más barato sin salirte del camino.
+</p>
+
+<section class="filtros viaje" aria-label="El viaje">
+  <div class="viaje__extremos">
+    <div class="gcampo gcampo--lugar">
+      <app-buscador-lugar
+        #campoOrigen
+        campo="origen"
+        etiqueta="Sales de"
+        pista="Tu pueblo, 28001…"
+        (lugarElegido)="elegirOrigen($event)"
+      />
+    </div>
+
+    <button
+      type="button"
+      class="viaje__vuelta"
+      aria-label="Dar la vuelta: cambiar salida por llegada"
+      title="Dar la vuelta"
+      [disabled]="!origen() && !destino()"
+      (click)="darLaVuelta()"
+    >
+      ⇅
+    </button>
+
+    <div class="gcampo gcampo--lugar">
+      <app-buscador-lugar
+        #campoDestino
+        campo="destino"
+        etiqueta="Vas a"
+        pista="Valencia, 46001…"
+        (lugarElegido)="elegirDestino($event)"
+      />
+    </div>
+  </div>
+
+  <button type="button" class="boton-ubicacion" [disabled]="localizando()" (click)="desdeAqui()">
+    {{ localizando() ? 'Buscando dónde estás…' : '📍 Salir desde mi ubicación' }}
+  </button>
+
+  <div class="viaje__opciones">
+    <div class="gcampo">
+      <label for="viaje-carburante">Carburante</label>
+      <select id="viaje-carburante" (change)="carburante.set($any($event.target).value)">
+        @for (c of carburantes(); track c.clave) {
+          <option [value]="c.clave" [selected]="c.clave === carburante()">{{ c.etiqueta }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="gcampo">
+      <span id="etiqueta-desvio">Salirte como mucho</span>
+      <div class="segmentado" role="group" aria-labelledby="etiqueta-desvio">
+        @for (d of desvios; track d) {
+          <button
+            type="button"
+            [class.activo]="d === desvioKm()"
+            [attr.aria-pressed]="d === desvioKm()"
+            (click)="desvioKm.set(d)"
+          >
+            {{ d }} km
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="principal viaje__buscar" [disabled]="!listo()" (click)="buscar()">
+    {{ buscando() ? 'Calculando la ruta…' : 'Buscar gasolineras de camino' }}
+  </button>
+</section>
+
+@if (error(); as mensaje) {
+  <p class="aviso" role="alert">{{ mensaje }}</p>
+}
+
+@if (viaje(); as v) {
+  <p class="resumen" role="status">
+    <span class="resumen__placa">{{ km(v.distanciaKm) }} km</span>
+    <span class="resumen__placa">{{ duracion(v.duracionMin) }}</span>
+    <span class="resumen__placa">
+      {{ v.enRuta }} {{ v.enRuta === 1 ? 'gasolinera' : 'gasolineras' }} de camino
+    </span>
+    @if (v.mediaRuta !== null) {
+      <span class="resumen__placa">media {{ v.mediaRuta.toFixed(3) }} €/l</span>
+    }
+  </p>
+
+  <section class="resultados">
+    <div class="panel">
+      @if (v.estaciones.length === 0) {
+        <p class="vacio">
+          Ninguna gasolinera con ese carburante a menos de {{ v.desvioKm }} km de la carretera.
+          Prueba a salirte un poco más.
+        </p>
+      } @else {
+        <ol class="lista">
+          @for (g of v.estaciones; track g.estacion.id; let i = $index) {
+            <li class="tarjeta" [class.tarjeta--activa]="g.estacion.id === seleccionada()">
+              <button type="button" class="tarjeta__cuerpo" (click)="seleccionada.set(g.estacion.id)">
+                <span class="tarjeta__cabecera">
+                  <span class="rotulo">
+                    @if (i === 0) {
+                      <span class="la-mejor">La más barata</span>
+                    }
+                    {{ g.estacion.rotulo || 'Sin rótulo' }}
+                  </span>
+                  <span class="precio-bloque">
+                    <span class="precio">{{ g.estacion.precio?.toFixed(3) }}</span>
+                    <span class="precio-unidad">€/l</span>
+                  </span>
+                </span>
+                <span class="direccion">{{ g.estacion.direccion }}, {{ g.estacion.municipio }}</span>
+                <span class="detalles">
+                  <span class="distancia">km {{ km(g.kmDesdeOrigen) }}</span>
+                  <span>a {{ km(g.desvioKm) }} km de la carretera</span>
+                  @if (ahorro(g) >= 0.5) {
+                    <span class="ahorro">{{ euros(ahorro(g)) }} € menos en 50 l</span>
+                  }
+                </span>
+              </button>
+              <a
+                class="como-llegar"
+                [href]="conParada(g)"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'Abrir el viaje en Google Maps con parada en ' + g.estacion.rotulo"
+                title="Abrir el viaje en Google Maps con esta parada"
+                >➜</a
+              >
+            </li>
+          }
+        </ol>
+        @if (v.enRuta > v.estaciones.length) {
+          <p class="nota">Salen las {{ v.estaciones.length }} más baratas de {{ v.enRuta }}.</p>
+        }
+      }
+    </div>
+
+    <div class="mapa-contenedor">
+      <app-mapa-estaciones
+        [estaciones]="estacionesMapa()"
+        [centro]="origen()!"
+        [ruta]="v.ruta"
+        [seleccionada]="seleccionada()"
+        (estacionElegida)="seleccionada.set($event.id)"
+      />
+    </div>
+  </section>
+}

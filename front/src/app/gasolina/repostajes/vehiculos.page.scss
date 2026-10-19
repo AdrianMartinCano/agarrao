@@ -1,0 +1,207 @@
+:host {
+  display: block;
+  max-inline-size: 46rem;
+  margin-inline: auto;
+}
+
+.cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 1.5rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+.intro {
+  margin: 0.25rem 0 0;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.alta {
+  padding: 1.1rem;
+  margin-block-end: 1.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+/* El grid contiene SOLO los campos, todos de la misma altura. Los mensajes van fuera,
+   debajo: metidos en una celda hacían crecer su columna y, con align-items: end,
+   descuadraban la fila entera al aparecer. */
+.campos {
+  display: grid;
+  grid-template-columns: 1.4fr 1.2fr 1fr auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.gcampo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-inline-size: 0;
+}
+
+/* El borde rojo marca de qué campo se queja el mensaje, que ahora está más abajo. */
+input[aria-invalid='true'] {
+  border-color: var(--rojo);
+}
+
+label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tinta-suave);
+}
+
+input,
+select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.5rem;
+  background: var(--fondo);
+  color: var(--tinta);
+  font: inherit;
+}
+
+.principal {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--azul);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.secundario {
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.5rem;
+  background: var(--superficie);
+  color: var(--tinta);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vehiculo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.vehiculo__nombre {
+  margin: 0;
+  font-weight: 700;
+}
+
+.vehiculo__detalle {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: var(--tinta-suave);
+}
+
+.acciones {
+  display: flex;
+  gap: 0.4rem;
+  flex: none;
+}
+
+.accion {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.45rem;
+  background: none;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--tinta);
+    border-color: var(--tinta-suave);
+  }
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Mientras se edita, el formulario se marca para que no parezca que se está creando otro
+   vehículo: es el mismo sitio haciendo dos cosas distintas. */
+.alta--editando {
+  border-color: var(--azul);
+  background: var(--azul-claro);
+}
+
+.editando-aviso {
+  margin: 0 0 0.85rem;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+}
+
+.nota {
+  margin: 0.9rem 0 0;
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+
+.estado {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+
+.error-campo {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  color: var(--rojo);
+}
+
+.error {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-inline-start: 3px solid var(--rojo);
+  background: color-mix(in srgb, var(--rojo) 8%, transparent);
+  border-radius: 0.35rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .campos {
+    grid-template-columns: 1fr;
+  }
+
+  .cabecera {
+    flex-direction: column;
+  }
+}

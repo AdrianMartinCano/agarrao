@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Frutero con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- Las frutas asomando: uvas, plátano, naranja y manzana -->
+  <circle cx="50" cy="66" r="9" fill="#B28BFF"/><circle cx="60" cy="56" r="9" fill="#9E73F2"/>
+  <circle cx="44" cy="54" r="8" fill="#9E73F2"/><circle cx="54" cy="44" r="8" fill="#B28BFF"/>
+  <path d="M60 64 Q78 18 120 34 Q96 40 84 66 Z" fill="#FFD84D"/>
+  <path d="M118 30 L126 26" stroke="#8A5A3C" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="110" cy="66" r="20" fill="#FFA43B"/>
+  <path d="M100 58 Q102 52 108 50" stroke="#FFC98A" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="78" cy="68" r="18" fill="#FF6B6B"/>
+  <path d="M78 50 Q80 42 86 40" stroke="#8A5A3C" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- El cuenco -->
+  <path d="M24 78 H136 Q134 128 92 138 H68 Q26 128 24 78 Z" fill="#FFE1EC"/>
+  <rect x="20" y="72" width="120" height="12" rx="6" fill="#FFCFE0"/>
+  <path d="M38 92 Q40 106 48 114" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <rect x="62" y="136" width="36" height="8" rx="4" fill="#FFCFE0"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="98" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="98" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="96" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="96" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="110" rx="7" ry="4.5" fill="#FF9FBF"/>
+  <ellipse cx="105" cy="110" rx="7" ry="4.5" fill="#FF9FBF"/>
+  <path d="M73 109 Q80 116 87 109" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

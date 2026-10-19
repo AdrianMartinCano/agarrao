@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Jarra de cerveza con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M116 58 Q144 58 142 86 Q140 112 116 110" stroke="#E4F2FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <rect x="34" y="40" width="86" height="104" rx="14" fill="#FFC93C"/>
+  <path d="M30 40 Q30 18 52 22 Q60 8 78 14 Q94 4 106 18 Q126 16 124 40 Q124 52 110 50 H44 Q30 52 30 40 Z" fill="#FFFFFF"/>
+  <path d="M46 66 V124 M108 66 V124" stroke="#FFE08A" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="64" cy="128" r="3" fill="#FFF3C4"/><circle cx="90" cy="118" r="2.5" fill="#FFF3C4"/>
+  <!-- Cara -->
+  <ellipse cx="65" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="89" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="66.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <circle cx="90.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="54" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="100" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M70 99 Q77 106 84 99" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

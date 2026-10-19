@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Cuña de queso con cara">
+  <ellipse cx="80" cy="148" rx="58" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M22 80 L130 46 L138 80 Z" fill="#FFE88A"/>
+  <path d="M22 80 H138 V132 H22 Z" fill="#FFD84D"/>
+  <circle cx="42" cy="118" r="7" fill="#F2C230"/><circle cx="122" cy="98" r="8" fill="#F2C230"/><circle cx="108" cy="124" r="5" fill="#F2C230"/><circle cx="100" cy="66" r="5" fill="#F5D24F"/>
+  <!-- Cara -->
+  <ellipse cx="62" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="90" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="63.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <circle cx="91.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="51" cy="112" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="101" cy="112" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M69 111 Q76 118 83 111" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

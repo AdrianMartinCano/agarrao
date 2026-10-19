@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Pez con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- La cola -->
+  <path d="M114 80 L146 54 Q150 80 146 106 Z" fill="#5CB2FF"/>
+  <!-- El cuerpo -->
+  <ellipse cx="74" cy="80" rx="56" ry="40" fill="#8EC5FF"/>
+  <path d="M74 40 Q90 26 104 34 Q96 44 92 46 Z" fill="#5CB2FF"/>
+  <path d="M30 88 Q74 112 118 88 Q100 118 74 120 Q46 118 30 88 Z" fill="#DFEEFF"/>
+  <path d="M38 68 Q42 54 56 48" stroke="#C4E1FF" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="52" cy="76" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="80" cy="76" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="53.5" cy="74" r="1.6" fill="#FFFFFF"/>
+  <circle cx="81.5" cy="74" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="41" cy="88" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="91" cy="88" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M59 87 Q66 94 73 87" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

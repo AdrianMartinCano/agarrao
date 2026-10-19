@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Muslito de pollo con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El hueso -->
+  <rect x="96" y="96" width="34" height="14" rx="7" transform="rotate(40 113 103)" fill="#FFF8EC"/>
+  <circle cx="128" cy="128" r="10" fill="#FFF8EC"/>
+  <circle cx="136" cy="116" r="10" fill="#FFF8EC"/>
+  <!-- La carne -->
+  <path d="M38 70 C38 38 70 22 98 34 C126 46 124 86 106 104 C90 120 60 124 46 108 C38 98 38 84 38 70 Z" fill="#E8925A"/>
+  <path d="M50 58 Q56 44 70 40" stroke="#F4B07E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="72" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="72" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="70" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="70" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="84" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="84" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 83 Q80 90 87 83" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

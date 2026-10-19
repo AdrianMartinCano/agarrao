@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Agarrao · Que no se te escape ni un céntimo</title>
+  <base href="/">
+  <meta name="description" content="Que no se te escape ni un céntimo: la lista de la compra, dónde es más barato cada cosa y en qué se os va el dinero.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eee8ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Agarrao">
+  <!-- El .ico, para quien no lee SVG: el servicio de iconos de DuckDuckGo (lo usa Umami), Google, marcadores… -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="iconos/icono-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="fuentes/sniglet-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!--
+    ESTADÍSTICAS DE VISITAS: el Umami de Pimon (stats.pimon3d.com), sin cookies. La web es la
+    que fue de Gasofa, renombrada a Agarrao (mismo Website ID: el historial sigue).
+    · data-domains: solo cuenta en agarrao.pimon.dev, no en localhost.
+    · data-exclude-search: no manda la query de la URL.
+    · data-before-send: /unirse/<código> lleva el código de invitación a una casa en la RUTA;
+      se manda como /unirse a secas para que el código no acabe en la base de Umami.
+    Si cambia, cambia también la política de privacidad (app/legal/privacidad.page.ts).
+  -->
+  <script>
+    function agarraoAntesDeUmami(tipo, datos) {
+      // También el referrer: al navegar dentro de la app, Umami pone ahí la página anterior.
+      ['url', 'referrer'].forEach(function (campo) {
+        if (datos && typeof datos[campo] === 'string') {
+          datos[campo] = datos[campo].replace(/\/unirse\/[^/?#]+/, '/unirse');
+        }
+      });
+      return datos;
+    }
+  </script>
+  <script defer src="https://stats.pimon3d.com/script.js"
+          data-website-id="1b38e508-2e1b-4370-abc2-6578012fd32a"
+          data-domains="agarrao.pimon.dev"
+          data-exclude-search="true"
+          data-before-send="agarraoAntesDeUmami"></script>
+</head>
+<body>
+  <app-root></app-root>
+  <noscript>Agarrao necesita JavaScript para funcionar.</noscript>
+</body>
+</html>

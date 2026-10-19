@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- La cara de Listillo sobre su rosa: a 16 px el cuerpo entero no se lee, las gafas sí -->
+  <rect width="64" height="64" rx="16" fill="#d42361"/>
+  <g fill="#fff" stroke="#2a2f5a" stroke-width="3.5">
+    <circle cx="21" cy="28" r="10"/>
+    <circle cx="43" cy="28" r="10"/>
+  </g>
+  <path d="M31 28 Q32 25.5 33 28" stroke="#2a2f5a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="22" cy="29" rx="3.2" ry="4" fill="#2a2f5a"/>
+  <path d="M39 30 Q43 26 47 30" stroke="#2a2f5a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+  <path d="M25 45 Q33 51 41 43" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

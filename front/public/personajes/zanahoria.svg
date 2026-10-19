@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Zanahoria con cara">
+  <ellipse cx="80" cy="148" rx="30" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M70 34 Q60 14 48 12 M80 32 V8 M90 34 Q100 14 112 12" stroke="#3FB777" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M42 38 Q80 26 118 38 Q104 104 84 144 Q80 150 76 144 Q56 104 42 38 Z" fill="#FF9F43"/>
+  <path d="M60 104 H72 M92 116 H100 M66 126 H74" stroke="#F0812A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M54 50 Q56 64 60 74" stroke="#FFC48A" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="68" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="69.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="57" cy="78" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <ellipse cx="103" cy="78" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <path d="M73 77 Q80 84 87 77" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

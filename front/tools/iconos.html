@@ -1,0 +1,15 @@
+<!doctype html>
+<!--
+  Plantilla para sacar los iconos PNG de la PWA con Chrome sin cabeza (no hay ImageMagick):
+    chrome --headless=new --screenshot=icono-512.png --window-size=512,512 "file:///.../iconos.html?m=0"
+  ?m=1 deja el personaje dentro de la zona segura del icono «maskable» (80 % central).
+-->
+<html><head><meta charset="utf-8"><style>
+  html, body { margin: 0; width: 100vw; height: 100vh; background: #eee8ff; overflow: hidden; }
+  body { display: grid; place-items: center; }
+  img { width: 86vmin; height: 86vmin; }
+  body.mask img { width: 66vmin; height: 66vmin; }
+</style></head>
+<body><img src="../public/personajes/listillo.svg" alt="">
+<script>if (new URLSearchParams(location.search).get('m') === '1') document.body.className = 'mask';</script>
+</body></html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Brik de leche con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- Tejadillo del brik -->
+  <path d="M50 46 L64 18 H96 L110 46 Z" fill="#E9F4FF"/>
+  <path d="M64 18 H96 V12 Q96 8 92 8 H68 Q64 8 64 12 Z" fill="#CFE4FF"/>
+  <path d="M80 18 L74 46 H86 Z" fill="#D7E9FF"/>
+  <!-- Cuerpo -->
+  <rect x="44" y="44" width="72" height="98" rx="12" fill="#FFFFFF"/>
+  <!-- Franja azul: «semi» -->
+  <path d="M44 96 H116 V130 Q116 142 104 142 H56 Q44 142 44 130 Z" fill="#8EC5FF"/>
+  <path d="M44 96 Q62 88 80 96 T116 96" fill="#B9DBFF"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="72" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="72" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="70" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="70" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="56" cy="84" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="104" cy="84" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 82 Q80 89 87 82" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Taza de cacao con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El vapor -->
+  <path d="M66 30 Q58 20 66 10 M88 30 Q80 20 88 10" stroke="#D9CDFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- El asa -->
+  <path d="M118 66 Q146 66 144 92 Q142 116 116 114" stroke="#FF6BA7" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <!-- La taza -->
+  <path d="M30 42 H126 V108 Q126 142 92 142 H64 Q30 142 30 108 Z" fill="#FF8DBE"/>
+  <ellipse cx="78" cy="44" rx="48" ry="9" fill="#8A5A3C"/>
+  <path d="M40 60 V78" stroke="#FFC2DC" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="64" cy="84" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="84" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="65.5" cy="82" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="82" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="53" cy="96" rx="7" ry="4.5" fill="#FFE1EC"/>
+  <ellipse cx="103" cy="96" rx="7" ry="4.5" fill="#FFE1EC"/>
+  <path d="M71 95 Q78 102 85 95" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

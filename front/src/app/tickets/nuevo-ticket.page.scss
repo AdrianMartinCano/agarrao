@@ -1,0 +1,267 @@
+.nuevo {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  max-width: 480px;
+  margin-inline: auto;
+  padding: max(14px, env(safe-area-inset-top)) 16px 32px;
+}
+
+.nuevo__cabeza {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+.nuevo__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding-right: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nuevo__volver svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nuevo__titular { font-size: 2.25rem; }
+
+/* ── Elegir: dos fichas, como en «Empezar» ── */
+
+.fuentes {
+  display: grid;
+  gap: 16px;
+}
+
+.fuente {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  padding: 18px 18px 16px 62px;
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  box-shadow: var(--sombra-ficha);
+  cursor: pointer;
+  transition: transform 380ms var(--salida), box-shadow 380ms var(--salida);
+}
+
+/* Como las tarjetas de «Empezar»: cielo y lila, inclinadas a mano */
+.fuente--pdf { --cinta: var(--cinta-leche); background: var(--cielo); transform: rotate(-1.5deg); }
+.fuente--foto { --cinta: var(--cinta-listillo); background: var(--lila); transform: rotate(1deg); }
+
+.fuente:hover {
+  transform: rotate(0) translateY(-3px);
+  box-shadow: 0 12px 24px -8px rgb(42 47 90 / 0.3), 0 2px 4px rgb(42 47 90 / 0.08);
+}
+
+.fuente:focus-within { outline: 3px solid var(--rosa-boton); outline-offset: 3px; }
+
+/* La cinta del catálogo con el icono de trazo */
+.fuente__cinta {
+  position: absolute;
+  top: -6px;
+  left: 16px;
+  display: grid;
+  place-items: start center;
+  width: 32px;
+  height: 40px;
+  padding-top: 6px;
+  background: color-mix(in srgb, var(--cinta) 38%, var(--papel));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  transition: background 260ms ease;
+}
+
+.fuente:hover .fuente__cinta,
+.fuente:focus-within .fuente__cinta { background: var(--cinta); }
+
+.fuente__cinta svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--tinta);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fuente__nombre {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--placa-nombre-rosa);
+  font-weight: 800;
+  font-size: 1.125rem;
+}
+
+.fuente__nota {
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--placa-nota);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+/* ── Leyendo: el papel asoma por la ranura ── */
+
+.leyendo {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.leyendo__ranura {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  overflow: hidden;
+}
+
+/* La boca de la caja registradora: por ella asoma el papel */
+.leyendo__boca {
+  position: absolute;
+  inset: 0 -8px auto;
+  z-index: 1;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--tinta);
+  box-shadow: var(--sombra-ficha);
+}
+
+.leyendo__papel {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 0;
+  height: 140px;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 14px, rgb(42 47 90 / 0.12) 14px 16px) 12px 12px / calc(100% - 24px) 100% no-repeat,
+    var(--papel);
+  box-shadow: var(--sombra-ficha);
+  animation: asoma 1.6s ease-in-out infinite alternate;
+}
+
+.leyendo__texto {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.leyendo__nota {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+}
+
+/* ── Repaso ── */
+
+.datos {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.datos__tienda,
+.datos__fecha {
+  min-height: 48px;
+  font-size: 1rem;
+}
+
+.datos__fecha { padding: 0 14px; }
+
+.importe {
+  width: 6.5ch;
+  min-height: 34px;
+  padding: 0 6px;
+  border: 0;
+  border-bottom: 2px dashed var(--placa-nombre-lila);
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  text-align: right;
+}
+
+.importe:focus-visible {
+  border-bottom-color: var(--rosa-boton);
+  border-radius: 6px;
+}
+
+/* ── Guardado ── */
+
+.guardado {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.guardado__texto {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 1.0625rem;
+  text-wrap: balance;
+}
+
+.guardar {
+  background: linear-gradient(to top, var(--fondo) 55%, rgb(238 232 255 / 0));
+}
+
+.guardar__barra {
+  max-width: 480px;
+  margin-inline: auto;
+  padding: 14px 16px max(14px, env(safe-area-inset-bottom));
+}
+
+@keyframes asoma {
+  from { transform: translateY(-110px); }
+  to { transform: translateY(-20px); }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .leyendo__papel { animation: none; transform: translateY(-40px); }
+}
+
+/* «¿No es del súper?»: nota mantequilla con el paso a Gastos */
+.no-super {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--placa-nota);
+  font-weight: 700;
+}
+
+.no-super__boton {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--rosa-boton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+

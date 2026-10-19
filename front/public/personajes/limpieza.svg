@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Botella de lejía con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El tapón -->
+  <rect x="58" y="10" width="30" height="18" rx="6" fill="#B28BFF"/>
+  <!-- La botella, con su asa hueca -->
+  <path d="M60 28 H88 V36 Q124 40 124 74 V130 Q124 142 112 142 H48 Q36 142 36 130 V64 Q36 40 60 36 Z" fill="#F2EDFF"/>
+  <path d="M96 48 Q112 50 112 66 Q112 78 100 78" stroke="#D9CDFF" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <rect x="44" y="96" width="72" height="30" rx="10" fill="#B28BFF"/>
+  <path d="M80 100 Q88 110 88 115 A8 8 0 0 1 72 115 Q72 110 80 100 Z" fill="#F2EDFF"/>
+  <path d="M46 62 Q48 50 58 46" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="59" cy="70" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="85" cy="70" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="60.5" cy="68" r="1.6" fill="#FFFFFF"/>
+  <circle cx="86.5" cy="68" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="48" cy="82" rx="7" ry="4.5" fill="#FFCFE0"/>
+  <ellipse cx="96" cy="82" rx="7" ry="4.5" fill="#FFCFE0"/>
+  <path d="M65 81 Q72 88 79 81" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

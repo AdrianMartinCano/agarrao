@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Botella de agua con cara">
+  <ellipse cx="80" cy="148" rx="38" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El tapón -->
+  <rect x="64" y="6" width="32" height="16" rx="6" fill="#5CB2FF"/>
+  <!-- La botella -->
+  <path d="M68 22 H92 V34 Q118 44 118 70 V128 Q118 142 104 142 H56 Q42 142 42 128 V70 Q42 44 68 34 Z" fill="#DFEEFF"/>
+  <rect x="42" y="92" width="76" height="30" fill="#8EC5FF"/>
+  <path d="M42 92 Q60 86 80 92 T118 92" fill="#B9DBFF"/>
+  <path d="M52 66 Q52 54 62 48" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="67" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="93" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="68.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <circle cx="94.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="56" cy="78" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="104" cy="78" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 77 Q80 84 87 77" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Rollo de papel higiénico con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El rollo -->
+  <rect x="34" y="34" width="92" height="104" rx="18" fill="#FFFFFF"/>
+  <ellipse cx="80" cy="36" rx="46" ry="14" fill="#F4F0FF"/>
+  <ellipse cx="80" cy="36" rx="14" ry="5" fill="#D9CDFF"/>
+  <!-- El papel que cuelga -->
+  <path d="M126 70 H140 V128 Q140 134 134 132 L126 128 Z" fill="#FFFFFF"/>
+  <path d="M130 84 H138 M130 100 H138 M130 116 H138" stroke="#E4DCFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M34 112 H126" stroke="#E4DCFF" stroke-width="4"/>
+  <path d="M44 62 V82" stroke="#F4F0FF" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="78" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="78" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="76" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="76" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="90" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="105" cy="90" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 89 Q80 96 87 89" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

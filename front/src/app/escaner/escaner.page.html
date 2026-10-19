@@ -1,0 +1,152 @@
+<ion-content class="trama">
+  <main class="escaner">
+    <header class="escaner__cabeza">
+      <h1 class="escaner__titulo">Escanea el envase</h1>
+      <button type="button" class="boton-papel escaner__listo" (click)="volver()">Listo</button>
+    </header>
+
+    @let e = estado();
+
+    <!-- La lupa de Listillo: la cámara vive dentro del aro -->
+    <div
+      class="lupa"
+      [class.lupa--pequena]="lupaPequena()"
+      [class.lupa--leido]="destello()"
+      [class.lupa--apagada]="e.tipo === 'sin-camara'"
+    >
+      <div class="lupa__vidrio">
+        <video #video class="lupa__video" playsinline muted autoplay aria-hidden="true"></video>
+        @if (e.tipo === 'mirando') {
+          <span class="lupa__barrido" aria-hidden="true"></span>
+        }
+        @if (e.tipo === 'arrancando') {
+          <span class="lupa__aviso">Abriendo la cámara…</span>
+        }
+        @if (e.tipo === 'sin-camara') {
+          <img class="lupa__listillo" src="personajes/listillo.svg" alt="" width="120" height="120" />
+        }
+      </div>
+      <span class="lupa__mango" aria-hidden="true"></span>
+    </div>
+
+    <p class="sr-solo" role="status">
+      @switch (e.tipo) {
+        @case ('mirando') { Cámara lista. Apunta al código de barras. }
+        @case ('buscando') { Código leído. Buscando qué es. }
+        @case ('encontrado') { Es {{ e.producto.nombre }}. }
+        @case ('desconocido') { No conocemos este código. }
+      }
+    </p>
+
+    @switch (e.tipo) {
+      @case ('mirando') {
+        <p class="escaner__ayuda">Pon el código de barras dentro de la lupa, sin prisa.</p>
+      }
+      @case ('sin-camara') {
+        @if (e.motivo) {
+          <p class="escaner__ayuda">{{ e.motivo }}</p>
+        }
+      }
+      @case ('buscando') {
+        <p class="escaner__ayuda escaner__ayuda--fuerte">¡Leído! Buscando qué es…</p>
+      }
+      @case ('encontrado') {
+        @let p = e.producto;
+        <section class="ficha-producto" aria-labelledby="producto-nombre">
+          <div class="ficha-producto__retrato">
+            @if (p.imagenUrl) {
+              <img [src]="p.imagenUrl" alt="" referrerpolicy="no-referrer" />
+            } @else {
+              <img src="personajes/listillo.svg" alt="" />
+            }
+          </div>
+          <h2 id="producto-nombre" class="ficha-producto__nombre">{{ p.nombre }}</h2>
+          @let marca = marcaAparte(p);
+          @if (marca || p.cantidad) {
+            <p class="ficha-producto__nota">
+              {{ marca }}@if (marca && p.cantidad) { · }{{ p.cantidad }}
+            </p>
+          }
+          <button type="button" class="boton-rosa" (click)="apuntar(p)">Apuntar</button>
+          <button type="button" class="ficha-producto__otro" (click)="otraVez()">No es esto</button>
+          @if (p.fuente) {
+            <p class="ficha-producto__fuente">
+              Datos de
+              <a [href]="'https://world.openfoodfacts.org/product/' + p.ean" target="_blank" rel="noopener">
+                {{ p.fuente }}
+              </a>
+            </p>
+          }
+        </section>
+      }
+      @case ('desconocido') {
+        <section class="ficha-producto ficha-producto--nueva" aria-labelledby="nuevo-titulo">
+          <h2 id="nuevo-titulo" class="ficha-producto__nombre">
+            {{ e.sinConexion ? 'Ahora no podemos buscarlo' : 'Este no lo conocemos' }}
+          </h2>
+          <p class="ficha-producto__nota">
+            {{ e.sinConexion ? 'Escribe qué es y lo apuntamos igual.' : 'Escribe qué es: lo recordaremos para la próxima.' }}
+          </p>
+          <form class="ficha-producto__form" (submit)="nombrarYApuntar($event, e.ean, e.sinConexion, nombre, marca.value)">
+            <label class="sr-solo" for="producto-nuevo">Qué es</label>
+            <input
+              #nombre
+              id="producto-nuevo"
+              class="campo"
+              placeholder="Qué es (p. ej. Turrón blando)"
+              maxlength="80"
+              autocomplete="off"
+              [attr.aria-invalid]="errorNombre() ? true : null"
+              [attr.aria-describedby]="errorNombre() ? 'producto-nuevo-error' : null"
+            />
+            @if (errorNombre()) {
+              <p id="producto-nuevo-error" class="aviso-error" role="alert">{{ errorNombre() }}</p>
+            }
+            <label class="sr-solo" for="producto-marca">Marca</label>
+            <input #marca id="producto-marca" class="campo" placeholder="Marca (si la tiene)" maxlength="80" autocomplete="off" />
+            <button type="submit" class="boton-rosa" [disabled]="enviando()">
+              {{ enviando() ? 'Apuntando…' : 'Apuntar' }}
+            </button>
+          </form>
+          <button type="button" class="ficha-producto__otro" (click)="otraVez()">Volver a escanear</button>
+          <p class="ficha-producto__codigo">Código {{ e.ean }}</p>
+        </section>
+      }
+    }
+
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+
+    @if (e.tipo === 'mirando' || e.tipo === 'sin-camara' || e.tipo === 'arrancando') {
+      @if (manual()) {
+        <form class="manual" (submit)="buscarManual($event)">
+          <label class="manual__etiqueta" for="codigo-manual">Los números de debajo de las barras</label>
+          <div class="manual__fila">
+            <input
+              id="codigo-manual"
+              class="campo manual__campo"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="8480000107947"
+              [value]="codigoManual()"
+              (input)="escribirCodigo($event)"
+            />
+            <button type="submit" class="manual__buscar" aria-label="Buscar el código">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6" /><path d="M15 15l5 5" /></svg>
+            </button>
+          </div>
+          @if (errorManual()) {
+            <p class="aviso-error" role="alert">{{ errorManual() }}</p>
+          }
+        </form>
+      } @else {
+        <button type="button" class="boton-papel escaner__manual" (click)="manual.set(true)">Escribir el código</button>
+      }
+    }
+  </main>
+
+  @if (apuntado()) {
+    <p class="apuntado" role="status">Ya está en la lista: {{ apuntado() }}</p>
+  }
+</ion-content>

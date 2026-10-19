@@ -1,0 +1,285 @@
+.lista {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  max-width: 560px;
+  margin-inline: auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px 28px;
+}
+
+/* ── Cabeza: el hogar a la izquierda, cuánto falta a la derecha ── */
+
+.lista__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lista__hogar {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 10px 0 18px;
+  border: 3px solid var(--papel);
+  border-radius: 999px;
+  background: var(--placa-nombre-rosa);
+  font-weight: 800;
+  font-size: 1.125rem;
+  text-decoration: none;
+  box-shadow: var(--sombra-ficha);
+}
+
+.lista__hogar svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* El camino al reparto por súper: placa menta, porque habla de precios (Placa Fija) */
+.donde {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px 0 12px;
+  border-radius: 999px;
+  background: var(--placa-precio);
+  box-shadow: var(--sombra-ficha);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: transform 300ms var(--salida);
+}
+
+.donde:active { transform: scale(0.97); }
+
+.donde svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contador {
+  flex: none;
+  display: grid;
+  justify-items: end;
+  margin: 0;
+  padding: 2px 10px;
+  border-radius: 18px;
+  line-height: 1;
+}
+
+/* En la letra del cuerpo y no en Sniglet: en Sniglet el 5 se confunde con una S */
+.contador__numero {
+  font-weight: 800;
+  font-size: 3.75rem;
+  letter-spacing: -0.02em;
+  animation: rebota 520ms var(--salida) both;
+}
+
+.contador__texto {
+  font-weight: 800;
+  font-size: 0.8125rem;
+  color: var(--tinta-suave);
+}
+
+/* ── Filas ── */
+
+.filas {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 6px 0 0;
+  list-style: none;
+}
+
+.filas--carro { gap: 10px; }
+
+/* ── El carro ── */
+
+.carro {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.carro__cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 10px;
+}
+
+.carro__titulo {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.0625rem;
+}
+
+.carro__cuenta {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  font-size: 0.9375rem;
+}
+
+.carro__botones {
+  display: flex;
+  gap: 8px;
+}
+
+.carro__vaciar {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+/* ── Vacía, o todo comprado: Listillo da la cara ── */
+
+.vacio {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 28px 0 8px;
+  text-align: center;
+}
+
+.vacio img { animation: rebota 700ms var(--salida) both; }
+
+.vacio__titulo {
+  margin: 0;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 2.25rem;
+  line-height: 1.05;
+}
+
+.vacio__texto {
+  margin: 0;
+  max-width: 28ch;
+  padding: 2px 10px;
+  border-radius: 12px;
+  color: var(--tinta-suave);
+  text-wrap: balance;
+}
+
+.vacio--hecho { padding-top: 8px; }
+.vacio--hecho .vacio__titulo { font-size: 1.75rem; }
+
+.lista__estado {
+  margin: 48px 0 0;
+  text-align: center;
+  font-weight: 800;
+}
+
+/* ── Apuntar: abajo, a mano del pulgar ── */
+
+.apuntar {
+  background: linear-gradient(to top, var(--fondo) 40%, rgb(238 232 255 / 0));
+}
+
+.apuntar__error {
+  max-width: 528px;
+  margin: 10px auto 0;
+  box-shadow: var(--sombra-ficha);
+}
+
+.apuntar__form {
+  display: flex;
+  gap: 10px;
+  max-width: 560px;
+  margin-inline: auto;
+  /* Abajo, la barra de pestañas: ella respeta la zona segura */
+  padding: 14px 16px 10px;
+}
+
+.apuntar__campo {
+  min-height: 58px;
+  border-color: var(--papel);
+  box-shadow: var(--sombra-ficha);
+}
+
+.apuntar__boton {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rosa-boton);
+  color: #fff;
+  box-shadow: var(--sombra-boton);
+  cursor: pointer;
+  transition: transform 300ms var(--salida), background 200ms ease, opacity 200ms ease;
+}
+
+.apuntar__boton:hover { background: var(--rosa-boton-hondo); }
+
+/* Escanear: el mismo botón redondo en papel, para que el (+) siga mandando */
+.apuntar__boton--escanear {
+  background: var(--papel);
+  color: var(--tinta);
+  box-shadow: var(--sombra-ficha);
+}
+
+.apuntar__boton--escanear:hover { background: var(--lila); }
+
+.apuntar__boton--escanear svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.apuntar__boton:active { transform: scale(0.94); }
+
+.apuntar__boton svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+@keyframes rebota {
+  0% { transform: scale(0.7); }
+  60% { transform: scale(1.08); }
+}

@@ -1,0 +1,98 @@
+spring:
+  application:
+    name: listillo-back
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/listillo}
+    username: ${SPRING_DATASOURCE_USERNAME:listillo}
+    password: ${SPRING_DATASOURCE_PASSWORD:listillo}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      # El esquema lo manda Flyway (db/migration). Hibernate solo COMPRUEBA que las
+      # entidades cuadran y, si no, no arranca: mejor fallar al arrancar que en una
+      # consulta cualquiera en producción.
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      # Un ticket digital en PDF pesa decenas de kB; 5 MB es margen de sobra.
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+pimon:
+  security:
+    jwt-secret: ${PIMON_SECURITY_JWT_SECRET:cambia-esto-por-un-secreto-de-al-menos-32-caracteres}
+    # Sesión larga (30 días): en una app de móvil nadie quiere volver a entrar cada semana.
+    access-token-expiration: ${PIMON_SECURITY_TOKEN_EXPIRATION:2592000000}
+    public-paths:
+      - "/api/auth/**"
+      # Se pregunta al arrancar, ANTES de entrar: una versión obligatoria tiene que poder
+      # bloquear también la pantalla de login.
+      - "/api/app/version"
+      # Buscar gasolineras es público: son datos del Ministerio. El resto
+      # de la gasolina (favoritas, vehículos, repostajes) pide sesión.
+      - "/api/estaciones/**"
+      - "/actuator/health"
+    cors:
+      # Ionic sirve en :8100 en desarrollo. La app nativa (Capacitor) llama desde
+      # https://localhost (Android) y capacitor://localhost (iOS).
+      allowed-origins: ${PIMON_CORS_ORIGINS:http://localhost:8100,http://localhost:4200,https://localhost,capacitor://localhost}
+
+  users:
+    # La cuenta de administración (panel de versiones). Solo se crea si NO hay ningún
+    # usuario en la base. Al entrar con Google con ese mismo correo, se vincula a ella.
+    #
+    # No se repiten aquí los valores por defecto de la librería (admin@example.com /
+    # Admin1234!): están en el código de una librería pública.
+    create-default-admin: ${CREATE_DEFAULT_ADMIN:false}
+    admin-email: ${ADMIN_EMAIL:}
+    admin-password: ${ADMIN_PASSWORD:}
+    admin-name: ${ADMIN_NAME:Administración}
+
+  google:
+    # APAGADO mientras no haya client-id: la librería no carga nada y la app no enseña
+    # el botón. Encenderlo son estas dos variables (la tabla ya la crea la V1).
+    #
+    # OJO: tiene que ser el client-id de tipo «Aplicación web», también para el móvil.
+    # El login nativo de Android pide el token con ese mismo id (serverClientId), y el
+    # `aud` del token es lo que comprueba la librería.
+    habilitado: ${GOOGLE_HABILITADO:false}
+    client-id: ${GOOGLE_CLIENT_ID:}
+
+listillo:
+  # POST /api/auth/register (de spring-users) cerrado: se entra solo con Google. Solo
+  # ListilloLocal lo abre, para crear usuarios de prueba. Ver seguridad/RegistroCerrado.
+  registro-con-contrasena: false
+  precios-web:
+    # Leer los catálogos de las webs de los súper (Mercadona…). APAGADO por defecto: riesgo
+    # legal si la app se publica. Solo para uso privado.
+    activo: ${PRECIOS_WEB:false}
+    mercadona:
+      # Almacén cuyos precios se leen (mad1 = Madrid). Cambia poco entre zonas.
+      almacen: ${MERCADONA_ALMACEN:mad1}
+  open-prices:
+    # Precios de Open Prices (datos abiertos, ODbL) para las cadenas cuya web no se lee.
+    # Encendido por defecto: es una API pública pensada para reutilizarse.
+    activo: ${OPEN_PRICES:true}
+  gasolina:
+    # Gasolineras y precios del Ministerio (público, sin clave), traído de Gasofa. El
+    # catálogo (~11.000 estaciones, 12 MB) vive en memoria y se refresca cada 30 minutos.
+    minetur:
+      activo: ${GASOLINA_MINISTERIO:true}
+      refresco: 30m
+      timeout: 60s
+  off:
+    # Open Food Facts pide un contacto en el User-Agent: un correo, por variable de entorno.
+    contacto: ${OFF_CONTACTO:}

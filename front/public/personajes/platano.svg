@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Plátano con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M62 22 L66 10" stroke="#8A5A3C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M62 22 Q40 70 52 120 Q58 142 84 140 Q122 136 124 110 Q96 112 86 80 Q80 50 82 26 Q72 14 62 22 Z" fill="#FFD84D"/>
+  <path d="M58 48 Q52 76 56 98" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <path d="M122 112 L130 108" stroke="#5C4030" stroke-width="6" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="69" cy="108" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="91" cy="108" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="70.5" cy="106" r="1.6" fill="#FFFFFF"/>
+  <circle cx="92.5" cy="106" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="58" cy="120" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="102" cy="120" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 119 Q80 126 87 119" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

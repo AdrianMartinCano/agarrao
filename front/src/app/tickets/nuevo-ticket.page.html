@@ -1,0 +1,200 @@
+<ion-content class="trama">
+  <main class="nuevo">
+    <header class="nuevo__cabeza">
+      <a class="nuevo__volver" routerLink="/tickets">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        Tickets
+      </a>
+      @if (paso().tipo !== 'guardado') {
+        <h1 class="titular nuevo__titular">Sube el ticket</h1>
+      }
+    </header>
+
+    @let p = paso();
+    @switch (p.tipo) {
+      @case ('eligiendo') {
+        <div class="fuentes">
+          <label class="fuente fuente--pdf">
+            <input class="sr-solo" type="file" accept="application/pdf,.pdf" (change)="subirPdf($event)" />
+            <span class="fuente__cinta" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6" /></svg>
+            </span>
+            <span class="fuente__nombre">Ticket digital</span>
+            <span class="fuente__nota">El PDF de la app o el correo de la tienda. Se lee perfecto.</span>
+          </label>
+          <label class="fuente fuente--foto">
+            <input class="sr-solo" type="file" accept="image/*" capture="environment" (change)="subirFoto($event)" />
+            <span class="fuente__cinta" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /></svg>
+            </span>
+            <span class="fuente__nombre">Foto del ticket</span>
+            <span class="fuente__nota">Estirado, con luz y entero. Se lee en tu móvil: la foto no sale de él.</span>
+          </label>
+        </div>
+      }
+      @case ('leyendo') {
+        <section class="leyendo" role="status" aria-live="polite">
+          <div class="leyendo__ranura" aria-hidden="true"><span class="leyendo__boca"></span><span class="leyendo__papel"></span></div>
+          @if (p.que === 'foto') {
+            <p class="leyendo__texto">Leyendo la foto… {{ (p.avance * 100).toFixed(0) }} %</p>
+            <p class="leyendo__nota">La primera vez tarda un poco más: está bajando el lector.</p>
+          } @else {
+            <p class="leyendo__texto">Leyendo el ticket…</p>
+          }
+        </section>
+      }
+      @case ('repasando') {
+        <div class="datos">
+          <label class="datos__campo">
+            <span class="sr-solo">Tienda</span>
+            <select class="campo datos__tienda" [value]="cadena()" (change)="elegirCadena($event)">
+              @for (c of cadenas; track c) {
+                <option [value]="c">{{ nombreCadena[c] }}</option>
+              }
+            </select>
+          </label>
+          <label class="datos__campo">
+            <span class="sr-solo">Fecha</span>
+            <input class="campo datos__fecha" type="date" [value]="fecha()" (change)="fecha.set(escribir($event))" />
+          </label>
+        </div>
+
+        <!-- Un restaurante, la gasolinera…: no tiene líneas que comparar, va a Gastos -->
+        @if (cadena() === 'OTRA') {
+          <p class="no-super">
+            ¿No es del súper?
+            <button type="button" class="no-super__boton" (click)="comoGasto()">Anótalo como gasto</button>
+          </p>
+        }
+
+        @for (aviso of avisos(); track aviso) {
+          <p class="aviso-error">{{ aviso }}</p>
+        }
+
+        @if (descuadre(); as total) {
+          <p class="aviso-error" role="status">
+            El ticket dice {{ euros(total) }} € y las líneas suman {{ euros(suma()) }} €. Revisa los importes
+            o quita lo que no sea un artículo.
+          </p>
+        }
+
+        <div class="boca" aria-hidden="true"></div>
+        <article class="tira tira--sale" aria-label="El ticket leído">
+          <p class="tira__tienda">{{ nombreCadena[cadena()] }}</p>
+          <p class="tira__fecha">
+            {{ lineas().length }} líneas ·
+            @if (sinCasar() > 0) {
+              {{ sinCasar() }} por casar
+            } @else {
+              todo casado
+            }
+          </p>
+          <ul class="tira__lineas">
+            @for (l of lineas(); track l.clave) {
+              <li class="linea">
+                <span class="linea__texto">{{ l.texto }}</span>
+                <label class="linea__importe">
+                  <span class="sr-solo">Importe de {{ l.texto }}</span>
+                  <input
+                    class="importe"
+                    inputmode="decimal"
+                    [value]="euros(l.importe)"
+                    (change)="cambiarImporte(l, $event)"
+                  />
+                </label>
+                <!-- Pie de la línea: el detalle a la izquierda y el casado al margen derecho -->
+                <div class="linea__pie">
+                @if (detalle(l); as d) {
+                  <span class="linea__detalle">{{ d }}</span>
+                }
+                <div class="linea__casado">
+                  @if (l.casado; as c) {
+                    <button
+                      type="button"
+                      class="mini-ficha"
+                      [class.mini-ficha--parecido]="c.parecido"
+                      [class.mini-ficha--pega]="l.recienCasada"
+                      [attr.aria-expanded]="abierta() === l.clave"
+                      [attr.aria-label]="'Casado con ' + c.nombre + (c.parecido ? ' (a confirmar)' : '') + '. Cambiar'"
+                      (click)="abrir(l)"
+                    >
+                      <span class="mini-ficha__nombre">{{ c.parecido ? '¿' + c.nombre + '?' : c.nombre }}</span>
+                    </button>
+                  } @else {
+                    <button type="button" class="hueco" [attr.aria-expanded]="abierta() === l.clave" (click)="abrir(l)">
+                      ¿Qué es?
+                    </button>
+                  }
+                </div>
+                </div>
+                @if (abierta() === l.clave) {
+                  <div class="casar">
+                    <label class="sr-solo" [for]="'busca-' + l.clave">Qué es {{ l.texto }}</label>
+                    <input
+                      class="campo casar__campo"
+                      [id]="'busca-' + l.clave"
+                      placeholder="Busca en tu lista o escribe qué es"
+                      autocomplete="off"
+                      [value]="busqueda()"
+                      (input)="busqueda.set(escribir($event))"
+                    />
+                    <div class="casar__opciones">
+                      @for (a of candidatos(); track a.id) {
+                        <button type="button" class="casar__opcion" (click)="casar(l, a.ean, a.nombre)">{{ a.nombre }}</button>
+                      }
+                      @if (busqueda().trim()) {
+                        <button type="button" class="casar__opcion casar__opcion--nueva" (click)="casar(l, null, busqueda())">
+                          Usar «{{ busqueda().trim() }}»
+                        </button>
+                      }
+                    </div>
+                    <div class="casar__acciones">
+                      @if (l.casado) {
+                        <button type="button" class="casar__accion" (click)="descasar(l)">Dejar sin casar</button>
+                      }
+                      <button type="button" class="casar__accion" (click)="quitar(l)">Quitar la línea</button>
+                    </div>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+          <!-- El total impreso en el ticket si se leyó; el aviso de arriba da la suma -->
+          <p class="tira__total" [class.tira__total--descuadre]="descuadre() !== null">
+            <span>TOTAL</span>
+            <span>{{ euros(totalLeido() ?? suma()) }} €</span>
+          </p>
+        </article>
+
+      }
+      @case ('guardado') {
+        <section class="guardado">
+          <img src="personajes/listillo.svg" alt="" width="140" height="140" />
+          <h1 class="titular">¡Guardado!</h1>
+          <p class="guardado__texto">
+            {{ euros(p.resultado.ticket.total) }} € en {{ nombreCadena[p.resultado.ticket.cadena] }}.
+            @if (p.resultado.tachados > 0) {
+              {{ p.resultado.tachados === 1 ? 'Una cosa tachada' : p.resultado.tachados + ' cosas tachadas' }} de la lista.
+            }
+          </p>
+          <button type="button" class="boton-rosa" (click)="verTicket(p.resultado.ticket.id)">Ver el ticket</button>
+          <button type="button" class="boton-papel" (click)="otra()">Subir otro</button>
+        </section>
+      }
+    }
+
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+  </main>
+</ion-content>
+
+@if (paso().tipo === 'repasando') {
+  <ion-footer class="ion-no-border guardar">
+    <div class="guardar__barra">
+      <button type="button" class="boton-rosa" [disabled]="guardando()" (click)="guardar()">
+        {{ guardando() ? 'Guardando…' : 'Guardar ticket' }}
+      </button>
+    </div>
+  </ion-footer>
+}

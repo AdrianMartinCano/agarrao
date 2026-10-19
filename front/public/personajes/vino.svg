@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Botella de vino con cara">
+  <ellipse cx="80" cy="148" rx="36" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <rect x="70" y="4" width="20" height="16" rx="4" fill="#B28BFF"/>
+  <path d="M70 20 H90 V50 Q114 60 114 86 V134 Q114 144 104 144 H56 Q46 144 46 134 V86 Q46 60 70 50 Z" fill="#8E3B5C"/>
+  <rect x="50" y="86" width="60" height="44" rx="8" fill="#FFF3C4"/>
+  <path d="M56 70 Q60 60 68 56" stroke="#B85C80" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="69" cy="104" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="91" cy="104" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="70.5" cy="102" r="1.6" fill="#FFFFFF"/>
+  <circle cx="92.5" cy="102" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="58" cy="116" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="102" cy="116" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 115 Q80 122 87 115" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

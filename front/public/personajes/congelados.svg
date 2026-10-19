@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Cubito de hielo con cara">
+  <ellipse cx="80" cy="148" rx="42" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El cubito, con su cara de arriba -->
+  <path d="M40 54 L80 34 L120 54 L80 74 Z" fill="#F2F9FF"/>
+  <path d="M40 54 L80 74 V140 L40 120 Z" fill="#CBE6FF"/>
+  <path d="M120 54 L80 74 V140 L120 120 Z" fill="#B0D8FF"/>
+  <path d="M48 70 V92" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Escarcha -->
+  <path d="M132 30 V46 M124 38 H140 M28 92 V104 M22 98 H34" stroke="#8EC5FF" stroke-width="4" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="69" cy="96" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="91" cy="96" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="70.5" cy="94" r="1.6" fill="#FFFFFF"/>
+  <circle cx="92.5" cy="94" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="58" cy="108" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="102" cy="108" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 107 Q80 114 87 107" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

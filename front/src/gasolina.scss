@@ -1,0 +1,427 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Gasolina (traída de Gasofa) con el aspecto de Agarrao.
+
+   Los componentes de Gasofa usan sus propias variables (--azul, --ambar, --superficie…).
+   En vez de reescribir sus 2.000 líneas de estilos, aquí cada una se apunta a un token de
+   Agarrao: papel, lila, tinta y el rosa de los botones. Así el buscador, el mapa y los
+   repostajes hablan el mismo idioma que el resto sin tocar su maquetación.
+
+   Va global (y no en un componente) porque Leaflet pinta marcadores y globos por su
+   cuenta, fuera del alcance de los estilos encapsulados.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.gasolina {
+  --superficie: var(--papel);
+  --superficie-2: #f7f4ff;
+  --superficie-alta: var(--papel);
+  --borde: var(--placa-nombre-lila);
+  /* Estructura y botones principales: la tinta de Agarrao */
+  --azul: var(--tinta);
+  --azul-claro: var(--lila);
+  /* Precio y acción: el rosa de los botones de Agarrao */
+  --ambar: var(--rosa-boton);
+  --ambar-fondo: var(--rubor);
+  /* SOLO «el más barato» */
+  --verde: #1f7a52;
+  --rojo: #c62828;
+  --sombra: var(--sombra-ficha);
+  --radio: 18px;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.gasolina h1,
+.gasolina h2,
+.gasolina h3 {
+  margin: 0;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+/* Etiqueta pequeña en versales: jerarquía sin gastar tamaño ni color. */
+.gasolina .eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+/* El precio, siempre igual: en la lista, en el mapa y en el detalle. */
+.gasolina .precio {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.gasolina .panel__lista,
+.gasolina .sugerencias,
+.gasolina .leaflet-popup-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--borde) transparent;
+}
+
+/* ── Mapa (Leaflet) ── */
+
+
+.gasolina .marcador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: var(--superficie);
+  border: 2px solid var(--azul);
+  color: var(--tinta);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  box-shadow: var(--sombra);
+}
+
+.gasolina .marcador--activo {
+  background: var(--azul);
+  color: #fff;
+  transform: scale(1.12);
+}
+
+/* Favorita: ámbar y estrella. Se distingue por COLOR y por FORMA, para que también
+   funcione si no se distingue bien el ámbar del azul. */
+.gasolina .marcador--favorito {
+  border-color: var(--ambar);
+}
+
+.gasolina .marcador--favorito.marcador--activo {
+  background: var(--ambar);
+  color: #1a1204;
+}
+
+.gasolina .marcador__estrella {
+  color: var(--ambar);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.gasolina .marcador--activo .marcador__estrella {
+  color: inherit;
+}
+
+/* Globo del marcador. */
+.gasolina .globo {
+  min-inline-size: 12.5rem;
+}
+
+.gasolina .globo__titulo {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.gasolina .globo__direccion {
+  margin: 0.15rem 0 0.7rem;
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+
+.gasolina .globo__precios {
+  list-style: none;
+  margin: 0 0 0.7rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  strong {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ambar);
+  }
+}
+
+.gasolina .globo__sin-precio {
+  color: var(--tinta-suave) !important;
+  font-weight: 400 !important;
+}
+
+.gasolina .globo__horario {
+  margin: 0 0 0.7rem;
+  font-size: 0.75rem;
+  color: var(--tinta-suave);
+}
+
+.gasolina .globo__boton {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.45rem;
+  background: var(--azul);
+  color: #fff !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Leaflet pinta el globo con fondo blanco fijo; sin esto, en tema oscuro saldría
+   texto claro sobre blanco. */
+.gasolina .leaflet-popup-content-wrapper,
+.gasolina .leaflet-popup-tip {
+  background: var(--superficie);
+  color: var(--tinta);
+}
+
+.gasolina .leaflet-popup-content-wrapper {
+  border-radius: var(--radio);
+}
+
+/* Los créditos de OpenStreetMap son obligatorios, pero no tienen por qué gritar. */
+.gasolina .leaflet-control-attribution {
+  background: color-mix(in srgb, var(--superficie) 85%, transparent) !important;
+  color: var(--tinta-suave) !important;
+  font-size: 0.65rem !important;
+
+  a {
+    color: var(--tinta-suave) !important;
+  }
+}
+
+/* Los botones principales de Gasofa, como los de Agarrao: píldora rosa. Con la clase
+   repetida para ganar a los estilos encapsulados de cada componente (que pintaban --azul). */
+.gasolina .principal.principal {
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rosa-boton);
+  color: #fff;
+  font-weight: 800;
+}
+
+.gasolina .principal.principal:hover {
+  background: var(--rosa-boton-hondo);
+}
+
+.gasolina .secundario.secundario {
+  border-radius: 999px;
+}
+
+/* ═══ Fichas de Agarrao en vez de las cajas blancas de Gasofa ═══════════════════════
+   1.1.2 cambió el borde gris por papel con sombra, pero seguía siendo BLANCO sobre la
+   trama lila y chirriaba. Desde la 1.1.4 nada grande es blanco en Gasolina:
+     · los PANELES (filtros, formularios, gráficas) son fichas cielo;
+     · las FILAS (gasolineras, repostajes, coches) son fichas lila; todas con el borde de
+       papel de 3 px, como las de Gasto, y el precio en una placa rubor;
+     · los selectores de dos o más opciones (secciones, «Ordenar por») son un carril lila
+       con la opción elegida en tinta;
+     · blanco solo queda donde se escribe (campos) y en los botones secundarios, como en
+       el resto de la app.
+   La clase repetida gana a los estilos encapsulados de cada componente. */
+
+.gasolina .filtros.filtros,
+.gasolina .formulario.formulario,
+.gasolina .alta.alta,
+.gasolina .grafica-caja.grafica-caja {
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  background: var(--cielo);
+  box-shadow: var(--sombra-ficha);
+}
+
+.gasolina .vacio.vacio {
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  background: var(--mantequilla);
+  box-shadow: var(--sombra-ficha);
+}
+
+.gasolina .alta--editando.alta--editando {
+  background: var(--rubor);
+}
+
+/* Las cifras del resumen (consumo, gasto, ahorro): placas de colores alternos */
+.gasolina .cifras > div,
+.gasolina .resumen > div {
+  border: 3px solid var(--papel) !important;
+  border-radius: 18px !important;
+  background: var(--mantequilla) !important;
+  box-shadow: none;
+}
+
+.gasolina .cifras > div:nth-child(2n),
+.gasolina .resumen > div:nth-child(2n) {
+  background: var(--menta) !important;
+}
+
+.gasolina .cifras > div:nth-child(3n),
+.gasolina .resumen > div:nth-child(3n) {
+  background: var(--rubor) !important;
+}
+
+/* Filas: fichas lila */
+.gasolina .tarjeta.tarjeta,
+.gasolina .repostaje.repostaje,
+.gasolina .vehiculo.vehiculo {
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--lila);
+  box-shadow: var(--sombra-ficha);
+}
+
+/* Los coches del resumen de Repostajes son tarjetas grandes: cielo, como los paneles */
+.gasolina .vehiculos .vehiculo.vehiculo:not(.vehiculo--anadir) {
+  background: var(--cielo);
+}
+
+.gasolina .vehiculo--anadir.vehiculo--anadir {
+  border: 3px dashed var(--placa-nombre-lila);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Favorita: franja rosa a la izquierda (la estrella y el marcador van a juego) */
+.gasolina .tarjeta--favorita.tarjeta--favorita {
+  border-inline-start: 6px solid var(--rosa-boton);
+}
+
+/* La gasolinera abierta (la que se ve en el mapa): mantequilla y contorno de tinta */
+.gasolina .tarjeta--activa.tarjeta--activa {
+  border-color: var(--tinta);
+  background: var(--mantequilla);
+}
+
+/* El precio de cada gasolinera, en placa: se lee como el cartel de la carretera */
+.gasolina .tarjeta .precio-bloque {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--rubor);
+}
+
+.gasolina .tarjeta .distancia {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+}
+
+.gasolina .mapa-contenedor.mapa-contenedor {
+  overflow: hidden;
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  box-shadow: var(--sombra-ficha);
+}
+
+/* Botones secundarios: los de papel de Agarrao (texto centrado, borde de tinta) */
+.gasolina .secundario.secundario,
+.gasolina .paginacion.paginacion button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Campos: píldoras de papel con borde lila (como .campo de Agarrao, en pequeño) */
+.gasolina .gcampo select,
+.gasolina .gcampo input:not([type='checkbox']):not([type='radio']):not(.entrada input),
+.gasolina .gcampo textarea {
+  min-height: 44px;
+  border: 2px solid var(--placa-nombre-lila) !important;
+  border-radius: 999px !important;
+  background: var(--papel) !important;
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+.gasolina .gcampo textarea {
+  border-radius: 18px !important;
+}
+
+.gasolina .gcampo select:focus-visible,
+.gasolina .gcampo input:focus-visible,
+.gasolina .gcampo textarea:focus-visible {
+  border-color: var(--rosa-boton) !important;
+}
+
+.gasolina .gcampo label,
+.gasolina .gcampo > span {
+  color: var(--tinta) !important;
+  font-weight: 800 !important;
+}
+
+/* «Ordenar por»: carril lila con la opción elegida en tinta. Mide 44 px, como los
+   desplegables de al lado, para que las tres cosas queden en fila. */
+.gasolina .segmentado.segmentado {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  overflow: visible;
+  border: 0;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+}
+
+.gasolina .segmentado.segmentado button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tinta);
+  font-weight: 800;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.gasolina .segmentado.segmentado button.activo {
+  background: var(--tinta);
+  color: #fff;
+}
+
+.gasolina .boton-ubicacion.boton-ubicacion {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+  font-weight: 800;
+}
+
+/* Editar / Archivar de cada coche: placas lila pequeñas, no recuadros grises */
+.gasolina .accion.accion {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+  font-weight: 800;
+}
+
+/* Viajes: la bandera de llegada del mapa, sin la caja blanca que Leaflet pone a los divIcon */
+.gasolina .llegada {
+  border: 0;
+  background: none;
+  font-size: 24px;
+  line-height: 1;
+}

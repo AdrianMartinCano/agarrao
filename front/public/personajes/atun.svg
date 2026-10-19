@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Lata de atún con cara">
+  <ellipse cx="80" cy="148" rx="54" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M26 76 V116 Q26 134 80 134 Q134 134 134 116 V76 Z" fill="#5CB2FF"/>
+  <ellipse cx="80" cy="76" rx="54" ry="16" fill="#E3E8F2"/>
+  <ellipse cx="80" cy="76" rx="44" ry="11" fill="#C9D1E2"/>
+  <path d="M92 66 Q104 60 112 66" stroke="#9AA6BF" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M104 118 L116 110 V126 Z" fill="#8EC5FF"/>
+  <!-- Cara -->
+  <ellipse cx="64" cy="104" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="88" cy="104" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="65.5" cy="102" r="1.6" fill="#FFFFFF"/>
+  <circle cx="89.5" cy="102" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="53" cy="116" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="99" cy="116" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M69 115 Q76 122 83 115" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

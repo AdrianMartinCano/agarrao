@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Patata con cara">
+  <ellipse cx="80" cy="148" rx="52" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M40 54 C58 30 112 28 128 56 C142 82 132 124 102 136 C74 146 34 136 26 108 C20 86 28 68 40 54 Z" fill="#E7B47E"/>
+  <g fill="#C98B52"><circle cx="54" cy="58" r="3"/><circle cx="116" cy="70" r="3"/><circle cx="48" cy="116" r="3"/><circle cx="110" cy="122" r="3"/><circle cx="92" cy="46" r="2.5"/></g>
+  <path d="M48 72 Q52 60 64 54" stroke="#F3CC94" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="90" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="90" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="88" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="88" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="102" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="102" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 101 Q80 108 87 101" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

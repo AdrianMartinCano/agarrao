@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Huevo con cara">
+  <ellipse cx="80" cy="148" rx="38" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- El huevo -->
+  <path d="M80 14 C112 14 128 64 128 96 C128 126 106 144 80 144 C54 144 32 126 32 96 C32 64 48 14 80 14 Z" fill="#FFF1D6"/>
+  <path d="M60 36 C66 26 74 22 80 22" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/>
+  <!-- Huevera de cartón -->
+  <path d="M30 104 H130 L122 140 Q120 146 114 146 H46 Q40 146 38 140 Z" fill="#E7C9A0"/>
+  <path d="M30 104 Q46 114 62 104 Q80 114 98 104 Q114 114 130 104" stroke="#D4B184" stroke-width="4" fill="none"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="74" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="74" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="72" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="72" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="54" cy="86" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="106" cy="86" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M74 85 Q80 91 86 85" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

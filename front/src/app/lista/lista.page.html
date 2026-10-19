@@ -1,0 +1,114 @@
+<ion-content class="trama">
+  <main class="lista">
+    <header class="lista__cabeza">
+      <a class="lista__hogar" routerLink="/hogar">
+        <span class="sr-solo">Tu hogar: </span>{{ hogar()?.nombre }}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </a>
+      <p class="contador" aria-live="polite">
+        <!-- Un elemento nuevo por número: así el rebote se repite en cada cambio -->
+        @for (n of [lista.pendientes().length]; track n) {
+          <span class="contador__numero">{{ n }}</span>
+        }
+        <span class="contador__texto">por coger</span>
+      </p>
+    </header>
+
+    @if (cargando()) {
+      <p class="lista__estado" role="status">Abriendo la lista…</p>
+    } @else if (vacia()) {
+      <section class="vacio">
+        <img src="personajes/listillo.svg" alt="" width="140" height="140" />
+        <h1 class="vacio__titulo">Nada que comprar</h1>
+        <p class="vacio__texto">Apunta lo primero aquí abajo. Lo verán todos los de casa.</p>
+      </section>
+    } @else {
+      <h1 class="sr-solo">La lista de {{ hogar()?.nombre }}</h1>
+
+      @if (lista.pendientes().length > 0) {
+        <a class="donde" routerLink="/lista/donde">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4.5A1.5 1.5 0 0 1 4.5 3H12l9 9-9 9zM7.5 7.5l.01 0" /></svg>
+          ¿Dónde lo compro más barato?
+        </a>
+      }
+
+      @if (todoEnElCarro()) {
+        <section class="vacio vacio--hecho">
+          <img src="personajes/listillo.svg" alt="" width="112" height="112" />
+          <h2 class="vacio__titulo">¡Todo en el carro!</h2>
+        </section>
+      }
+
+      <ul class="filas" aria-label="Por coger">
+        @for (a of lista.pendientes(); track a.id) {
+          <li>
+            <app-fila-articulo
+              [articulo]="a"
+              [cinta]="cinta(a)"
+              (marcar)="marcar(a, $event)"
+              (cantidad)="lista.cambiarCantidad(a, $event)"
+              (quitar)="lista.quitar(a)"
+            />
+          </li>
+        }
+      </ul>
+
+      @if (lista.enElCarro().length > 0) {
+        <section class="carro" aria-labelledby="carro-titulo">
+          <div class="carro__cabeza">
+            <h2 id="carro-titulo" class="carro__titulo">
+              En el carro <span class="carro__cuenta">{{ lista.enElCarro().length }}</span>
+            </h2>
+            <div class="carro__botones">
+              <a class="carro__vaciar" routerLink="/tickets/nuevo">Subir ticket</a>
+              <button type="button" class="carro__vaciar" (click)="lista.vaciarCarro()">Vaciar</button>
+            </div>
+          </div>
+          <ul class="filas filas--carro">
+            @for (a of lista.enElCarro(); track a.id) {
+              <li>
+                <app-fila-articulo
+                  [articulo]="a"
+                  [cinta]="cinta(a)"
+                  [recien]="recien().has(a.id)"
+                  (marcar)="marcar(a, $event)"
+                />
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    }
+  </main>
+</ion-content>
+
+<ion-footer class="ion-no-border apuntar">
+  <!-- Aquí y no arriba: el fallo se ve junto al pulgar, aunque la lista esté desplazada -->
+  @if (lista.error()) {
+    <p class="aviso-error apuntar__error" role="alert">{{ lista.error() }}</p>
+  }
+  <form class="apuntar__form" (submit)="apuntar($event, campo)">
+    <label class="sr-solo" for="apuntar">Apunta algo</label>
+    <input
+      #campo
+      id="apuntar"
+      class="campo apuntar__campo"
+      placeholder="Apunta algo…"
+      maxlength="80"
+      autocomplete="off"
+      enterkeyhint="done"
+      [value]="texto()"
+      (input)="texto.set(valor($event))"
+    />
+    <a class="apuntar__boton apuntar__boton--escanear" routerLink="/escanear" aria-label="Escanear un código de barras">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16" />
+        <path d="M8 8.5v7M11 8.5v7M14 8.5v7M16.5 8.5v7" />
+      </svg>
+    </a>
+    <button type="submit" class="apuntar__boton" aria-label="Apuntar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+    </button>
+  </form>
+  <app-pestanas activa="lista" />
+</ion-footer>

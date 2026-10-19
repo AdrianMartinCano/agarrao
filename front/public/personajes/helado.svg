@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Cucurucho de helado con cara">
+  <ellipse cx="80" cy="148" rx="30" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M46 84 H114 L84 148 Q80 154 76 148 Z" fill="#E7B47E"/>
+  <path d="M56 96 L92 124 M70 88 L100 108 M104 96 L68 124 M90 88 L58 108" stroke="#C98B52" stroke-width="3"/>
+  <circle cx="80" cy="58" r="40" fill="#FFB3CC"/>
+  <path d="M40 66 Q50 92 62 82 Q70 96 82 86 Q94 98 104 84 Q116 94 120 66 Z" fill="#FFB3CC"/>
+  <circle cx="80" cy="18" r="8" fill="#FF5C6E"/>
+  <path d="M54 44 Q58 32 68 28" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <!-- Cara -->
+  <ellipse cx="68" cy="60" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="60" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="69.5" cy="58" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="58" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="57" cy="72" rx="7" ry="4.5" fill="#FF8DBE"/>
+  <ellipse cx="103" cy="72" rx="7" ry="4.5" fill="#FF8DBE"/>
+  <path d="M73 71 Q80 78 87 71" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

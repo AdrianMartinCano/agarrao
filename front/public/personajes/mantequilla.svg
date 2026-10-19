@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Mantequilla con cara">
+  <ellipse cx="80" cy="148" rx="56" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <ellipse cx="80" cy="128" rx="66" ry="14" fill="#DFEEFF"/>
+  <path d="M34 68 L58 52 H126 V112 L102 128 H34 Z" fill="#FFE9A0"/>
+  <path d="M34 68 L58 52 H126 L102 68 Z" fill="#FFF3C4"/>
+  <path d="M102 68 H34 V128 H102 Z" fill="#FFE07A"/>
+  <path d="M102 68 L126 52 V112 L102 128 Z" fill="#F5D060"/>
+  <!-- Cara -->
+  <ellipse cx="56" cy="92" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="80" cy="92" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="57.5" cy="90" r="1.6" fill="#FFFFFF"/>
+  <circle cx="81.5" cy="90" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="45" cy="104" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="91" cy="104" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M61 103 Q68 110 75 103" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

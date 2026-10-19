@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Galleta con cara">
+  <ellipse cx="80" cy="148" rx="50" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <circle cx="80" cy="86" r="56" fill="#E0A562"/>
+  <circle cx="80" cy="86" r="48" fill="#EDBB7A"/>
+  <g fill="#8A5A3C"><circle cx="52" cy="62" r="5"/><circle cx="110" cy="60" r="4"/><circle cx="118" cy="104" r="5"/><circle cx="46" cy="108" r="4"/><circle cx="84" cy="128" r="4"/><circle cx="80" cy="46" r="3.5"/></g>
+  <!-- Cara -->
+  <ellipse cx="66" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="88" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="86" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="100" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 99 Q80 106 87 99" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

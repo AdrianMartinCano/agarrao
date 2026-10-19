@@ -1,0 +1,481 @@
+/*
+ * Gasto: el mes como un tarro de hucha. Arriba el mes y el total; en medio el tarro y su
+ * leyenda en placas; debajo los tarritos de los meses, las tiendas y lo que más cuesta.
+ */
+.gasto {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  max-width: 460px;
+  margin-inline: auto;
+  padding: max(22px, env(safe-area-inset-top)) 18px 28px;
+}
+
+/* El mes en su propia fila y de ancho fijo: cambiar de mes no mueve el total ni el tarro */
+.gasto__cabeza {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+/* El selector, en el eje del total y del tarro */
+.gasto__cabeza .mes {
+  justify-self: center;
+}
+
+/* El mes, en una placa con sus flechas */
+.mes {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+}
+
+.mes__nombre {
+  width: 17ch;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  text-align: center;
+}
+
+.mes__flecha {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.mes__flecha:disabled { opacity: 0.3; cursor: default; }
+
+.mes__flecha svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── El total ── */
+
+.total {
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  text-align: center;
+}
+
+.total__cifra {
+  font-weight: 800;
+  font-size: 3.25rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.total__tickets {
+  color: var(--tinta-suave);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+/* ── El tarro ── */
+
+.tarro {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.tarro__dibujo {
+  position: relative;
+  width: min(62vw, 236px);
+}
+
+.tarro__vacio {
+  position: absolute;
+  inset: 44% 14% auto;
+  margin: 0;
+  color: var(--tinta-suave);
+  font-weight: 800;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* La leyenda: una placa por capa, con su muestra de color (nunca solo el color) */
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leyenda__placa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 4px 12px 4px 6px;
+  border-radius: 999px;
+  background: var(--papel);
+  box-shadow: 0 2px 6px -2px rgb(42 47 90 / 0.25);
+  font-size: 0.875rem;
+}
+
+.leyenda__muestra {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--papel);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(42 47 90 / 0.18);
+}
+
+.leyenda__nombre { font-weight: 800; }
+
+.leyenda__importe { font-weight: 800; }
+
+.leyenda__parte { color: var(--tinta-suave); }
+
+/* Siempre la misma placa, ocupe una línea o dos: centrada, ancho tope y texto equilibrado */
+.nota {
+  max-inline-size: 32ch;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 12px;
+  text-align: center;
+  text-wrap: balance;
+  background: var(--placa-nota);
+  font-size: 0.875rem;
+}
+
+.gasto__subir { width: auto; text-decoration: none; }
+
+/* ── Bloques de abajo ── */
+
+.bloque {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.bloque__rotulo {
+  margin: 0;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Los tarritos de los meses */
+.tarritos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.tarrito {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 8px 2px 6px;
+  border: 0;
+  border-radius: 16px;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 380ms var(--salida), background 260ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tarrito__dibujo {
+  width: 36px;
+  height: auto;
+  filter: drop-shadow(0 3px 4px rgb(42 47 90 / 0.2));
+}
+
+.tarrito__lleno { fill: var(--placa-nombre-lila); }
+
+.tarrito__brillo { stroke: #fff; stroke-width: 3; stroke-linecap: round; fill: none; opacity: 0.9; }
+
+.tarrito__mes {
+  font-weight: 800;
+  font-size: 0.8125rem;
+}
+
+.tarrito__anio {
+  display: block;
+  color: var(--tinta-suave);
+  font-weight: 700;
+  font-size: 0.6875rem;
+}
+
+/* Ocupa su hueco igual, para que los totales queden en fila */
+.tarrito__anio--oculto { visibility: hidden; }
+
+.tarrito__total {
+  color: var(--tinta-suave);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* El mes elegido: se levanta y su tarrito se llena de rosa chicle claro */
+.tarrito--elegido {
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+  transform: translateY(-4px);
+}
+
+.tarrito--elegido .tarrito__lleno { fill: var(--cinta-listillo); }
+
+@media (hover: hover) {
+  .tarrito:not(.tarrito--elegido):hover { background: var(--lila); }
+}
+
+/* Las tiendas: filas papel con una barra pastel detrás de la cifra */
+.tiendas,
+.top {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tienda {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 10px;
+  min-height: 56px;
+  padding: 6px 14px;
+  overflow: hidden;
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+}
+
+.tienda__barra {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--lila);
+  transform-origin: left;
+  animation: crece 620ms var(--salida) backwards;
+}
+
+.tienda__nombre,
+.tienda__veces,
+.tienda__total { position: relative; }
+
+.tienda__nombre {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tienda__veces {
+  grid-row: 2;
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+.tienda__total {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  font-weight: 800;
+  font-size: 1.0625rem;
+}
+
+/* Lo que más cuesta: el elenco con su puesto */
+.top__fila {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 6px 14px 6px 50px;
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+}
+
+.top__puesto {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  display: grid;
+  place-items: start center;
+  width: 32px;
+  height: 40px;
+  padding-top: 5px;
+  background: color-mix(in srgb, var(--cinta-listillo) 38%, var(--papel));
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.top__fila:first-child .top__puesto { background: var(--cinta-listillo); }
+
+.top__retrato {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fondo);
+}
+
+.top__nombre {
+  display: grid;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.top__veces {
+  color: var(--tinta-suave);
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.top__total {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.gasto__tickets { justify-self: center; margin-top: 4px; text-decoration: none; }
+
+.gasto__cargando {
+  margin: 40px 0 0;
+  text-align: center;
+  font-weight: 800;
+}
+
+@keyframes crece {
+  from { transform: scaleX(0); }
+}
+
+/* ── Lo anotado y lo de cada mes: filas de papel con la muestra de su tipo ── */
+
+.anotados {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.anotado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 14px;
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+a.anotado:active { transform: scale(0.99); }
+
+.anotado__muestra {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(42 47 90 / 0.18);
+}
+
+.anotado__que {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.anotado__nota {
+  color: var(--tinta-suave);
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.anotado__importe {
+  flex: none;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.anotado__quitar {
+  flex: none;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-decoration-color: var(--rosa-boton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.anotado__quitar--seguro {
+  color: var(--rosa-boton);
+}
+
+.gasto__anotar {
+  justify-self: center;
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+/* Las notas de los bloques, en el eje como las del tarro (si no, se pegan a la izquierda) */
+.bloque > .nota { justify-self: center; }
+
+.sin-anotar {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 18px 16px;
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  background: var(--lila);
+  box-shadow: var(--sombra-ficha);
+  text-align: center;
+}
+
+.sin-anotar__titulo {
+  margin: 0;
+  font-weight: 800;
+}
+
+.sin-anotar__pista {
+  max-inline-size: 30ch;
+  margin: 0 0 10px;
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+  text-wrap: balance;
+}
+
+.sin-anotar .boton-papel { text-decoration: none; }
+

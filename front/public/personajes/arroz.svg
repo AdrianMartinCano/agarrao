@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Saco de arroz con cara">
+  <ellipse cx="80" cy="148" rx="46" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M58 30 Q80 20 102 30 L96 42 H64 Z" fill="#EADFCB"/>
+  <path d="M60 42 H100" stroke="#C98B52" stroke-width="7" stroke-linecap="round"/>
+  <path d="M62 44 Q30 60 32 104 Q34 142 80 142 Q126 142 128 104 Q130 60 98 44 Z" fill="#FBF5EA"/>
+  <g fill="#FFFFFF" stroke="#E5DACB" stroke-width="2"><ellipse cx="58" cy="124" rx="5" ry="3" transform="rotate(30 58 124)"/><ellipse cx="100" cy="126" rx="5" ry="3" transform="rotate(-20 100 126)"/><ellipse cx="80" cy="132" rx="5" ry="3"/></g>
+  <path d="M44 84 Q46 68 58 60" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="92" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="92" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="90" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="90" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="104" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="105" cy="104" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 103 Q80 110 87 103" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

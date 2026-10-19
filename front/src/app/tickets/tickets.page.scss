@@ -1,0 +1,116 @@
+.tickets {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  max-width: 480px;
+  margin-inline: auto;
+  padding: max(14px, env(safe-area-inset-top)) 16px 32px;
+}
+
+.tickets__cabeza {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+.tickets__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding-right: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tickets__volver svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tickets__subir { text-decoration: none; }
+
+.tickets__lista {
+  display: grid;
+  gap: 18px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada ticket, un resguardo de papel de caja con los dientes abajo (regla Papel De Caja) */
+.resguardo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 14px 16px 16px;
+  background: var(--papel);
+  filter: drop-shadow(0 6px 9px rgb(42 47 90 / 0.2)) drop-shadow(0 1px 2px rgb(42 47 90 / 0.1));
+  color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  transition: transform 380ms var(--salida), filter 380ms var(--salida);
+}
+
+.resguardo::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -9px;
+  height: 9px;
+  background: var(--papel);
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 90deg, #0000 91deg) 50% / 16px 100%;
+}
+
+@media (hover: hover) {
+  .resguardo:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 12px 14px rgb(42 47 90 / 0.24)) drop-shadow(0 2px 3px rgb(42 47 90 / 0.1));
+  }
+}
+
+.resguardo__tienda {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.resguardo__total {
+  font-weight: 800;
+  font-size: 1.125rem;
+}
+
+.resguardo__fecha,
+.resguardo__lineas {
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+}
+
+.resguardo__lineas { text-align: right; }
+
+.vacio {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.vacio__texto {
+  margin: 0;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+.tickets__cargando {
+  margin: 24px 0 0;
+  text-align: center;
+  font-weight: 800;
+}

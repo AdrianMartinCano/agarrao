@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Cesta de verduras con cara">
+  <ellipse cx="80" cy="148" rx="50" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- Las verduras asomando: puerro, zanahoria, tomate y lechuga -->
+  <path d="M46 70 L40 22" stroke="#7FD6A0" stroke-width="12" stroke-linecap="round"/>
+  <path d="M40 22 L32 8 M40 22 L46 8" stroke="#3FB777" stroke-width="6" stroke-linecap="round"/>
+  <path d="M76 70 L92 24" stroke="#FF9F43" stroke-width="14" stroke-linecap="round"/>
+  <path d="M92 24 L88 10 M92 24 L102 14" stroke="#3FB777" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="118" cy="62" r="18" fill="#FF6B6B"/>
+  <path d="M112 46 L118 50 L124 46" stroke="#3FB777" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="62" cy="64" r="16" fill="#4FD18B"/><circle cx="52" cy="70" r="12" fill="#7FD6A0"/>
+  <!-- El asa y la cesta de mimbre -->
+  <path d="M30 78 Q80 10 130 78" stroke="#C98B52" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M22 76 H138 L128 132 Q126 140 118 140 H42 Q34 140 32 132 Z" fill="#E7B47E"/>
+  <rect x="18" y="70" width="124" height="14" rx="7" fill="#D9A36A"/>
+  <path d="M36 130 H124" stroke="#D9A36A" stroke-width="4" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="112" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="112" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 111 Q80 118 87 111" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

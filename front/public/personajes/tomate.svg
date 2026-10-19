@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Tomate con cara">
+  <ellipse cx="80" cy="148" rx="54" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <ellipse cx="80" cy="92" rx="60" ry="50" fill="#FF6B6B"/>
+  <path d="M80 50 L66 38 L74 50 L54 48 L72 58 L80 50 L88 58 L106 48 L86 50 L94 38 Z" fill="#3FB777" stroke="#3FB777" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M80 48 V34" stroke="#3FB777" stroke-width="6" stroke-linecap="round"/>
+  <path d="M38 80 Q42 66 56 60" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="96" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="96" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="94" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="94" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="108" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <ellipse cx="105" cy="108" rx="7" ry="4.5" fill="#FFC2C2"/>
+  <path d="M73 107 Q80 114 87 107" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,120 @@
+:host {
+  display: block;
+}
+
+.selector-vehiculo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-end: 1rem;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--tinta-suave);
+  }
+
+  select {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--borde);
+    border-radius: 0.5rem;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: inherit;
+  }
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+
+  > div {
+    padding: 0.85rem 1rem;
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+  }
+
+  dt {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--tinta);
+  }
+
+  /* Solo el ahorro se pinta en verde, y solo cuando de verdad se ha ahorrado. */
+  .bueno {
+    color: var(--verde);
+  }
+}
+
+.unidad {
+  font-size: 0.68rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.sin-dato {
+  color: var(--tinta-suave);
+  font-weight: 400;
+}
+
+.grafica-caja {
+  padding: 1.1rem;
+  margin-block-end: 0.75rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+
+  h3 {
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Altura fija: el canvas de Chart.js necesita un contenedor con medida o crece sin fin
+   al redimensionar la ventana. */
+.lienzo {
+  block-size: 15rem;
+}
+
+.pendiente {
+  margin: 0;
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+  line-height: 1.5;
+}
+
+.nota {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: var(--tinta-suave);
+}
+
+.estado {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+
+@media (max-width: 640px) {
+  .lienzo {
+    block-size: 12rem;
+  }
+}

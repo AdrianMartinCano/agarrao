@@ -1,0 +1,245 @@
+:host {
+  display: block;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  padding: 1rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 0.75rem;
+}
+
+.gcampo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-inline-size: 10rem;
+
+  label,
+  span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--tinta-suave);
+  }
+
+  select {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--borde);
+    border-radius: 0.5rem;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: inherit;
+  }
+}
+
+/* La caja de municipio se lleva el espacio sobrante: es donde se escribe texto libre y
+   agradece el ancho, mientras que los desplegables tienen ancho fijo. */
+.gcampo--lugar {
+  flex: 1;
+  min-inline-size: 14rem;
+  /* La lista de sugerencias se posiciona respecto a esta caja. */
+  position: relative;
+}
+
+.segmentado {
+  display: flex;
+  border: 1px solid var(--borde);
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  button {
+    padding: 0.55rem 0.9rem;
+    border: none;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: inherit;
+    cursor: pointer;
+
+    &.activo {
+      background: var(--azul);
+      color: #fff;
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.boton-ubicacion {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.5rem;
+  background: var(--fondo);
+  color: var(--tinta);
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--azul);
+  }
+}
+
+.nota {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+}
+
+.nota--aviso {
+  padding: 0.6rem 0.8rem;
+  border-inline-start: 3px solid var(--ambar);
+  background: color-mix(in srgb, var(--ambar) 10%, transparent);
+  border-radius: 0.35rem;
+  color: var(--tinta);
+}
+
+/* La referencia de precio, justo encima de la lista. Va discreta a propósito: es el
+   patrón contra el que se leen los precios de abajo, no un resultado más. Si compitiera
+   en peso con las tarjetas, estorbaría en vez de ayudar. */
+.resumen-zona {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+
+  strong {
+    color: var(--tinta);
+  }
+}
+
+.resumen-zona__cuantas {
+  /* Cuántas se han promediado. Con dos gasolineras una media no dice gran cosa, y quien
+     mire este número merece saber sobre cuántas está calculado. */
+  opacity: 0.75;
+}
+
+/* Lista y mapa miden lo mismo y empiezan a la misma altura: leídos juntos son una sola
+   cosa, no dos bloques sueltos de largos distintos. La lista scrollea por dentro. */
+$alto-resultados: min(70vh, 40rem);
+
+.resultados {
+  display: grid;
+  /* En pantallas anchas, lista y mapa uno al lado del otro; en móvil se apilan. */
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+  gap: 1rem;
+  margin-block-start: 1rem;
+  align-items: start;
+}
+
+.panel {
+  min-inline-size: 0;
+  block-size: $alto-resultados;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El scroll vive aquí, no en el panel: así la paginación se queda abajo, siempre a la
+   vista, en vez de haber que bajar hasta el final de la lista para encontrarla. */
+.panel__lista {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  /* Aire para que la última tarjeta no quede pegada al borde al llegar abajo. */
+  padding-block-end: 0.25rem;
+  /* Sin esto, al llegar al final de la lista el scroll sigue en la página de detrás. */
+  overscroll-behavior: contain;
+}
+
+.mapa-contenedor {
+  block-size: $alto-resultados;
+  position: sticky;
+  inset-block-start: 1rem;
+}
+
+.cargando {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-start: 1rem;
+
+  button {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--borde);
+    border-radius: 0.5rem;
+    background: var(--superficie);
+    color: var(--tinta);
+    font: inherit;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      border-color: var(--azul);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.paginacion__estado {
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  padding: 1rem;
+  border: 1px solid #ef4444;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, #ef4444 8%, transparent);
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--borde);
+    border-radius: 0.5rem;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: inherit;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 900px) {
+  .resultados {
+    grid-template-columns: 1fr;
+  }
+
+  /* Apilados no tiene sentido limitar la altura de la lista: dejaría un scroll dentro
+     de otro scroll, que en el móvil es de lo más incómodo que hay. */
+  .panel {
+    block-size: auto;
+  }
+
+  .panel__lista {
+    overflow-y: visible;
+  }
+
+  .mapa-contenedor {
+    /* Apilado, el mapa va primero: ubica de un vistazo antes de leer la lista. */
+    order: -1;
+    position: static;
+    block-size: 22rem;
+  }
+
+  .boton-ubicacion {
+    margin-inline-start: 0;
+    inline-size: 100%;
+  }
+}

@@ -1,0 +1,27 @@
+# Entorno / secretos: nunca subir
+.env
+.env.*
+!.env.example
+
+# Front
+node_modules/
+dist/
+.angular/
+
+# Back
+target/
+.local-db/
+
+# Impeccable: capturas y referencias de trabajo (se regeneran)
+.impeccable/review/
+.impeccable/ref/
+.impeccable/questions/
+.impeccable/config.local.json
+
+# IDE / SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.log

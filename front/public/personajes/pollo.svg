@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Pollo asado con cara">
+  <ellipse cx="80" cy="148" rx="56" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- Los dos muslos hacia arriba, con su hueso -->
+  <path d="M48 70 L30 34" stroke="#FFF8EC" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="26" cy="30" r="7" fill="#FFF8EC"/><circle cx="34" cy="26" r="6" fill="#FFF8EC"/>
+  <path d="M112 70 L130 34" stroke="#FFF8EC" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="134" cy="30" r="7" fill="#FFF8EC"/><circle cx="126" cy="26" r="6" fill="#FFF8EC"/>
+  <ellipse cx="50" cy="72" rx="18" ry="22" transform="rotate(-25 50 72)" fill="#D9853E"/>
+  <ellipse cx="110" cy="72" rx="18" ry="22" transform="rotate(25 110 72)" fill="#D9853E"/>
+  <!-- El cuerpo dorado, en su bandeja -->
+  <ellipse cx="80" cy="136" rx="62" ry="10" fill="#DFEEFF"/>
+  <path d="M26 100 C26 70 52 58 80 58 C108 58 134 70 134 100 C134 124 110 136 80 136 C50 136 26 124 26 100 Z" fill="#E59A52"/>
+  <path d="M44 88 Q54 74 70 70" stroke="#F4B97E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="102" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="102" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="100" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="100" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="114" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="114" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 113 Q80 120 87 113" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

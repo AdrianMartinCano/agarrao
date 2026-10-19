@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Bote de tomate frito con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- La tapa -->
+  <rect x="50" y="14" width="60" height="18" rx="7" fill="#3E9B5B"/>
+  <rect x="50" y="14" width="60" height="7" rx="3.5" fill="#5DBB79"/>
+  <!-- El bote, gordito -->
+  <path d="M46 34 H114 Q126 34 126 48 V128 Q126 142 112 142 H48 Q34 142 34 128 V48 Q34 34 46 34 Z" fill="#E8463C"/>
+  <!-- Brillo del cristal: el volumen de peluche -->
+  <path d="M44 52 Q44 42 54 42" stroke="#FF8A7A" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M42 66 V82" stroke="#FF8A7A" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- La etiqueta, con su tomatito -->
+  <rect x="40" y="94" width="80" height="34" rx="10" fill="#FFF3D6"/>
+  <circle cx="80" cy="111" r="10" fill="#E8463C"/>
+  <path d="M74 102 L80 106 L86 102 L82 108 Z" fill="#3E9B5B"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="66" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="64" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="78" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="105" cy="78" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 77 Q80 84 87 77" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

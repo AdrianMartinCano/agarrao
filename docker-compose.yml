@@ -1,0 +1,85 @@
+# Listillo: Postgres + back Spring + front (nginx sirviendo la PWA y haciendo de proxy de
+# /api al back, mismo origen, sin CORS).
+#
+#   cp .env.example .env   # y rellenarlo
+#   docker compose up -d --build
+#
+# En el VPS con Coolify: GITHUB_TOKEN tiene que marcarse como "Build Variable".
+
+services:
+  db:
+    image: postgres:16-alpine
+    command: >
+      postgres
+        -c shared_buffers=96MB
+        -c effective_cache_size=256MB
+        -c max_connections=25
+        -c work_mem=4MB
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-listillo}
+      POSTGRES_USER: ${POSTGRES_USER:-listillo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD en .env}
+    volumes:
+      - listillo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-listillo} -d ${POSTGRES_DB:-listillo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+
+  back:
+    build:
+      context: ./back
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN:?define GITHUB_TOKEN (o Build Variable en Coolify)}
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-listillo}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-listillo}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      PIMON_SECURITY_JWT_SECRET: ${JWT_SECRET:?define JWT_SECRET (>= 32 caracteres)}
+      PIMON_CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      # Entrar con Google: apagado hasta tener el client-id (tipo «Aplicación web»).
+      GOOGLE_HABILITADO: ${GOOGLE_HABILITADO:-false}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      OFF_CONTACTO: ${OFF_CONTACTO:-}
+      # Precios de las webs de los súper: APAGADO salvo uso privado.
+      PRECIOS_WEB: ${PRECIOS_WEB:-false}
+      OPEN_PRICES: ${OPEN_PRICES:-true}
+      MERCADONA_ALMACEN: ${MERCADONA_ALMACEN:-mad1}
+      # Cuenta de administración (panel de versiones). Solo se crea con la base vacía.
+      CREATE_DEFAULT_ADMIN: ${CREATE_DEFAULT_ADMIN:-false}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+
+  front:
+    build:
+      context: ./front
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    # Sin "ports": en el VPS entra el proxy de Coolify por la red interna. En local,
+    # docker-compose.override.yml publica FRONT_PORT.
+    expose:
+      - "80"
+    depends_on:
+      - back
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+volumes:
+  listillo-db:

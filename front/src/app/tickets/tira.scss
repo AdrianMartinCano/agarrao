@@ -1,0 +1,275 @@
+/*
+ * La tira de ticket, común al repaso y al detalle: papel con borde dentado arriba y abajo,
+ * cifras tabulares en tinta y, pegada al margen derecho de cada línea, su mini-ficha.
+ */
+
+.tira {
+  position: relative;
+  margin: 12px 0;
+  padding: 18px 16px 20px;
+  background: var(--papel);
+  color: var(--tinta);
+  /* Sombra que sigue también a los dientes (box-shadow no los vería) */
+  filter: drop-shadow(0 6px 9px rgb(42 47 90 / 0.2)) drop-shadow(0 1px 2px rgb(42 47 90 / 0.1));
+  font-variant-numeric: tabular-nums;
+}
+
+/* Los dientes del papel: triángulos de 9 px cada 16 px, recortados con una máscara */
+.tira::before,
+.tira::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 9px;
+  background: var(--papel);
+}
+
+.tira::before {
+  top: -9px;
+  mask: conic-gradient(from 135deg at top, #0000, #000 1deg 90deg, #0000 91deg) 50% / 16px 100%;
+}
+
+.tira::after {
+  bottom: -9px;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 90deg, #0000 91deg) 50% / 16px 100%;
+}
+
+/* La boca de la caja registradora, de la que sale la tira en el repaso */
+.boca {
+  position: relative;
+  z-index: 2;
+  height: 16px;
+  margin: 8px -8px -6px;
+  border-radius: 999px;
+  background: var(--tinta);
+  box-shadow: var(--sombra-ficha);
+}
+
+.tira__tienda {
+  margin: 0 0 2px;
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tira__fecha {
+  margin: 0 0 12px;
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.tira__lineas {
+  display: grid;
+  margin: 0;
+  padding: 10px 0;
+  border-top: 2px dashed var(--placa-nombre-lila);
+  border-bottom: 2px dashed var(--placa-nombre-lila);
+  list-style: none;
+}
+
+.linea {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 8px 0;
+}
+
+.linea + .linea { border-top: 1px solid rgb(42 47 90 / 0.08); }
+
+.linea__texto {
+  font-weight: 800;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+
+.linea__importe {
+  font-weight: 800;
+  font-size: 0.9375rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* El pie de la línea ocupa todo el ancho: el nombre del ticket no se parte por la mini-ficha */
+.linea__pie {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+}
+
+.linea__pie:empty { display: none; }
+
+.linea__detalle {
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+}
+
+/* Al margen derecho: con qué se casó. Nunca se corta: si no cabe, ocupa dos líneas */
+.linea__casado {
+  margin-left: auto;
+  max-width: 100%;
+}
+
+.mini-ficha {
+  position: relative;
+  /* Contorno papel, como un cromo recortado */
+  box-shadow: 0 0 0 2px var(--papel), 0 2px 5px -1px rgb(42 47 90 / 0.25);
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 34px;
+  padding: 4px 12px 4px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--placa-nombre-lila);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.mini-ficha--parecido { background: var(--placa-nombre-rosa); }
+
+/* El banderín pequeño, como la cinta de una ficha */
+.mini-ficha::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 8px;
+  width: 10px;
+  height: 16px;
+  background: var(--cinta-listillo);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+}
+
+.mini-ficha__nombre {
+  overflow-wrap: anywhere;
+}
+
+.hueco {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 4px 14px;
+  border: 2px dashed var(--tinta-suave);
+  border-radius: 999px;
+  background: var(--placa-nota);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.8125rem;
+}
+
+.tira__total--descuadre { color: var(--rosa-boton-hondo); }
+
+.tira__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 12px 0 0;
+  padding-top: 6px;
+  border-top: 3px double var(--tinta);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: 0.06em;
+}
+
+/* La firma: la tira sale de la ranura, como de una caja registradora */
+.tira--sale {
+  animation: sale 760ms var(--salida) backwards;
+}
+
+.mini-ficha--pega {
+  animation: pega 420ms var(--salida);
+}
+
+@keyframes sale {
+  from {
+    transform: translateY(-60%);
+    clip-path: inset(60% -20px -20px -20px);
+  }
+  to {
+    transform: none;
+    clip-path: inset(-20px -20px -20px -20px);
+  }
+}
+
+@keyframes pega {
+  0% { transform: scale(0.6) rotate(-6deg); }
+  60% { transform: scale(1.08) rotate(1deg); }
+}
+
+/* El panel que se abre bajo una línea para casarla o clasificarla (repasar y ticket guardado) */
+.casar {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 16px;
+  background: var(--lila);
+  animation: abre 320ms var(--salida) both;
+}
+
+.casar__campo { min-height: 46px; font-size: 0.9375rem; }
+
+.casar__opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.casar__opcion {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.casar__opcion--nueva { background: var(--placa-nombre-rosa); }
+
+.casar__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.casar__accion {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-decoration-color: var(--rosa-boton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@keyframes abre {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

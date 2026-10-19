@@ -1,0 +1,66 @@
+<ion-content class="trama">
+  <main class="portada">
+    <header class="portada__marca">
+      <h1 class="portada__nombre">
+        Agarrao
+        <svg class="portada__chispas" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M18 4 C19.5 13 22 15.5 31 17 C22 18.5 19.5 21 18 30 C16.5 21 14 18.5 5 17 C14 15.5 16.5 13 18 4 Z" />
+          <path d="M38 26 C38.8 30.5 40 31.7 44.5 32.5 C40 33.3 38.8 34.5 38 39 C37.2 34.5 36 33.3 31.5 32.5 C36 31.7 37.2 30.5 38 26 Z" />
+        </svg>
+      </h1>
+      <p class="portada__lema">Que no se te escape ni un céntimo.</p>
+      <!-- Buscar gasolineras no pide cuenta: arriba, para verlo sin bajar -->
+      <a class="portada__gasolina" routerLink="/gasolina">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M7 9h4M14 11h2a2 2 0 0 1 2 2v3a1.5 1.5 0 0 0 3 0V8l-3-3" />
+        </svg>
+        ¿Solo buscas gasolina barata? <strong>Sin cuenta</strong>
+      </a>
+    </header>
+
+    <section class="portada__elenco" aria-labelledby="elenco-titulo">
+      <h2 id="elenco-titulo" class="sr-solo">Así compara Agarrao</h2>
+      <p class="portada__ejemplo">Precios de ejemplo · por litro, por kilo o por unidad</p>
+      <ul class="elenco">
+        @for (personaje of elenco; track personaje.puesto) {
+          <li class="elenco__hueco" [style.--orden]="$index">
+            <app-ficha-personaje
+              [personaje]="personaje"
+              [elegida]="elegido() === personaje.puesto"
+              (elegir)="elegido.set($event)"
+            />
+          </li>
+        }
+      </ul>
+    </section>
+
+    <footer class="portada__entrar">
+      @if (hayGoogle()) {
+        <lib-google-button
+          class="boton-google"
+          label="Entrar con Google"
+          [showDivider]="false"
+          errorLabel="No se ha podido entrar con Google. Inténtalo otra vez."
+          (loginSuccess)="entrar()"
+        />
+        <p class="portada__privado">
+          De tu cuenta de Google solo guardamos tu nombre y tu correo.
+          <a routerLink="/privacidad">Privacidad</a> · <a routerLink="/condiciones">Condiciones</a>
+        </p>
+      } @else {
+        <p class="portada__sin-google" role="status">
+          El acceso con Google todavía no está configurado en este servidor.
+        </p>
+      }
+      @if (accesoPrueba) {
+        <button type="button" class="portada__prueba" (click)="entrarDePrueba()" [disabled]="entrandoDePrueba()">
+          {{ entrandoDePrueba() ? 'Entrando…' : 'Entrar con el usuario de prueba' }}
+        </button>
+        @if (errorPrueba()) {
+          <p class="portada__error" role="alert">{{ errorPrueba() }}</p>
+        }
+      }
+      <p class="portada__version">Agarrao {{ version }}</p>
+    </footer>
+  </main>
+</ion-content>

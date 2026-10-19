@@ -1,0 +1,532 @@
+<ion-content class="trama">
+  <main class="precios">
+    <header class="precios__cabeza">
+      <h1 class="titular">Precios</h1>
+      <p class="precios__lema">
+        Por unidad: de las webs de los súper (de hoy), de Open Prices y de vuestros tickets.
+      </p>
+    </header>
+
+    <label class="sr-solo" for="buscar-generico">Busca un genérico</label>
+    <input
+      id="buscar-generico"
+      class="campo precios__buscar"
+      type="search"
+      placeholder="¿Qué comparo? Leche, huevos…"
+      autocomplete="off"
+      enterkeyhint="search"
+      [value]="busqueda()"
+      (input)="busqueda.set(valor($event))"
+    />
+
+    <!-- Un producto concreto del buscador, en cada súper -->
+    @if (elegido(); as e) {
+      <section class="tiendas" aria-labelledby="cada-titulo" aria-live="polite">
+        <button type="button" class="enlace cada__volver" (click)="cerrarEnCadaSuper()">
+          ← Volver a «{{ busqueda().trim() }}»
+        </button>
+        <h2 id="cada-titulo" class="seccion">En cada súper</h2>
+        <div class="cada__elegido">
+          @if (e.producto.imagenUrl) {
+            <img class="tienda__foto" [src]="e.producto.imagenUrl" alt="" width="56" height="56" />
+          }
+          <span class="tienda__texto">
+            <span class="tienda__que">{{ e.producto.nombre }}</span>
+            <span class="tienda__formato">
+              {{ nombreDe(e.cadena) }}{{ e.producto.formato ? ' · ' + e.producto.formato : '' }}
+            </span>
+          </span>
+        </div>
+          <ng-container
+            *ngTemplateOutlet="apuntarEnLista; context: { $implicit: e.producto.nombre }"
+          />
+        @if (cargandoCada()) {
+          <p class="tiendas__nota" role="status">Buscándolo en cada súper…</p>
+        } @else if (errorCada()) {
+          <p class="aviso-error" role="alert">{{ errorCada() }}</p>
+        } @else if (enCadaSuper(); as c) {
+          @if (c.tiendas.length < 2) {
+            <p class="tiendas__nota">No lo encontramos igual en otros súper.</p>
+          } @else {
+            <p class="tiendas__nota">
+              {{
+                e.producto.unidad === 'UD'
+                  ? 'Por precio'
+                  : 'Por precio por ' + (e.producto.unidad === 'KG' ? 'kilo' : 'litro')
+              }}, del más barato al más caro.
+            </p>
+          }
+          <ol class="tiendas__lista">
+            @for (t of c.tiendas; track t.cadena; let primera = $first) {
+              <li class="tienda" [class.tienda--mejor]="primera && c.tiendas.length > 1">
+                <span class="tienda__nombre">{{ nombreDe(t.cadena) }}</span>
+                <a class="tienda__producto" [href]="t.producto.url" target="_blank" rel="noopener">
+                  @if (t.producto.imagenUrl) {
+                    <img
+                      class="tienda__foto"
+                      [src]="t.producto.imagenUrl"
+                      alt=""
+                      width="44"
+                      height="44"
+                      loading="lazy"
+                    />
+                  }
+                  <span class="tienda__texto">
+                    <span class="tienda__que">{{ t.producto.nombre }}</span>
+                    <span class="tienda__formato">
+                      {{ t.producto.formato }}{{ t.producto.formato && !t.mismoTamano ? ' · ' : ''
+                      }}{{ t.mismoTamano ? '' : 'otro tamaño'
+                      }}{{
+                        t.producto.fuente === 'OPEN_PRICES'
+                          ? ' · Open Prices, ' + dia(t.producto.fecha)
+                          : ''
+                      }}
+                    </span>
+                  </span>
+                  <span class="sr-solo"> (se abre la web de {{ nombreDe(t.cadena) }})</span>
+                </a>
+                <span class="tienda__precio">
+                  {{ euros(t.producto.precio) }} €
+                  @if (t.producto.unidad !== 'UD') {
+                    <span class="tienda__unidad">{{
+                      precio({ mejorPrecio: t.producto.precioUnidad, unidad: t.producto.unidad })
+                    }}</span>
+                  }
+                </span>
+              </li>
+            }
+          </ol>
+        }
+      </section>
+    }
+
+    <!-- Cualquier cosa en las webs de los súper, tenga genérico o no (una fregona, unas pilas) -->
+    @if (busqueda().trim().length >= 3 && !elegido()) {
+      <section class="tiendas" aria-labelledby="tiendas-titulo" aria-live="polite">
+        <h2 id="tiendas-titulo" class="seccion">En los súper</h2>
+        @if (buscandoEnTiendas()) {
+          <p class="tiendas__nota" role="status">Buscando «{{ busqueda().trim() }}» en las webs…</p>
+        } @else if (enLasTiendas(); as b) {
+          @if (b.tiendas.length === 0) {
+            <p class="tiendas__nota">Ningún súper tiene «{{ b.texto }}» en su web.</p>
+          } @else {
+            <p class="tiendas__nota">
+              {{ b.porUnidad ? 'Por precio por unidad' : 'Por precio' }}, del más barato al más
+              caro. Toca uno para ver cuánto vale en cada súper.
+            </p>
+            <ol class="tiendas__lista">
+              @for (t of b.tiendas; track t.cadena; let primera = $first) {
+                @let p = t.productos[0];
+                <li class="tienda" [class.tienda--mejor]="primera && b.tiendas.length > 1">
+                  <span class="tienda__nombre">{{ nombreDe(t.cadena) }}</span>
+                  <button
+                    type="button"
+                    class="tienda__producto"
+                    (click)="verEnCadaSuper(t.cadena, p)"
+                  >
+                    @if (p.imagenUrl) {
+                      <img
+                        class="tienda__foto"
+                        [src]="p.imagenUrl"
+                        alt=""
+                        width="44"
+                        height="44"
+                        loading="lazy"
+                      />
+                    }
+                    <span class="tienda__texto">
+                      <span class="tienda__que">{{ p.nombre }}</span>
+                      @if (p.formato || p.fuente === 'OPEN_PRICES') {
+                        <span class="tienda__formato">
+                          {{ p.formato }}{{ p.formato && p.fuente === 'OPEN_PRICES' ? ' · ' : ''
+                          }}{{ p.fuente === 'OPEN_PRICES' ? 'Open Prices, ' + dia(p.fecha) : '' }}
+                        </span>
+                      }
+                    </span>
+                  </button>
+                  <span class="tienda__precio">
+                    {{ euros(p.precio) }} €
+                    @if (b.porUnidad && p.unidad !== 'UD') {
+                      <span class="tienda__unidad">{{
+                        precio({ mejorPrecio: p.precioUnidad, unidad: p.unidad })
+                      }}</span>
+                    }
+                  </span>
+                  @if (t.encontrados > 1) {
+                    <button
+                      type="button"
+                      class="enlace tienda__mas"
+                      [attr.aria-expanded]="tiendaAbierta() === t.cadena"
+                      (click)="abrirTienda(t.cadena)"
+                    >
+                      {{
+                        tiendaAbierta() === t.cadena
+                          ? 'Menos'
+                          : t.encontrados - 1 + ' más en ' + nombreDe(t.cadena)
+                      }}
+                    </button>
+                  }
+                  @if (tiendaAbierta() === t.cadena) {
+                    <ul class="tienda__otros">
+                      @for (o of t.productos.slice(1); track o.idExterno) {
+                        <li class="tienda__otro">
+                          <button
+                            type="button"
+                            class="tienda__otro-boton"
+                            (click)="verEnCadaSuper(t.cadena, o)"
+                          >
+                            {{ o.nombre }}
+                          </button>
+                          <span class="tienda__otro-precio">{{ euros(o.precio) }} €</span>
+                        </li>
+                      }
+                    </ul>
+                  }
+                </li>
+              }
+            </ol>
+          }
+        }
+      </section>
+    }
+
+    <div class="pasillos" role="group" aria-label="Pasillos">
+      @for (c of categorias; track c) {
+        <button
+          type="button"
+          class="pasillo"
+          [class.pasillo--elegido]="pasillo() === c"
+          [attr.aria-pressed]="pasillo() === c"
+          (click)="elegirPasillo(c)"
+        >
+          {{ nombreCategoria[c] }}
+        </button>
+      }
+    </div>
+
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    } @else if (catalogo() === null) {
+      <p class="precios__estado" role="status">Abriendo el catálogo…</p>
+    } @else {
+      @if (sinPrecios() && !filtrando()) {
+        <section class="vacio">
+          <img src="personajes/listillo-cartel.svg" alt="" width="150" height="150" />
+          <h2 class="vacio__titulo">Aún no hay precios</h2>
+          <p class="vacio__texto">
+            Sube los tickets de la compra y aquí se enfrentan las marcas blancas de cada súper.
+          </p>
+          <a class="boton-rosa vacio__boton" routerLink="/tickets/nuevo">Subir un ticket</a>
+        </section>
+      }
+
+      <!-- Lo que compra el hogar (sale en sus tickets), por pasillo -->
+      @if (pasillosComprados().length > 0) {
+        <h2 class="seccion">Lo que compráis</h2>
+      }
+      @for (p of pasillosComprados(); track p.categoria) {
+        <section class="grupo" [attr.aria-labelledby]="'compra-' + p.categoria">
+          <h2 class="grupo__rotulo" [id]="'compra-' + p.categoria">
+            {{ nombreCategoria[p.categoria] }}
+          </h2>
+          <ul class="filas">
+            @for (g of p.genericos; track g.id) {
+              <ng-container *ngTemplateOutlet="fila; context: { $implicit: g }" />
+            }
+          </ul>
+        </section>
+      }
+
+      <!-- El resto con precio: de las webs de los súper -->
+      @if (pasillosConPrecio().length > 0) {
+        <h2 class="seccion">
+          {{ pasillosComprados().length > 0 ? 'Más precios de los súper' : 'Precios de los súper' }}
+        </h2>
+      }
+      @for (p of pasillosConPrecio(); track p.categoria) {
+        <section class="grupo" [attr.aria-labelledby]="'pasillo-' + p.categoria">
+          <h2 class="grupo__rotulo" [id]="'pasillo-' + p.categoria">
+            {{ nombreCategoria[p.categoria] }}
+          </h2>
+          <ul class="filas">
+            @for (g of p.genericos; track g.id) {
+              <ng-container *ngTemplateOutlet="fila; context: { $implicit: g }" />
+            }
+          </ul>
+        </section>
+      }
+
+      <!-- El resto del catálogo, en gris: plegado salvo al buscar o filtrar -->
+      @if (cuantosSinPrecio() > 0) {
+        @if (filtrando() || verSinPrecio()) {
+          @for (p of pasillosSinPrecio(); track p.categoria) {
+            <section class="grupo grupo--gris" [attr.aria-labelledby]="'gris-' + p.categoria">
+              <h2 class="grupo__rotulo" [id]="'gris-' + p.categoria">
+                {{ nombreCategoria[p.categoria] }} <span class="grupo__sin">sin precio aún</span>
+              </h2>
+              <ul class="filas">
+                @for (g of p.genericos; track g.id) {
+                  <ng-container *ngTemplateOutlet="fila; context: { $implicit: g }" />
+                }
+              </ul>
+            </section>
+          }
+        } @else {
+          <!-- Plegado en un botón: son decenas de fichas grises que en el súper estorban -->
+          <h2 class="seccion">El resto del catálogo</h2>
+          <button type="button" class="boton-papel precios__resto" (click)="verSinPrecio.set(true)">
+            Ver los {{ cuantosSinPrecio() }} sin precio aún
+          </button>
+        }
+      } @else if (filtrando() && noHayNada()) {
+        <p class="precios__estado">Ningún genérico se llama así.</p>
+      }
+
+      <!-- Crear uno propio -->
+      <section class="propio">
+        @if (creando()) {
+          <form class="propio__form" (submit)="crear($event)">
+            <h2 class="propio__titulo">Un genérico vuestro</h2>
+            <label class="sr-solo" for="nuevo-nombre">Nombre</label>
+            <input
+              id="nuevo-nombre"
+              class="campo"
+              maxlength="60"
+              placeholder="Turrón, comida del gato…"
+              [value]="nuevoNombre()"
+              (input)="nuevoNombre.set(valor($event))"
+            />
+            <div class="propio__fila">
+              <label class="propio__campo">
+                <span class="propio__etiqueta">Pasillo</span>
+                <select
+                  class="campo"
+                  [value]="nuevaCategoria()"
+                  (change)="nuevaCategoria.set($any(valor($event)))"
+                >
+                  @for (c of categorias; track c) {
+                    <option [value]="c">{{ nombreCategoria[c] }}</option>
+                  }
+                </select>
+              </label>
+              <label class="propio__campo">
+                <span class="propio__etiqueta">Se compara en</span>
+                <select
+                  class="campo"
+                  [value]="nuevaUnidad()"
+                  (change)="nuevaUnidad.set($any(valor($event)))"
+                >
+                  <option value="KG">€/kg</option>
+                  <option value="L">€/L</option>
+                  <option value="UD">€/ud</option>
+                </select>
+              </label>
+            </div>
+            @if (errorCrear()) {
+              <p class="aviso-error" role="alert">{{ errorCrear() }}</p>
+            }
+            <div class="propio__botones">
+              <button type="button" class="enlace" (click)="creando.set(false)">Ahora no</button>
+              <button type="submit" class="boton-rosa propio__crear">Crear</button>
+            </div>
+          </form>
+        } @else {
+          <button type="button" class="enlace" (click)="creando.set(true)">
+            ¿Falta alguno? Créalo
+          </button>
+        }
+      </section>
+    }
+
+    <p class="precios__fuente">
+      Algunos precios son de
+      <a href="https://prices.openfoodfacts.org" target="_blank" rel="noopener">Open Prices</a>, de
+      Open Food Facts: los sube la gente desde sus tickets (datos abiertos, licencia ODbL).
+    </p>
+  </main>
+</ion-content>
+
+<ion-footer class="ion-no-border pie">
+  <app-pestanas activa="precios" />
+</ion-footer>
+
+<!-- Una fila del catálogo y, abierta, su cara a cara -->
+<ng-template #fila let-g>
+  <li class="fila" [class.fila--sin]="!g.mejorCadena" [class.fila--abierta]="abierto() === g.id">
+    <button
+      type="button"
+      class="fila__toque"
+      [attr.aria-expanded]="abierto() === g.id"
+      [attr.aria-controls]="'cara-' + g.id"
+      (click)="abrir(g)"
+    >
+      <img class="fila__retrato" [src]="retrato(g)" alt="" width="48" height="48" />
+      <span class="fila__texto">
+        <span class="fila__nombre">{{ g.nombre }}</span>
+        <span class="fila__donde">
+          @if (g.mejorCadena) {
+            Mejor en {{ nombreDe(g.mejorCadena)
+            }}{{
+              g.mejorFuente === 'WEB'
+                ? ' · web'
+                : g.mejorFuente === 'OPEN_PRICES'
+                  ? ' · Open Prices'
+                  : ''
+            }}
+          } @else if (g.productos > 0) {
+            Falta saber cuánto trae
+          } @else {
+            Sin precio aún
+          }
+        </span>
+      </span>
+      @if (precio(g); as p) {
+        <span class="fila__precio">{{ p }}</span>
+      }
+    </button>
+
+    @if (abierto() === g.id) {
+      <div class="cara" [id]="'cara-' + g.id">
+        @if (errorDetalle()) {
+          <p class="aviso-error" role="alert">{{ errorDetalle() }}</p>
+        } @else if (detalle(); as d) {
+          <ng-container *ngTemplateOutlet="apuntarEnLista; context: { $implicit: d.nombre }" />
+          @if (d.tiendas.length > 0) {
+            <app-cara-a-cara [detalle]="d" />
+          } @else if (d.productos.length === 0) {
+            <p class="cara__vacio">
+              Todavía no ha salido en ningún ticket. Cuando lo compréis, aparece aquí su precio en
+              cada súper.
+            </p>
+          }
+
+          @if (d.enLaWeb.length > 0) {
+            <h3 class="cara__titulo">En las webs de los súper</h3>
+            <ul class="productos">
+              @for (
+                w of d.enLaWeb.slice(0, verTodaLaWeb() ? 99 : 8);
+                track w.cadena + w.idExterno
+              ) {
+                <li class="producto web">
+                  @if (w.url) {
+                    <a class="web__nombre" [href]="w.url" target="_blank" rel="noopener">
+                      @if (w.imagenUrl) {
+                        <img
+                          class="web__foto"
+                          [src]="w.imagenUrl"
+                          alt=""
+                          width="40"
+                          height="40"
+                          loading="lazy"
+                        />
+                      }
+                      {{ w.nombre
+                      }}<span class="sr-solo"> (se abre la web de {{ nombreDe(w.cadena) }})</span>
+                    </a>
+                  } @else {
+                    <span class="web__nombre">{{ w.nombre }}</span>
+                  }
+                  <span class="web__precio">{{
+                    precio({ mejorPrecio: w.precioUnidad, unidad: d.unidad })
+                  }}</span>
+                  <span class="web__detalle">
+                    {{ nombreDe(w.cadena) }}{{ w.formato ? ' · ' + w.formato : '' }} ·
+                    {{ euros(w.precio) }} €{{
+                      w.fuente === 'OPEN_PRICES' ? ' · Open Prices, ' + dia(w.actualizado) : ''
+                    }}
+                  </span>
+                  <button type="button" class="enlace web__no" (click)="noEsEste(d, w)">
+                    No es esto<span class="sr-solo">: {{ w.nombre }}</span>
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+
+          @if (d.enLaWeb.length > 8 && !verTodaLaWeb()) {
+            <button type="button" class="enlace cara__mas" (click)="verTodaLaWeb.set(true)">
+              Ver los {{ d.enLaWeb.length }} de la web
+            </button>
+          }
+
+          @if (d.productos.length > 0) {
+            <h3 class="cara__titulo">Lo que habéis comprado</h3>
+            <ul class="productos">
+              @for (p of d.productos; track claveProducto(p)) {
+                <li class="producto">
+                  <div class="producto__fila">
+                    <span class="producto__texto">
+                      <span class="producto__nombre">{{ decir(p.nombre) }}</span>
+                      <span class="producto__tienda"
+                        >{{ nombreDe(p.cadena) }} ·
+                        {{ p.compras === 1 ? 'una vez' : p.compras + ' veces' }}</span
+                      >
+                    </span>
+                    @if (p.precioUnidad !== null) {
+                      <span class="producto__precio">{{
+                        precio({ mejorPrecio: p.precioUnidad, unidad: d.unidad })
+                      }}</span>
+                    } @else {
+                      <span class="producto__falta">¿Cuánto trae?</span>
+                    }
+                    <button
+                      type="button"
+                      class="enlace producto__corregir"
+                      [attr.aria-expanded]="corrigiendo() === claveProducto(p)"
+                      (click)="corregir(p)"
+                    >
+                      Corregir<span class="sr-solo"> {{ p.nombre }}</span>
+                    </button>
+                  </div>
+                  @if (corrigiendo() === claveProducto(p)) {
+                    <app-clasificar-linea
+                      [clave]="claveProducto(p)"
+                      [texto]="p.texto"
+                      unidadLinea="UD"
+                      [catalogo]="catalogo()"
+                      [actual]="{ genericoId: d.id, tamano: p.tamano }"
+                      [ocupado]="guardando()"
+                      [error]="errorCorregir()"
+                      (guardar)="guardarCorreccion(p, $event)"
+                      (ninguno)="guardarCorreccion(p, { genericoId: null, tamano: null })"
+                    />
+                  }
+                </li>
+              }
+            </ul>
+          }
+
+          @if (d.propio) {
+            <button
+              type="button"
+              class="boton-papel cara__borrar"
+              [class.cara__borrar--seguro]="confirmandoBorrar()"
+              (click)="borrar(d)"
+            >
+              {{ confirmandoBorrar() ? '¿Seguro? Toca otra vez' : 'Borrar este genérico' }}
+            </button>
+          }
+        } @else {
+          <p class="cara__cargando" role="status">Enfrentando precios…</p>
+        }
+      </div>
+    }
+  </li>
+</ng-template>
+
+<!-- Apuntar en la lista: el genérico abierto o el producto elegido en el buscador -->
+<ng-template #apuntarEnLista let-nombre>
+  @if (yaApuntado(nombre)) {
+    <p class="apuntar apuntar--hecho" role="status">
+      ✓ En la lista
+      <a class="enlace" routerLink="/lista">Ver la lista</a>
+    </p>
+  } @else {
+    <button type="button" class="boton-papel apuntar" (click)="apuntar(nombre)">
+      Apuntar en la lista
+    </button>
+  }
+  @if (errorLista() && yaApuntado(nombre)) {
+    <p class="aviso-error" role="alert">{{ errorLista() }}</p>
+  }
+</ng-template>

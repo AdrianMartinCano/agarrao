@@ -1,0 +1,120 @@
+<ion-content class="trama">
+  <main class="empezar">
+    <header class="empezar__cabeza">
+      @if (tieneHogar()) {
+        <button type="button" class="empezar__volver" (click)="volver()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          Volver a la lista
+        </button>
+      }
+      <img class="empezar__listillo" src="personajes/listillo.svg" alt="" width="112" height="112" />
+      <h1 class="titular">
+        @if (codigo() && hogarInvitado(); as h) {
+          Te esperan en {{ h.nombre }}
+        } @else if (tieneHogar()) {
+          Otro hogar
+        } @else {
+          ¿Con quién compras?
+        }
+      </h1>
+      <p class="empezar__texto">La lista es del hogar: lo que apunte uno, lo ven todos.</p>
+    </header>
+
+    <div class="caminos">
+      <section class="camino camino--crear" [class.camino--abierto]="camino() === 'crear'">
+        <button
+          type="button"
+          class="camino__toque"
+          [attr.aria-expanded]="camino() === 'crear'"
+          aria-controls="camino-crear"
+          (click)="elegir('crear')"
+        >
+          <span class="camino__cinta" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5M10 20v-5h4v5" /></svg>
+          </span>
+          <span class="camino__nombre">Crear mi hogar</span>
+          <span class="camino__nota">Y luego invitas a los tuyos.</span>
+        </button>
+        @if (camino() === 'crear') {
+          <form id="camino-crear" class="camino__form" (submit)="crear($event)">
+            <label class="sr-solo" for="nombre-hogar">Nombre del hogar</label>
+            <input
+              id="nombre-hogar"
+              class="campo"
+              maxlength="40"
+              autocomplete="off"
+              [value]="nombre()"
+              (input)="nombre.set(valor($event))"
+            />
+            <button type="submit" class="boton-rosa" [disabled]="enviando()">
+              {{ enviando() ? 'Creando…' : 'Crear hogar' }}
+            </button>
+          </form>
+        }
+      </section>
+
+      <section class="camino camino--unirse" [class.camino--abierto]="camino() === 'unirse'">
+        <button
+          type="button"
+          class="camino__toque"
+          [attr.aria-expanded]="camino() === 'unirse'"
+          aria-controls="camino-unirse"
+          (click)="elegir('unirse')"
+        >
+          <span class="camino__cinta" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4" /><path d="M12 12h9M18 12v3M21 12v2" /></svg>
+          </span>
+          <span class="camino__nombre">Tengo un código</span>
+          <span class="camino__nota">Te lo pasa quien ya está dentro.</span>
+        </button>
+        @if (camino() === 'unirse') {
+          <form id="camino-unirse" class="camino__form" (submit)="unirse($event)">
+            <label class="sr-solo" for="codigo-hogar">Código de invitación</label>
+            <input
+              id="codigo-hogar"
+              class="campo campo--codigo"
+              placeholder="ABCD 2345"
+              maxlength="9"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              [value]="codigoCampo()"
+              (input)="escribirCodigo(valor($event))"
+            />
+            @if (hogarInvitado(); as h) {
+              <p class="invitacion" role="status">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5M10 20v-5h4v5" /></svg>
+                <span>
+                  @if (h.yaEstoyDentro) {
+                    Ya estás en <strong>{{ h.nombre }}</strong>
+                  } @else {
+                    <strong>{{ h.nombre }}</strong> · {{ h.miembros }} {{ h.miembros === 1 ? 'persona' : 'personas' }}
+                  }
+                </span>
+              </p>
+            } @else if (buscandoInvitacion()) {
+              <p class="invitacion invitacion--buscando" role="status">Buscando el hogar…</p>
+            } @else if (errorInvitacion()) {
+              <p class="aviso-error" role="alert">{{ errorInvitacion() }}</p>
+            }
+            <button type="submit" class="boton-rosa" [disabled]="enviando() || !!errorInvitacion()">
+              @if (enviando()) {
+                Entrando…
+              } @else if (hogarInvitado()?.yaEstoyDentro) {
+                Ir a su lista
+              } @else if (hogarInvitado(); as h) {
+                Entrar en «{{ h.nombre }}»
+              } @else {
+                Entrar en el hogar
+              }
+            </button>
+          </form>
+        }
+      </section>
+    </div>
+
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+  </main>
+</ion-content>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Naranja con cara">
+  <ellipse cx="80" cy="148" rx="50" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <circle cx="80" cy="88" r="54" fill="#FFA43B"/>
+  <path d="M80 36 Q96 18 114 26 Q100 42 80 36 Z" fill="#4FD18B"/>
+  <circle cx="80" cy="36" r="4" fill="#8A5A3C"/>
+  <path d="M44 70 Q48 56 60 50" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <circle cx="110" cy="62" r="2" fill="#FF8A1F"/><circle cx="118" cy="80" r="2" fill="#FF8A1F"/><circle cx="46" cy="104" r="2" fill="#FF8A1F"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="94" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="94" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="92" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="92" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="106" rx="7" ry="4.5" fill="#FF8FA3"/>
+  <ellipse cx="105" cy="106" rx="7" ry="4.5" fill="#FF8FA3"/>
+  <path d="M73 105 Q80 112 87 105" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

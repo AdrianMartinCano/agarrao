@@ -1,0 +1,97 @@
+<ion-content class="trama">
+  <main class="reparto">
+    <header class="reparto__cabeza">
+      <a class="reparto__volver" routerLink="/lista">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        La lista
+      </a>
+      <h1 class="titular reparto__titular">¿Dónde lo compro?</h1>
+    </header>
+
+    @if (reparto(); as r) {
+      @if (r.grupos.length === 0 && r.sinPrecio.length === 0) {
+        <section class="vacio">
+          <img src="personajes/listillo.svg" alt="" width="130" height="130" />
+          <p class="vacio__texto">No falta nada en la lista. Apunta algo y te digo dónde sale más barato.</p>
+        </section>
+      } @else {
+        <!-- Lo que cuesta repartido y lo que se ahorra -->
+        @if (r.grupos.length > 0) {
+          <p class="resumen">
+            <span class="resumen__cifra"><span class="resumen__unos">unos </span>{{ euros(r.total) }} €</span>
+            <span class="resumen__texto">
+              comprando cada cosa donde sale más barata
+              @if (r.grupos.length > 1) {
+                en {{ r.grupos.length }} súper
+              }
+            </span>
+          </p>
+          @if (ahorro(); as a) {
+            <p class="nota">Te ahorras {{ euros(a.dif) }} € frente a ir solo a {{ nombreDe(a.cadena) }}.</p>
+          }
+        }
+
+        <!-- Un resguardo por súper -->
+        <ol class="resguardos">
+          @for (g of r.grupos; track g.cadena) {
+            <li class="resguardo">
+              <h2 class="resguardo__tienda">{{ nombreDe(g.cadena) }}</h2>
+              <ul class="lineas">
+                @for (a of g.articulos; track a.articuloId) {
+                  <li class="linea">
+                    <img class="linea__retrato" [src]="retrato(a)" alt="" width="36" height="36" />
+                    <span class="linea__que">
+                      <span class="linea__nombre">
+                        {{ a.nombre }}@if (a.cantidad > 1) {
+                          <span class="linea__cantidad"> ×{{ a.cantidad }}</span>
+                        }
+                      </span>
+                      <span class="linea__producto">{{ decir(a.producto) }} · {{ porUnidad(a) }}</span>
+                    </span>
+                    <span class="linea__importe">{{ euros(a.importe) }}</span>
+                  </li>
+                }
+              </ul>
+              <p class="resguardo__total"><span>TOTAL</span><span>{{ euros(g.total) }} €</span></p>
+            </li>
+          }
+        </ol>
+
+        @if (r.sinPrecio.length > 0) {
+          <section class="sin" aria-labelledby="sin-titulo">
+            <h2 id="sin-titulo" class="bloque__rotulo">Donde quieras</h2>
+            <p class="sin__texto">
+              @for (s of r.sinPrecio; track s.articuloId; let ultimo = $last) {
+                <span class="sin__cosa">{{ s.nombre }}</span>{{ ultimo ? '' : ', ' }}
+              }
+            </p>
+            <p class="sin__nota">Sin precio todavía: o no sé qué genérico es o ningún súper lo tiene.</p>
+          </section>
+        }
+
+        @if (r.enUna.length > 1) {
+          <section class="solas" aria-labelledby="solas-titulo">
+            <h2 id="solas-titulo" class="bloque__rotulo">Si vas a uno solo</h2>
+            <ul class="solas__filas">
+              @for (e of r.enUna; track e.cadena) {
+                <li class="sola">
+                  <span class="sola__tienda">{{ nombreDe(e.cadena) }}</span>
+                  <span class="sola__falta">
+                    {{ e.faltan === 0 ? 'lo tiene todo' : e.faltan === 1 ? 'falta 1 cosa' : 'faltan ' + e.faltan + ' cosas' }}
+                  </span>
+                  <span class="sola__total">{{ euros(e.total) }} €</span>
+                </li>
+              }
+            </ul>
+          </section>
+        }
+
+        <p class="reparto__pie">Precios de las webs de los súper (de hoy) y de vuestros tickets.</p>
+      }
+    } @else if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    } @else {
+      <p class="reparto__cargando" role="status">Mirando precios…</p>
+    }
+  </main>
+</ion-content>

@@ -1,0 +1,122 @@
+<ion-content class="trama">
+  <main class="anotar">
+    <header class="anotar__cabeza">
+      <a class="anotar__volver" routerLink="/gasto">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        Gasto
+      </a>
+      <h1 class="titular">{{ editando() ? 'Cambiar el gasto' : 'Anotar un gasto' }}</h1>
+    </header>
+
+    @if (cargando()) {
+      <p class="anotar__nota" role="status">Cargando…</p>
+    } @else {
+      @if (!editando()) {
+        <!-- Rellenar desde un ticket: la tienda, el total y la fecha -->
+        <section class="leer" aria-labelledby="leer-titulo">
+          <h2 id="leer-titulo" class="leer__titulo">¿Tienes el ticket?</h2>
+          <p class="leer__nota">Léelo y se rellena solo: la tienda, el total y la fecha.</p>
+          <div class="leer__botones">
+            <label class="boton-papel leer__boton">
+              <input class="sr-solo" type="file" accept="application/pdf,.pdf" (change)="leerPdf($event)" />
+              PDF
+            </label>
+            <label class="boton-papel leer__boton">
+              <input class="sr-solo" type="file" accept="image/*" capture="environment" (change)="leerFoto($event)" />
+              Foto
+            </label>
+          </div>
+          @if (leyendo(); as l) {
+            <p class="leer__nota" role="status">{{ l }}</p>
+          }
+        </section>
+      }
+
+      <form class="ficha" (submit)="guardar($event)" novalidate>
+        <label class="ficha__campo">
+          <span class="ficha__etiqueta">En qué</span>
+          <input
+            class="campo"
+            maxlength="80"
+            placeholder="Cena, gasolina, Netflix…"
+            autocomplete="off"
+            [value]="concepto()"
+            (input)="concepto.set(valor($event))"
+          />
+        </label>
+
+        <div class="ficha__fila">
+          <label class="ficha__campo">
+            <span class="ficha__etiqueta">Cuánto (€)</span>
+            <input
+              class="campo ficha__importe"
+              inputmode="decimal"
+              placeholder="12,50"
+              autocomplete="off"
+              [value]="importe()"
+              (input)="importe.set(valor($event))"
+            />
+          </label>
+          <label class="ficha__campo">
+            <span class="ficha__etiqueta">Cuándo</span>
+            <input class="campo" type="date" [max]="hoy" [value]="fecha()" (input)="fecha.set(valor($event))" />
+          </label>
+        </div>
+
+        <fieldset class="tipos">
+          <legend class="ficha__etiqueta">De qué tipo</legend>
+          <div class="tipos__lista">
+            @for (t of tipos; track t) {
+              <button
+                type="button"
+                class="tipo"
+                [class.tipo--si]="tipo() === t"
+                [attr.aria-pressed]="tipo() === t"
+                (click)="tipo.set(t)"
+              >
+                {{ nombreTipo[t] }}
+              </button>
+            }
+          </div>
+          @if (tipo() === 'SUPER') {
+            <p class="ficha__nota">Una compra sin ticket. Si tienes el ticket del súper, mejor súbelo: así sus precios van a Precios.</p>
+          }
+        </fieldset>
+
+        @if (!editando()) {
+          <label class="cada-mes">
+            <input type="checkbox" [checked]="cadaMes()" (change)="cadaMes.set(!cadaMes())" />
+            <span>
+              <strong>Se repite cada mes</strong>
+              <span class="ficha__nota">
+                Se apunta solo cada mes el día {{ fecha() ? (+fecha().slice(8) > 28 ? 28 : +fecha().slice(8)) : '' }}
+                (Netflix, Spotify, el gimnasio…).
+              </span>
+            </span>
+          </label>
+        } @else if (original()?.fijoId) {
+          <p class="ficha__nota">Este gasto sale de uno que se repite cada mes: cambiarlo solo cambia este mes.</p>
+        }
+
+        @if (error()) {
+          <p class="aviso-error" role="alert">{{ error() }}</p>
+        }
+
+        <button type="submit" class="boton-rosa" [disabled]="guardando()">
+          {{ guardando() ? 'Guardando…' : editando() ? 'Guardar los cambios' : 'Anotar' }}
+        </button>
+        @if (editando()) {
+          <button
+            type="button"
+            class="boton-papel ficha__borrar"
+            [class.ficha__borrar--seguro]="confirmandoBorrar()"
+            [disabled]="guardando()"
+            (click)="borrar()"
+          >
+            {{ confirmandoBorrar() ? '¿Seguro? Toca otra vez' : 'Borrar el gasto' }}
+          </button>
+        }
+      </form>
+    }
+  </main>
+</ion-content>

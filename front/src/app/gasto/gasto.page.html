@@ -1,0 +1,224 @@
+<ion-content class="trama">
+  <main class="gasto">
+    @if (gasto(); as g) {
+      <header class="gasto__cabeza">
+        <h1 class="titular">Gasto</h1>
+        <div class="mes" role="group" aria-label="Mes">
+          <button type="button" class="mes__flecha" aria-label="Mes anterior" (click)="moverMes(-1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <span class="mes__nombre" aria-live="polite">{{ nombreMes(g.mes, true, true) }}</span>
+          <button
+            type="button"
+            class="mes__flecha"
+            aria-label="Mes siguiente"
+            [disabled]="esteMes()"
+            (click)="moverMes(1)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- El total: cifra exacta, M PLUS tabular (Burbuja Contada) -->
+      <p class="total">
+        <span class="total__cifra">{{ euros(g.total) }} €</span>
+        <span class="total__tickets">{{ cuantos(g) }}</span>
+      </p>
+
+      <section class="tarro" aria-labelledby="tarro-titulo">
+        <h2 id="tarro-titulo" class="sr-solo">En qué se ha ido</h2>
+        <div class="tarro__dibujo">
+          <app-hucha id="mes" [mes]="g.mes" [capas]="capas()" [nivel]="nivel()" [etiqueta]="etiquetaHucha()" />
+          @if (g.total === 0) {
+            <p class="tarro__vacio">Este mes la hucha está vacía.<br />Sube un ticket o anota un gasto.</p>
+          }
+        </div>
+
+        @if (capas().length > 0) {
+          <ul class="leyenda">
+            @for (c of capas(); track c.clave) {
+              <li class="leyenda__placa">
+                <span class="leyenda__muestra" [style.background]="c.color" aria-hidden="true"></span>
+                <span class="leyenda__nombre">{{ c.nombre }}</span>
+                <span class="leyenda__importe">{{ euros(c.total) }} €</span>
+                <span class="leyenda__parte">{{ porcentaje(c.total) }}</span>
+              </li>
+            }
+          </ul>
+        }
+
+        @if (goloso(); as nota) {
+          <p class="nota">{{ nota }}</p>
+        }
+        @if (g.descuentos > 0) {
+          <p class="nota">Los descuentos te han ahorrado {{ euros(g.descuentos) }} €.</p>
+        }
+        @if (g.total === 0) {
+          <a class="boton-rosa gasto__subir" routerLink="/anadir">Añadir un gasto</a>
+        }
+      </section>
+
+      <!-- Los seis meses: un tarrito cada uno, lleno según lo gastado -->
+      <section class="bloque" aria-labelledby="meses-titulo">
+        <h2 id="meses-titulo" class="bloque__rotulo">Los últimos meses</h2>
+        <div class="tarritos">
+          @for (m of g.meses; track m.mes; let primero = $first) {
+            <button
+              type="button"
+              class="tarrito"
+              [class.tarrito--elegido]="m.mes === g.mes"
+              [attr.aria-pressed]="m.mes === g.mes"
+              [attr.aria-label]="nombreMes(m.mes, true, true) + ': ' + euros(m.total) + ' €'"
+              (click)="elegirMes(m.mes)"
+            >
+              <svg class="tarrito__dibujo" viewBox="0 0 40 52" aria-hidden="true">
+                <rect x="4" y="12" width="32" height="38" rx="9" fill="#FFFFFF" />
+                <rect
+                  class="tarrito__lleno"
+                  x="7"
+                  [attr.y]="47 - 32 * nivelMes(m.total)"
+                  width="26"
+                  [attr.height]="32 * nivelMes(m.total)"
+                  rx="4"
+                />
+                <path class="tarrito__brillo" d="M10 22 V30" />
+                <rect x="8" y="5" width="24" height="9" rx="4" fill="#FFB23E" />
+              </svg>
+              <span class="tarrito__mes">
+                {{ nombreMes(m.mes) }}
+                <!-- El año en el primero y en cada enero: «may 2026 … dic · ene 2027» -->
+                <span class="tarrito__anio" [class.tarrito__anio--oculto]="!primero && !m.mes.endsWith('-01')">{{
+                  m.mes.slice(0, 4)
+                }}</span>
+              </span>
+              <span class="tarrito__total">{{ m.total > 0 ? redondo(m.total) + ' €' : '—' }}</span>
+            </button>
+          }
+        </div>
+      </section>
+
+      <!-- Lo anotado este mes: cada uno se toca para cambiarlo o borrarlo -->
+      <section class="bloque" aria-labelledby="anotados-titulo">
+        <h2 id="anotados-titulo" class="bloque__rotulo">Anotado este mes</h2>
+        @if (anotados().length > 0) {
+          <ul class="anotados">
+            @for (a of anotados(); track a.id) {
+              <li>
+                <a class="anotado" [routerLink]="['/gastos', a.id]">
+                  <span class="anotado__muestra" [style.background]="colorTipo[a.tipo]" aria-hidden="true"></span>
+                  <span class="anotado__que">
+                    {{ a.concepto }}
+                    <span class="anotado__nota">
+                      {{ nombreTipo[a.tipo] }} · {{ dia(a.fecha) }}{{ a.fijoId ? ' · cada mes' : '' }}
+                    </span>
+                  </span>
+                  <span class="anotado__importe">{{ euros(a.importe) }} €</span>
+                </a>
+              </li>
+            }
+          </ul>
+          <a class="boton-papel gasto__anotar" routerLink="/gastos/nuevo">Anotar un gasto</a>
+        } @else {
+          <!-- Vacío: una ficha con la pista y el botón dentro, todo en el eje -->
+          <div class="sin-anotar">
+            <p class="sin-anotar__titulo">Nada anotado este mes</p>
+            <p class="sin-anotar__pista">Cenas, gasolina, Netflix… lo que no es un ticket del súper.</p>
+            <a class="boton-papel" routerLink="/gastos/nuevo">Anotar un gasto</a>
+          </div>
+        }
+      </section>
+
+      @if (fijos().length > 0) {
+        <section class="bloque" aria-labelledby="fijos-titulo">
+          <h2 id="fijos-titulo" class="bloque__rotulo">Cada mes</h2>
+          <ul class="anotados">
+            @for (f of fijos(); track f.id) {
+              <li class="anotado anotado--fijo">
+                <span class="anotado__muestra" [style.background]="colorTipo[f.tipo]" aria-hidden="true"></span>
+                <span class="anotado__que">
+                  {{ f.concepto }}
+                  <span class="anotado__nota">{{ nombreTipo[f.tipo] }} · el día {{ f.dia }}</span>
+                </span>
+                <span class="anotado__importe">{{ euros(f.importe) }} €</span>
+                <button
+                  type="button"
+                  class="anotado__quitar"
+                  [class.anotado__quitar--seguro]="quitandoFijo() === f.id"
+                  (click)="quitarFijo(f)"
+                >
+                  {{ quitandoFijo() === f.id ? '¿Seguro?' : 'Quitar' }}
+                </button>
+              </li>
+            }
+          </ul>
+          <p class="nota">Quitar uno deja de apuntarlo; lo de los meses pasados se queda.</p>
+        </section>
+      }
+
+      @if (porTipo() && g.porCategoria.length > 0) {
+        <section class="bloque" aria-labelledby="pasillos-titulo">
+          <h2 id="pasillos-titulo" class="bloque__rotulo">En el súper, por pasillo</h2>
+          <ul class="leyenda">
+            @for (c of g.porCategoria; track c.categoria) {
+              <li class="leyenda__placa">
+                <span
+                  class="leyenda__muestra"
+                  [style.background]="colorCategoria[c.categoria ?? 'SIN']"
+                  aria-hidden="true"
+                ></span>
+                <span class="leyenda__nombre">{{ c.categoria ? nombreCategoria[c.categoria] : 'Sin clasificar' }}</span>
+                <span class="leyenda__importe">{{ euros(c.total) }} €</span>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (g.porTienda.length > 0) {
+        <section class="bloque" aria-labelledby="tiendas-titulo">
+          <h2 id="tiendas-titulo" class="bloque__rotulo">En qué súper</h2>
+          <ul class="tiendas">
+            @for (t of g.porTienda; track t.cadena) {
+              <li class="tienda">
+                <span class="tienda__barra" [style.width.%]="(t.total * 100) / maxTienda()" aria-hidden="true"></span>
+                <span class="tienda__nombre">{{ nombreCadena[t.cadena] }}</span>
+                <span class="tienda__veces">{{ t.tickets === 1 ? '1 ticket' : t.tickets + ' tickets' }}</span>
+                <span class="tienda__total">{{ euros(t.total) }} €</span>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (g.top.length > 0) {
+        <section class="bloque" aria-labelledby="top-titulo">
+          <h2 id="top-titulo" class="bloque__rotulo">Lo que más cuesta</h2>
+          <ol class="top">
+            @for (t of g.top; track t.id; let i = $index) {
+              <li class="top__fila">
+                <span class="top__puesto" aria-hidden="true">{{ i + 1 }}</span>
+                <img class="top__retrato" [src]="retrato(t)" alt="" width="44" height="44" />
+                <span class="top__nombre">
+                  {{ t.nombre }}
+                  <span class="top__veces">{{ t.compras === 1 ? 'una compra' : t.compras + ' compras' }}</span>
+                </span>
+                <span class="top__total">{{ euros(t.total) }} €</span>
+              </li>
+            }
+          </ol>
+        </section>
+      }
+
+      <a class="boton-papel gasto__tickets" routerLink="/tickets">Ver los tickets</a>
+    } @else if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    } @else {
+      <p class="gasto__cargando" role="status">Contando la hucha…</p>
+    }
+  </main>
+</ion-content>
+
+<ion-footer class="ion-no-border pie">
+  <app-pestanas activa="gasto" />
+</ion-footer>

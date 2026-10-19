@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.4.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>dev.pimon</groupId>
+  <artifactId>listillo-back</artifactId>
+  <version>1.2.4</version>
+  <name>Listillo — back</name>
+  <description>API de Listillo: tu lista de la compra, pero más lista</description>
+
+  <properties>
+    <java.version>21</java.version>
+    <libs.version>0.12.5</libs.version>   <!-- versionado lockstep: todas las libs comparten versión -->
+  </properties>
+
+  <!-- GitHub Packages: requiere ~/.m2/settings.xml con el server id 'github-adrianmartincano'
+       y un token con read:packages (ver librerias-backend/README.md). -->
+  <repositories>
+    <repository>
+      <id>github-adrianmartincano</id>
+      <url>https://maven.pkg.github.com/AdrianMartinCano/librerias-backend</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- common: web, data-jpa, ApiResponse, AppException. security: JWT. users: AppUser y roles. -->
+    <dependency>
+      <groupId>io.github.adrianmartincano</groupId>
+      <artifactId>spring-common</artifactId>
+      <version>${libs.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.adrianmartincano</groupId>
+      <artifactId>spring-security</artifactId>
+      <version>${libs.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.adrianmartincano</groupId>
+      <artifactId>spring-users</artifactId>
+      <version>${libs.version}</version>
+    </dependency>
+    <!--
+      Entrar con Google. Se entra SOLO con Google: es una app de consumo y pedir una
+      contraseña más es la manera más rápida de perder a alguien en la primera pantalla.
+      Apagado mientras no haya client-id (ver application.yml).
+    -->
+    <dependency>
+      <groupId>io.github.adrianmartincano</groupId>
+      <artifactId>spring-google</artifactId>
+      <version>${libs.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <!-- Texto de los tickets digitales en PDF (Mercadona, Lidl Plus, Carrefour…) -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>3.0.7</version>
+    </dependency>
+
+    <!-- Lombok: las libs lo declaran como provided (no transitivo). -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Desde Flyway 10 cada motor va en su artefacto: sin el de Postgres falla con
+         "Unsupported Database: PostgreSQL". -->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Postgres de verdad en los tests, sin Docker: así se prueban las migraciones
+         con Flyway y `validate`, igual que en el servidor. -->
+    <dependency>
+      <groupId>io.zonky.test</groupId>
+      <artifactId>embedded-postgres</artifactId>
+      <version>2.0.7</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,215 @@
+<ion-content class="trama">
+  <main class="hogar">
+    @if (hogar(); as h) {
+      <header class="hogar__cabeza">
+        @if (editandoNombre()) {
+          <form class="hogar__renombrar" (submit)="guardarNombre($event, campoNombre)">
+            <label class="sr-solo" for="nombre-hogar">Nombre del hogar</label>
+            <input #campoNombre id="nombre-hogar" class="campo" maxlength="40" [value]="h.nombre" />
+            <button type="submit" class="boton-papel" [disabled]="ocupado()">Guardar</button>
+          </form>
+        } @else {
+          <h1 class="titular">{{ h.nombre }}</h1>
+          <button type="button" class="hogar__lapiz" (click)="editandoNombre.set(true)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 6l3 3" /></svg>
+            Cambiar nombre
+          </button>
+        }
+      </header>
+
+      <!-- Invitar: el cartel con el código, como el de Listillo -->
+      <section class="cartel" aria-labelledby="invitar-titulo">
+        <h2 id="invitar-titulo" class="cartel__titulo">Trae a los tuyos</h2>
+        <p class="cartel__texto">Les llega un enlace; si lo prefieren, les dictas el código.</p>
+        <p class="cartel__codigo" aria-label="Código de invitación">{{ codigoLegible() }}</p>
+        <button type="button" class="boton-rosa" (click)="invitar()">
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5" />
+          </svg>
+          Invitar
+        </button>
+        @if (soyPropietario()) {
+          <button type="button" class="cartel__nuevo" (click)="nuevoCodigo()" [disabled]="ocupado()">
+            Cambiar el código
+          </button>
+        }
+      </section>
+
+      <section class="miembros" aria-labelledby="miembros-titulo">
+        <h2 id="miembros-titulo" class="miembros__titulo">
+          En casa <span class="miembros__cuenta">{{ h.miembros.length }}</span>
+        </h2>
+        <ul class="miembros__lista">
+          @for (m of h.miembros; track m.usuarioId; let i = $index) {
+            <li class="miembro" [style.--cinta]="cinta(i)">
+              <span class="miembro__cinta" aria-hidden="true">{{ inicial(m.nombre) }}</span>
+              <span class="miembro__nombre">
+                {{ m.nombre }}
+                @if (m.usuarioId === miId()) {
+                  <span class="miembro__tu">tú</span>
+                }
+              </span>
+              @if (m.rol === 'PROPIETARIO') {
+                <span class="miembro__rol">Lleva el hogar</span>
+              } @else if (soyPropietario() && m.usuarioId !== miId()) {
+                <button
+                  type="button"
+                  class="miembro__sacar"
+                  [class.miembro__sacar--seguro]="confirmando() === m.usuarioId"
+                  [disabled]="ocupado()"
+                  (click)="sacar(m)"
+                >
+                  {{ confirmando() === m.usuarioId ? '¿Seguro? Toca otra vez' : 'Sacar' }}
+                </button>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+
+      <!-- Ajustes: lo tuyo y lo que compara la casa -->
+      <section class="ajustes" aria-labelledby="ajustes-titulo">
+        <h2 id="ajustes-titulo" class="miembros__titulo">Ajustes</h2>
+
+        <div class="ajuste">
+          <h3 class="ajuste__titulo">Tu nombre</h3>
+          @if (editandoMiNombre()) {
+            <form class="ajuste__form" (submit)="guardarMiNombre($event, campoMiNombre)">
+              <label class="sr-solo" for="mi-nombre">Tu nombre</label>
+              <input #campoMiNombre id="mi-nombre" class="campo" maxlength="60" [value]="miNombre()" />
+              <button type="submit" class="boton-papel" [disabled]="ocupado()">Guardar</button>
+            </form>
+          } @else {
+            <p class="ajuste__valor">
+              {{ miNombre() }}
+              <button type="button" class="hogar__lapiz" (click)="editandoMiNombre.set(true)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 6l3 3" /></svg>
+                Cambiar
+              </button>
+            </p>
+          }
+        </div>
+
+        <div class="ajuste">
+          <h3 class="ajuste__titulo">Qué usas</h3>
+          <p class="ajuste__nota">Solo para ti: lo que apagues desaparece de tu barra de abajo.</p>
+          <ul class="usos">
+            @for (p of todasLasPartes; track p) {
+              @let encendida = partes.partes().includes(p);
+              <li>
+                <button
+                  type="button"
+                  class="uso"
+                  role="switch"
+                  [attr.aria-checked]="encendida"
+                  (click)="alternarParte(p)"
+                >
+                  <span class="uso__texto">
+                    <span class="uso__nombre">{{ parte[p].nombre }}</span>
+                    <span class="uso__nota">{{ parte[p].nota }}</span>
+                  </span>
+                  <span class="interruptor" [class.interruptor--si]="encendida" aria-hidden="true"></span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="ajuste">
+          <h3 class="ajuste__titulo">Supermercados que comparáis</h3>
+          <p class="ajuste__nota">Solo estos salen en Precios, en el buscador y en «¿Dónde lo compro?».</p>
+          <div class="cadenas" role="group" aria-label="Con precios de su web">
+            @for (c of cadenasConWeb; track c) {
+              <button
+                type="button"
+                class="cadena"
+                [class.cadena--si]="compara(c)"
+                [attr.aria-pressed]="compara(c)"
+                (click)="alternarCadena(c)"
+              >
+                {{ nombreCadena[c] }}
+              </button>
+            }
+          </div>
+          <p class="ajuste__nota">Sin precios en su web (solo los de vuestros tickets):</p>
+          <div class="cadenas" role="group" aria-label="Solo con los precios de vuestros tickets">
+            @for (c of cadenasSoloTickets; track c) {
+              <button
+                type="button"
+                class="cadena"
+                [class.cadena--si]="compara(c)"
+                [attr.aria-pressed]="compara(c)"
+                (click)="alternarCadena(c)"
+              >
+                {{ nombreCadena[c] }}
+              </button>
+            }
+          </div>
+        </div>
+      </section>
+
+      @if (otrosHogares().length > 0) {
+        <section class="otros" aria-labelledby="otros-titulo">
+          <h2 id="otros-titulo" class="miembros__titulo">Tus otros hogares</h2>
+          @for (o of otrosHogares(); track o.id) {
+            <button type="button" class="otros__hogar" (click)="cambiarA(o.id)">
+              {{ o.nombre }}
+              <span class="otros__gente">{{ o.miembros }} {{ o.miembros === 1 ? 'persona' : 'personas' }}</span>
+            </button>
+          }
+        </section>
+      }
+
+      <section class="ayuda" aria-label="Ayuda">
+        <a class="ayuda__enlace" routerLink="/guia">
+          <img src="personajes/listillo.svg" alt="" width="40" height="40" />
+          <span>
+            <strong>Cómo funciona</strong>
+            <span class="ayuda__nota">La guía, por si se te olvida algo.</span>
+          </span>
+        </a>
+        <a class="ayuda__enlace" routerLink="/novedades">
+          <span class="ayuda__version">{{ version }}</span>
+          <span>
+            <strong>Novedades</strong>
+            <span class="ayuda__nota">Lo que ha cambiado en cada versión.</span>
+          </span>
+        </a>
+      </section>
+
+      <footer class="hogar__pie">
+        <a class="boton-papel" routerLink="/tickets">Tickets del hogar</a>
+        <a class="boton-papel" routerLink="/empezar">Otro hogar</a>
+        <button
+          type="button"
+          class="boton-papel hogar__salir"
+          [class.hogar__salir--seguro]="confirmando() === 'salir'"
+          [disabled]="ocupado()"
+          (click)="salir()"
+        >
+          {{
+            confirmando() === 'salir'
+              ? h.miembros.length === 1
+                ? '¿Seguro? Se borra la lista'
+                : '¿Seguro? Toca otra vez'
+              : 'Salir del hogar'
+          }}
+        </button>
+        <button type="button" class="hogar__sesion" (click)="cerrarSesion()">Cerrar sesión</button>
+      </footer>
+    } @else if (!error()) {
+      <p class="hogar__cargando" role="status">Cargando el hogar…</p>
+    }
+
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+    @if (hecho()) {
+      <p class="hogar__hecho" role="status">{{ hecho() }}</p>
+    }
+  </main>
+</ion-content>
+
+<ion-footer class="ion-no-border pie">
+  <app-pestanas activa="hogar" />
+</ion-footer>

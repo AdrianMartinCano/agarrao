@@ -1,0 +1,232 @@
+:host {
+  display: block;
+  position: relative;
+  border: 3px solid var(--papel);
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: var(--sombra-ficha);
+  transition: background 260ms ease, box-shadow 260ms var(--salida);
+}
+
+.fila__cuerpo {
+  display: flex;
+  align-items: stretch;
+}
+
+.fila__toque {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 6px 10px 58px;
+  border: 0;
+  border-radius: 15px;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 260ms var(--salida);
+}
+
+.fila__toque:active { transform: scale(0.985); }
+
+/* Escritorio: como la ficha del catálogo, sube y se levanta al señalarla */
+@media (hover: hover) {
+  :host(:not(.fila--comprada)) {
+    transition: background 260ms ease, box-shadow 380ms var(--salida), transform 380ms var(--salida);
+  }
+
+  :host(:not(.fila--comprada):hover) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -8px rgb(42 47 90 / 0.3), 0 2px 4px rgb(42 47 90 / 0.08);
+  }
+}
+
+/* El banderín del catálogo, del color de quien lo apuntó */
+.fila__cinta {
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  display: grid;
+  place-items: start center;
+  width: 32px;
+  height: 44px;
+  padding-top: 7px;
+  background: var(--cinta);
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  transition: background 260ms ease;
+}
+
+.fila__nombre {
+  position: relative;
+  min-width: 0;
+  font-weight: 800;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.fila__cantidad {
+  flex: none;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--placa-precio);
+  font-weight: 800;
+  font-size: 0.9375rem;
+}
+
+.fila__mas {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  border: 0;
+  border-radius: 0 15px 15px 0;
+  background: transparent;
+  color: var(--tinta-suave);
+  cursor: pointer;
+}
+
+.fila__mas svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+:host(.fila--abierta) .fila__mas { color: var(--rosa-boton); }
+
+/* ── Abierta: cantidad y quitar ── */
+
+.fila__ajustes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 2px 12px 12px 58px;
+  animation: abre 320ms var(--salida) both;
+}
+
+.paso {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--placa-precio);
+}
+
+.paso__boton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.paso__boton:disabled { opacity: 0.35; cursor: default; }
+
+.paso__boton svg,
+.fila__mas svg {
+  stroke: currentColor;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+}
+
+.paso__boton svg { width: 20px; height: 20px; fill: none; }
+
+/* M PLUS, no Sniglet: en Sniglet el 5 se lee S */
+.paso__valor {
+  min-width: 2ch;
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.fila__quien {
+  font-size: 0.8125rem;
+  color: var(--tinta-suave);
+}
+
+.fila__quitar {
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* ── En el carro: apagada y tachada con trazo rosa ── */
+
+:host(.fila--comprada) {
+  background: var(--lila);
+  box-shadow: none;
+}
+
+:host(.fila--comprada) .fila__toque { min-height: 54px; }
+
+:host(.fila--comprada) .fila__cinta {
+  background: color-mix(in srgb, var(--cinta) 38%, var(--papel));
+}
+
+:host(.fila--comprada) .fila__nombre {
+  color: var(--tinta-suave);
+  font-weight: 500;
+}
+
+/* El trazo: un rotulador rosa que cruza el nombre de izquierda a derecha */
+:host(.fila--comprada) .fila__nombre::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 52%;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--rosa-boton);
+  transform-origin: left center;
+}
+
+:host(.fila--recien) .fila__nombre::after {
+  animation: tacha 420ms var(--salida) both;
+}
+
+/* Sin View Transitions, al menos una caída corta (con ellas, la fila viaja de verdad) */
+@supports not (view-transition-name: none) {
+  :host(.fila--recien) {
+    animation: cae 520ms var(--salida) both;
+  }
+}
+
+@keyframes tacha {
+  from { transform: scaleX(0); }
+}
+
+@keyframes cae {
+  from {
+    opacity: 0.4;
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes abre {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

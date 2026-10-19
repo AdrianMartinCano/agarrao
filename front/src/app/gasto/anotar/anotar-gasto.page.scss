@@ -1,0 +1,194 @@
+.anotar {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  max-width: 528px;
+  margin-inline: auto;
+  padding: max(18px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+}
+
+.anotar__cabeza {
+  display: grid;
+  gap: 4px;
+}
+
+.anotar__volver {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding-right: 10px;
+  color: var(--tinta);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.anotar__volver svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.anotar__nota {
+  margin: 0;
+  color: var(--tinta-suave);
+}
+
+/* ── Leer el ticket: una nota pegada, color mantequilla ── */
+
+.leer {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: var(--radio-ficha);
+  background: var(--placa-nota);
+  transform: rotate(-0.8deg);
+}
+
+.leer__titulo {
+  margin: 0;
+  font-family: var(--letra-burbuja);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.leer__nota {
+  margin: 0;
+  color: var(--tinta-suave);
+  font-size: 0.9375rem;
+}
+
+.leer__botones {
+  display: flex;
+  gap: 10px;
+}
+
+.leer__boton {
+  flex: 1;
+  cursor: pointer;
+}
+
+.leer__boton:focus-within {
+  outline: 3px solid var(--rosa-boton);
+  outline-offset: 2px;
+}
+
+/* ── La ficha del gasto ── */
+
+.ficha {
+  display: grid;
+  gap: 16px;
+  padding: 18px 16px;
+  border: 3px solid var(--papel);
+  border-radius: var(--radio-ficha);
+  background: var(--lila);
+  box-shadow: var(--sombra-ficha);
+}
+
+.ficha__campo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ficha__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ficha__etiqueta {
+  padding: 0;
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.ficha__importe {
+  font-variant-numeric: tabular-nums;
+}
+
+.ficha__nota {
+  margin: 0;
+  color: var(--tinta-suave);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.tipos {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tipos__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Cada tipo, una píldora: tinta y placa rosa cuando es el elegido */
+.tipo {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid var(--placa-nombre-lila);
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--tinta-suave);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease, transform 300ms var(--salida);
+}
+
+.tipo:active { transform: scale(0.96); }
+
+.tipo--si {
+  border-color: var(--tinta);
+  background: var(--placa-nombre-rosa);
+  color: var(--tinta);
+}
+
+.cada-mes {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--papel);
+  cursor: pointer;
+}
+
+.cada-mes input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: var(--rosa-boton);
+}
+
+.cada-mes > span {
+  display: grid;
+  gap: 2px;
+}
+
+.ficha__borrar {
+  justify-self: center;
+}
+
+.ficha__borrar--seguro {
+  border-color: var(--rosa-boton);
+  background: var(--rosa-boton);
+  color: var(--papel);
+}
+
+@media (max-width: 360px) {
+  .ficha__fila { grid-template-columns: 1fr; }
+}

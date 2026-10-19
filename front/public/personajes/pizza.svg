@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Porción de pizza con cara">
+  <ellipse cx="80" cy="148" rx="30" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <path d="M80 148 L22 40 Q80 16 138 40 Z" fill="#FFD84D"/>
+  <path d="M18 38 Q80 8 142 38 Q144 52 132 52 Q80 30 28 52 Q16 52 18 38 Z" fill="#E0A562"/>
+  <circle cx="58" cy="66" r="9" fill="#FF6B6B"/><circle cx="104" cy="64" r="9" fill="#FF6B6B"/><circle cx="82" cy="118" r="7" fill="#FF6B6B"/>
+  <path d="M70 128 Q74 138 70 146" stroke="#FFD84D" stroke-width="5" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="69" cy="84" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="91" cy="84" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="70.5" cy="82" r="1.6" fill="#FFFFFF"/>
+  <circle cx="92.5" cy="82" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="58" cy="96" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <ellipse cx="102" cy="96" rx="7" ry="4.5" fill="#FFB3A8"/>
+  <path d="M73 95 Q80 102 87 95" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

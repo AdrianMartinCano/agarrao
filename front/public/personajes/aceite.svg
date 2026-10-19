@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Botella de aceite con cara">
+  <ellipse cx="80" cy="148" rx="40" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <rect x="68" y="4" width="24" height="14" rx="5" fill="#3FB777"/>
+  <path d="M70 18 H90 V44 Q116 54 116 80 V130 Q116 142 104 142 H56 Q44 142 44 130 V80 Q44 54 70 44 Z" fill="#F4F8D8"/>
+  <path d="M44 86 H116 V130 Q116 142 104 142 H56 Q44 142 44 130 Z" fill="#D7E05A"/>
+  <path d="M44 86 Q62 80 80 86 T116 86" fill="#E4EA8A"/>
+  <path d="M54 70 Q56 60 64 54" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+  <!-- Cara -->
+  <ellipse cx="68" cy="108" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="92" cy="108" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="69.5" cy="106" r="1.6" fill="#FFFFFF"/>
+  <circle cx="93.5" cy="106" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="57" cy="120" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="103" cy="120" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 119 Q80 126 87 119" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

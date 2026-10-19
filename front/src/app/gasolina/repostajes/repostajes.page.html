@@ -1,0 +1,356 @@
+<header class="cabecera">
+  <div>
+    <h1>Mis repostajes</h1>
+    <p class="intro">Lo que echas, lo que gastas y lo que consume el coche de verdad.</p>
+  </div>
+
+  @if ((vehiculos.value()?.length ?? 0) > 0) {
+    <div class="cabecera__acciones">
+      <!-- Antes solo se enlazaba desde el estado vacío: con un vehículo ya creado no
+           había forma de volver aquí para añadir otro. -->
+      <a routerLink="/gasolina/vehiculos" class="secundario">Mis vehículos</a>
+
+      @if (!formularioAbierto()) {
+        <button type="button" class="principal" (click)="abrirFormulario()">
+          Apuntar repostaje
+        </button>
+      }
+    </div>
+  }
+</header>
+
+@if (vehiculos.isLoading()) {
+  <p class="estado" role="status">Cargando…</p>
+} @else if ((vehiculos.value()?.length ?? 0) === 0) {
+  <!-- Sin vehículo no se puede registrar nada: los kilómetros salen del cuadro de cada
+       coche, y mezclarlos haría imposible medir el consumo. -->
+  <div class="vacio">
+    <h2>Primero, tu coche</h2>
+    <p>
+      Para llevar los repostajes hace falta saber de qué vehículo son: los kilómetros salen
+      del cuentakilómetros de cada uno.
+    </p>
+    <a routerLink="/gasolina/vehiculos" class="principal">Añadir un vehículo</a>
+  </div>
+} @else {
+  <!-- Resumen por vehículo -->
+  <section class="vehiculos" aria-label="Resumen por vehículo">
+    @for (vehiculo of vehiculos.value(); track vehiculo.id) {
+      <article class="vehiculo">
+        <h2>{{ vehiculo.nombre }}</h2>
+        <p class="vehiculo__detalle">{{ vehiculo.carburanteEtiqueta }}</p>
+
+        <dl class="cifras">
+          <div>
+            <dt>Consumo</dt>
+            <dd class="cifra">
+              @if (vehiculo.consumoMedio !== null) {
+                {{ vehiculo.consumoMedio.toFixed(1) }} <span class="unidad">l/100km</span>
+              } @else {
+                <span class="sin-dato">—</span>
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Gastado</dt>
+            <dd class="cifra">
+              {{ vehiculo.gastoTotal.toFixed(2) }} <span class="unidad">€</span>
+            </dd>
+          </div>
+          <div>
+            <dt>Repostajes</dt>
+            <dd class="cifra">{{ vehiculo.repostajes }}</dd>
+          </div>
+        </dl>
+
+        @if (vehiculo.consumoMedio === null && vehiculo.repostajes > 0) {
+          <p class="pista">
+            El consumo aparece cuando haya dos repostajes con el depósito lleno y los
+            kilómetros apuntados.
+          </p>
+        }
+      </article>
+    }
+
+    <!-- Añadir otro vehículo, donde se está mirando la lista de los que hay. -->
+    <a routerLink="/gasolina/vehiculos" class="vehiculo vehiculo--anadir">
+      <span class="mas" aria-hidden="true">+</span>
+      <span>Añadir otro coche o moto</span>
+    </a>
+  </section>
+
+  <!-- Pestañas -->
+  <div class="pestanas" role="tablist" aria-label="Vistas de repostajes">
+    <button
+      type="button"
+      role="tab"
+      [attr.aria-selected]="pestana() === 'historial'"
+      [class.activa]="pestana() === 'historial'"
+      (click)="pestana.set('historial')"
+    >
+      Historial
+    </button>
+    <button
+      type="button"
+      role="tab"
+      [attr.aria-selected]="pestana() === 'graficas'"
+      [class.activa]="pestana() === 'graficas'"
+      (click)="pestana.set('graficas')"
+    >
+      Gráficas
+    </button>
+  </div>
+
+  @if (pestana() === 'graficas') {
+    <app-graficas [vehiculos]="vehiculos.value() ?? []" />
+  } @else {
+
+  <!-- Formulario -->
+  @if (formularioAbierto()) {
+    <section class="formulario" aria-label="Repostaje">
+      @if (editando(); as repostaje) {
+        <p class="editando-aviso">
+          Editando el repostaje del <strong>{{ repostaje.fecha | date: 'd MMMM y' }}</strong>
+        </p>
+      }
+
+      <form [formGroup]="formulario" (ngSubmit)="guardar()">
+        <div class="fila">
+          <div class="gcampo">
+            <label for="vehiculo">Vehículo</label>
+            @if ((vehiculos.value()?.length ?? 0) > 1) {
+              <select id="vehiculo" formControlName="vehiculoId">
+                @for (vehiculo of vehiculos.value(); track vehiculo.id) {
+                  <option [value]="vehiculo.id">
+                    {{ vehiculo.nombre }} · {{ vehiculo.carburanteEtiqueta }}
+                  </option>
+                }
+              </select>
+            } @else {
+              <!-- Con un solo vehículo, un desplegable de una opción es un trámite que no
+                   decide nada. Se enseña cuál es y se acabó. -->
+              <p class="valor-fijo">{{ vehiculoElegido()?.nombre }}</p>
+            }
+          </div>
+
+          <div class="gcampo">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" type="date" formControlName="fecha" />
+          </div>
+        </div>
+
+        <div class="gcampo">
+          <span class="etiqueta">Gasolinera</span>
+          @if (vehiculoElegido(); as vehiculo) {
+            <app-selector-gasolinera
+              [carburante]="vehiculo.carburante"
+              [carburanteEtiqueta]="vehiculo.carburanteEtiqueta"
+              (estacionElegida)="gasolineraElegida($event)"
+            />
+          }
+          @if (editando()?.estacionNombre; as gasolinera) {
+            <p class="ayuda">
+              Ahora es <strong>{{ gasolinera }}</strong>. Si no eliges otra, se queda esa. El precio
+              no cambia al elegir otra: es el que pagaste aquel día.
+            </p>
+          } @else {
+            <p class="ayuda">
+              Al elegirla se pone su precio de hoy, y puedes cambiarlo. Si el repostaje fue
+              en otro sitio, busca por municipio. También puedes dejarla en blanco y
+              escribir el precio a mano.
+            </p>
+          }
+        </div>
+
+        <div class="fila fila--tres">
+          <div class="gcampo">
+            <label for="precio">Precio por litro</label>
+            <input
+              id="precio"
+              type="number"
+              step="0.001"
+              inputmode="decimal"
+              formControlName="precioLitro"
+              (input)="recalcularDesdeImporte()"
+            />
+          </div>
+
+          <div class="gcampo">
+            <label for="importe">Lo que pagaste</label>
+            <input
+              id="importe"
+              type="number"
+              step="0.01"
+              inputmode="decimal"
+              placeholder="20"
+              formControlName="importe"
+              (input)="recalcularDesdeImporte()"
+            />
+            <p class="ayuda">€</p>
+          </div>
+
+          <div class="gcampo">
+            <label for="litros">Litros</label>
+            <input
+              id="litros"
+              type="number"
+              step="0.001"
+              inputmode="decimal"
+              formControlName="litros"
+              (input)="recalcularDesdeLitros()"
+            />
+            <p class="ayuda">Se calculan solos</p>
+          </div>
+        </div>
+
+        <div class="fila">
+          <div class="gcampo">
+            <label for="kilometros">Kilómetros del cuadro</label>
+            <input
+              id="kilometros"
+              type="number"
+              inputmode="numeric"
+              placeholder="127450"
+              formControlName="kilometros"
+            />
+            <p class="ayuda">Opcional, pero es lo que permite calcular el consumo.</p>
+          </div>
+
+          <div class="gcampo gcampo--casilla">
+            <label class="casilla">
+              <input type="checkbox" formControlName="depositoLleno" />
+              <span>He llenado el depósito</span>
+            </label>
+            <p class="ayuda">
+              Si echaste solo unos euros, desmárcalo: esos litros contarán igualmente en el
+              siguiente lleno.
+            </p>
+          </div>
+        </div>
+
+        @if (error(); as mensaje) {
+          <p class="error" role="alert">{{ mensaje }}</p>
+        }
+
+        <div class="acciones">
+          <button type="button" class="secundario" (click)="cerrarFormulario()">Cancelar</button>
+          <button type="submit" class="principal" [disabled]="guardando()">
+            {{ guardando() ? 'Guardando…' : editando() ? 'Guardar cambios' : 'Guardar repostaje' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+
+  <!-- Historial -->
+  <section aria-label="Historial">
+    @if (historial.isLoading()) {
+      <p class="estado" role="status">Cargando el historial…</p>
+    } @else if (historial.value(); as repostajes) {
+      @if (repostajes.length === 0) {
+        <p class="estado">Todavía no has apuntado ningún repostaje.</p>
+      } @else {
+        <ul class="historial">
+          @for (repostaje of repostajes; track repostaje.id) {
+            <li class="repostaje">
+              <div class="repostaje__fecha">
+                <span class="dia">{{ repostaje.fecha | date: 'd MMM' }}</span>
+                <span class="anyo">{{ repostaje.fecha | date: 'yyyy' }}</span>
+              </div>
+
+              <div class="repostaje__cuerpo">
+                <p class="repostaje__titulo">
+                  {{ repostaje.estacionNombre || 'Sin gasolinera' }}
+                  @if (!repostaje.depositoLleno) {
+                    <span class="etiqueta-parcial">parcial</span>
+                  }
+                </p>
+                @if (repostaje.estacionDireccion || repostaje.estacionMunicipio) {
+                  <p class="repostaje__donde">
+                    {{ repostaje.estacionDireccion }}{{
+                      repostaje.estacionDireccion && repostaje.estacionMunicipio ? ', ' : ''
+                    }}{{ repostaje.estacionMunicipio }}
+                  </p>
+                }
+                <p class="repostaje__detalle">
+                  {{ repostaje.litros.toFixed(2) }} L · {{ repostaje.precioLitro.toFixed(3) }} €/l
+                  @if (repostaje.kilometros !== null) {
+                    · {{ repostaje.kilometros.toLocaleString('es-ES') }} km
+                  }
+                </p>
+                <!--
+                  UNA sola línea, y siempre la misma: la que compara con la más barata que
+                  había cerca. Es la única de las comparaciones posibles que se puede
+                  corregir la próxima vez, y por eso es la que va en el listado; la media
+                  de la zona se queda en el desglose de abajo, para quien quiera el detalle.
+                -->
+                @if (repostaje.dejadoEnLaMesa !== null) {
+                  <p
+                    class="repostaje__ahorro"
+                    [class.repostaje__ahorro--malo]="repostaje.dejadoEnLaMesa > 0"
+                  >
+                    @if (repostaje.dejadoEnLaMesa === 0) {
+                      La más barata de la zona
+                    } @else {
+                      Te dejaste {{ repostaje.dejadoEnLaMesa.toFixed(2) }} €
+                      frente a la más barata de la zona
+                    }
+                  </p>
+                  <!--
+                    Los números detrás del titular. Van en texto pequeño y NO en un `title`
+                    porque esto se mira desde el móvil, donde un tooltip no existe.
+                  -->
+                  <p class="repostaje__zona">
+                    Media de la zona {{ repostaje.precioMedioZona!.toFixed(3) }} €/l ·
+                    más barata {{ repostaje.precioMinimoZona!.toFixed(3) }} €/l
+                    a {{ repostaje.radioZonaKm }} km
+                  </p>
+                } @else if (repostaje.diferenciaMedia !== null && repostaje.diferenciaMedia !== 0) {
+                  <!--
+                    Repostajes anteriores a que se guardara la zona: no se pueden recalcular
+                    —no hay precios de aquel día— así que siguen enseñando lo que tenían.
+                  -->
+                  <p
+                    class="repostaje__ahorro"
+                    [class.repostaje__ahorro--malo]="repostaje.diferenciaMedia < 0"
+                  >
+                    {{ repostaje.diferenciaMedia > 0 ? 'Ahorraste' : 'Pagaste de más' }}
+                    {{ (repostaje.diferenciaMedia > 0 ? repostaje.diferenciaMedia : -repostaje.diferenciaMedia).toFixed(2) }} €
+                    frente a la media de la provincia
+                  </p>
+                }
+              </div>
+
+              <div class="repostaje__importe">
+                <span class="precio">{{ repostaje.importe.toFixed(2) }}</span>
+                <span class="precio-unidad">€</span>
+              </div>
+
+              <div class="repostaje__acciones">
+                <button
+                  type="button"
+                  class="accion"
+                  (click)="editar(repostaje)"
+                  [attr.aria-label]="'Editar el repostaje del ' + repostaje.fecha"
+                  title="Editar"
+                >
+                  ✎
+                </button>
+                <button
+                  type="button"
+                  class="accion accion--borrar"
+                  (click)="eliminar(repostaje.id)"
+                  [attr.aria-label]="'Borrar el repostaje del ' + repostaje.fecha"
+                  title="Borrar"
+                >
+                  ✕
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    }
+  </section>
+  }
+}

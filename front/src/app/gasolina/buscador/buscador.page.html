@@ -1,0 +1,158 @@
+<section class="filtros" aria-label="Filtros de búsqueda">
+  <!--
+    Ojo con los <select>: la opción marcada se indica con [selected] en cada <option>, no
+    con [value] en el select. Angular asigna el value del select ANTES de que el @for haya
+    creado las opciones, así que el navegador lo descarta y se queda en la primera: el
+    desplegable decía "1 km" mientras la búsqueda usaba de verdad el radio guardado.
+  -->
+  <div class="gcampo">
+    <label for="carburante">Carburante</label>
+    <select id="carburante" (change)="cambiarCarburante($any($event.target).value)">
+      <option value="" [selected]="filtros().carburante === null">Todos</option>
+      @for (carburante of carburantes(); track carburante.clave) {
+        <option [value]="carburante.clave" [selected]="carburante.clave === filtros().carburante">
+          {{ carburante.etiqueta }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <div class="gcampo">
+    <label for="radio">Distancia máxima</label>
+    <select id="radio" (change)="cambiarRadio(+$any($event.target).value)">
+      @for (radio of radios; track radio) {
+        <option [value]="radio" [selected]="radio === filtros().radioKm">{{ radio }} km</option>
+      }
+    </select>
+  </div>
+
+  <div class="gcampo">
+    <span id="etiqueta-orden">Ordenar por</span>
+    <div class="segmentado" role="group" aria-labelledby="etiqueta-orden">
+      <button
+        type="button"
+        [class.activo]="filtros().orden === 'DISTANCIA'"
+        [attr.aria-pressed]="filtros().orden === 'DISTANCIA'"
+        (click)="cambiarOrden('DISTANCIA')"
+      >
+        Cercanía
+      </button>
+      <button
+        type="button"
+        [class.activo]="filtros().orden === 'PRECIO'"
+        [attr.aria-pressed]="filtros().orden === 'PRECIO'"
+        [disabled]="!filtros().carburante"
+        [title]="!filtros().carburante ? 'Elige un carburante para ordenar por precio' : ''"
+        (click)="cambiarOrden('PRECIO')"
+      >
+        Precio
+      </button>
+    </div>
+  </div>
+
+  <div class="gcampo gcampo--lugar">
+    <app-buscador-lugar (lugarElegido)="buscarEnLugar($event)" />
+  </div>
+
+  <button type="button" class="boton-ubicacion" (click)="localizar()">
+    {{ ubicacionReal() ? '📍 Actualizar mi ubicación' : '📍 Usar mi ubicación' }}
+  </button>
+</section>
+
+@if (aviso(); as mensaje) {
+  <p class="nota nota--aviso" role="status">{{ mensaje }}</p>
+}
+
+<!-- Solo se avisa cuando NO se está buscando desde la ubicación del móvil. Decir
+     "buscando desde tu ubicación" a quien acaba de dar permiso es contarle algo que ya
+     sabe; los otros dos casos sí son información que no se deduce sola. -->
+@if (!ubicacionReal()) {
+  @if (lugarElegido(); as lugar) {
+    <p class="nota" role="status">Buscando desde <strong>{{ lugar }}</strong>.</p>
+  } @else {
+    <p class="nota" role="status">
+      Buscando desde el centro de Madrid. Escribe tu municipio o código postal arriba para
+      buscar en otro sitio.
+    </p>
+  }
+}
+
+<section class="resultados">
+  <div class="panel">
+    @if (busqueda.isLoading()) {
+      <p class="cargando" role="status">Buscando gasolineras…</p>
+    } @else if (busqueda.error(); as error) {
+      <div class="error" role="alert">
+        <p>{{ mensajeDeError(error) }}</p>
+        <button type="button" (click)="busqueda.reload()">Reintentar</button>
+      </div>
+    } @else if (busqueda.value(); as resultado) {
+      <!--
+        La referencia de precio de la zona. Es lo que convierte una lista de números en
+        una decisión: llegas en reserva, tienes una a 1,52 delante y sin nada con que
+        compararla no sabes si es cara. Con la media al lado se resuelve de un vistazo, y
+        con la más barata sabes qué te ahorras aguantando hasta la siguiente.
+
+        No aparece sin carburante elegido: cada estación vende varios a precios distintos
+        y una media de todos mezclados no significaría nada.
+      -->
+      @if (resultado.resumen; as resumen) {
+        <p class="resumen-zona" role="status">
+          Media de tu zona <strong>{{ resumen.medio.toFixed(3) }} €/l</strong> ·
+          la más barata, <strong>{{ resumen.minimo.toFixed(3) }}</strong>
+          <span class="resumen-zona__cuantas">
+            ({{ resumen.estaciones }} {{ resumen.estaciones === 1 ? 'gasolinera' : 'gasolineras' }})
+          </span>
+        </p>
+      }
+
+      <!-- El scroll va en este contenedor y no en el componente: así la paginación se
+           queda fija abajo en lugar de irse con la lista. -->
+      <div class="panel__lista" #listaScroll>
+        <app-lista-estaciones
+          [estaciones]="resultado.estaciones.contenido"
+          [favoritos]="favoritos()"
+          [seleccionada]="seleccionada()"
+          [mostrarFavoritos]="autenticado()"
+          mensajeVacio="No hay gasolineras con esos filtros. Prueba a ampliar la distancia."
+          (estacionElegida)="seleccionar($event)"
+          (favoritoAlternado)="alternarFavorito($event)"
+        />
+      </div>
+
+      @if (resultado.estaciones.totalPaginas > 1) {
+        <nav class="paginacion" aria-label="Páginas de resultados">
+          <button
+            type="button"
+            [disabled]="resultado.estaciones.pagina === 0"
+            (click)="irAPagina(resultado.estaciones.pagina - 1)"
+          >
+            ← Anterior
+          </button>
+
+          <span class="paginacion__estado" role="status">
+            Página {{ resultado.estaciones.pagina + 1 }} de {{ resultado.estaciones.totalPaginas }}
+          </span>
+
+          <button
+            type="button"
+            [disabled]="resultado.estaciones.pagina >= resultado.estaciones.totalPaginas - 1"
+            (click)="irAPagina(resultado.estaciones.pagina + 1)"
+          >
+            Siguiente →
+          </button>
+        </nav>
+      }
+    }
+  </div>
+
+  <div class="mapa-contenedor">
+    <app-mapa-estaciones
+      [estaciones]="busqueda.value()?.estaciones?.contenido ?? []"
+      [centro]="posicion()"
+      [seleccionada]="seleccionada()"
+      [favoritos]="favoritos()"
+      (estacionElegida)="seleccionar($event)"
+    />
+  </div>
+</section>

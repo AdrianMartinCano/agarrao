@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Plato de espaguetis con cara">
+  <ellipse cx="80" cy="148" rx="50" ry="7" fill="#2A2F5A" opacity=".12"/>
+  <!-- Los espaguetis con tomate y una albóndiga -->
+  <path d="M34 74 Q36 34 80 30 Q124 34 126 74 Z" fill="#FFD27A"/>
+  <path d="M44 66 Q56 46 70 62 Q80 40 92 60 Q104 44 116 66 M52 72 Q66 56 78 70 Q92 54 106 72" stroke="#F5B954" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M58 46 Q80 30 104 46 Q96 60 80 56 Q64 60 58 46 Z" fill="#FF6B6B"/>
+  <circle cx="84" cy="40" r="10" fill="#B5603A"/>
+  <path d="M100 30 L108 22 M104 34 L114 30" stroke="#3FB777" stroke-width="4" stroke-linecap="round"/>
+  <!-- El plato hondo -->
+  <path d="M22 76 H138 Q136 126 94 136 H66 Q24 126 22 76 Z" fill="#D9CDFF"/>
+  <rect x="18" y="70" width="124" height="12" rx="6" fill="#C7B8FF"/>
+  <path d="M36 92 Q38 106 46 114" stroke="#F2EDFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Cara -->
+  <ellipse cx="66" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <ellipse cx="94" cy="100" rx="4.5" ry="5.5" fill="#2A2F5A"/>
+  <circle cx="67.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <circle cx="95.5" cy="98" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="55" cy="112" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <ellipse cx="105" cy="112" rx="7" ry="4.5" fill="#FFB3CC"/>
+  <path d="M73 111 Q80 118 87 111" stroke="#2A2F5A" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>
