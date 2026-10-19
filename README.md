@@ -20,6 +20,38 @@ copia de seguridad. La mascota sigue llamándose Listillo.
 Es una **PWA**: se instala desde el navegador en Android y en iPhone. No hay APK ni App
 Store (ni la licencia de Apple).
 
+## Capturas
+
+En vivo en **[agarrao.pimon.dev](https://agarrao.pimon.dev)** (se entra con Google; la
+gasolina, sin cuenta). Las capturas son de una instancia local con el hogar de ejemplo:
+**los tickets y los gastos son inventados**.
+
+<table>
+  <tr>
+    <th>Portada</th>
+    <th>La lista</th>
+    <th>Gasto del mes</th>
+  </tr>
+  <tr>
+    <td><img src="docs/capturas/portada.png" alt="Portada de Agarrao con la mascota y ejemplos de precio por unidad" width="240"></td>
+    <td><img src="docs/capturas/lista.png" alt="Lista de la compra compartida del hogar, con quién apuntó cada cosa" width="240"></td>
+    <td><img src="docs/capturas/gasto.png" alt="Gasto del mes como un tarro de hucha repartido por pasillos" width="240"></td>
+  </tr>
+  <tr>
+    <th>¿Qué apuntas?</th>
+    <th>Gasolina</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="docs/capturas/anadir.png" alt="Botón más: subir un ticket, anotar un gasto o apuntar algo en la lista" width="240"></td>
+    <td><img src="docs/capturas/gasolina.png" alt="Buscador de gasolineras con mapa y precios del Ministerio" width="240"></td>
+    <td></td>
+  </tr>
+</table>
+
+Se rehacen con la app en local (`ListilloLocal`, ver «Arrancar en local») y el hogar
+«Casa de ejemplo», a 390×844 y escala 2.
+
 Monorepo con dos proyectos independientes unidos por `docker-compose`:
 
 - **`front/`**: Angular 21 (standalone, signals, zoneless) + Ionic 9 + service worker.
